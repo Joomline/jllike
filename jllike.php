@@ -77,9 +77,9 @@ class plgContentjllike extends JPlugin
 				 <div class="event-container" >
 				<div class="likes-block">
 HTML;
-			if ($this->params->def('addfacebook')) {
+				if ($this->params->def('addfacebook')) {
 		 		$scriptPage .= <<<HTML
-					<a href="$article_url" class="like l-fb">
+					<a title="Facebook" href="$article_url" class="like l-fb">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
@@ -87,7 +87,7 @@ HTML;
 }			
 			if ($this->params->def('addvk')) {
 				$scriptPage .= <<<HTML
-					<a href="$article_url" class="like l-vk">
+					<a title="Вконтакте" href="$article_url" class="like l-vk">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
@@ -95,7 +95,7 @@ HTML;
 }			
 			if ($this->params->def('addtw')) {
 				$scriptPage .= <<<HTML
-					<a href="$article_url" class="like l-tw">
+					<a title="Twitter" href="$article_url" class="like l-tw">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
@@ -103,7 +103,7 @@ HTML;
 }	
 			if ($this->params->def('addod')) {		
 				$scriptPage .= <<<HTML
-					<a href="$article_url" class="like l-ok">
+					<a title="Одноклассники" href="$article_url" class="like l-ok">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
@@ -111,7 +111,7 @@ HTML;
 }
 			if ($this->params->def('addgp')) {
 				$scriptPage .= <<<HTML
-					<a href="$article_url" class="like l-gp">
+					<a title="Google+" href="$article_url" class="like l-gp">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
@@ -120,7 +120,7 @@ HTML;
 				$scriptPage .= <<<HTML
 				</div>
 				</div>
-				<div style="text-align: right;">
+				<div style="text-align: left;">
 					<a style="text-decoration:none; color: #c0c0c0; font-family: arial,helvetica,sans-serif; font-size: 5pt; " target="_blank" href="http://joomline.ru/rasshirenija/plugin/jllike.html">Social Like</a>
 				</div>
 					

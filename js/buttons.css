@@ -1,10 +1,11 @@
 .likes-block {
     line-height:24px;
     height:24px;
-    text-align:right;
-
+    text-align:left;
+		padding:15px 0 5px;
+ 
 }
-
+ 
 .like {
     display:inline-block;
     height:24px;
@@ -17,11 +18,11 @@
     text-align:center;
     padding:0;
 }
-
+ 
 .likes-block .like:first-child {
     margin-left:10px;
 }
-
+ 
 .like .l-ico {
     width:24px;
     height:24px;
@@ -31,40 +32,61 @@
     background-image:url("./images/likes-ico.png");
     background-repeat:no-repeat;
 }
-
+ 
 .l-fb .l-ico {
     background-position:0 0;
 }
-
+ 
 .l-vk .l-ico {
     background-position:-29px 0;
 }
-
+ 
 .l-tw .l-ico {
     background-position:-58px 0;
 }
-
+ 
 .l-ok .l-ico {
     background-position:-87px 0;
 }
-
+ 
 .l-gp .l-ico {
     background-position:-116px 0;
 }
-
-
+ 
+ 
+ 
+.l-fb:hover .l-ico {
+    background-position:0 -48px;
+}
+ 
+.l-vk:hover .l-ico {
+    background-position:-29px -48px;
+}
+ 
+.l-tw:hover .l-ico {
+    background-position:-58px -48px;
+}
+ 
+.l-ok:hover .l-ico {
+    background-position:-87px -48px;
+}
+ 
+.l-gp:hover .l-ico {
+    background-position:-116px -48px;
+}
+ 
 .like .l-count {
     vertical-align:middle;
     line-height:24px;
     cursor: default;
 }
-
+ 
 .like.like-not-empty {
     background: url("./images/likes-bg.png") no-repeat 100% 0;
     margin-right:14px;
     padding:0 0 0 9px;
 }
-
+ 
 a.like {
     text-decoration: none;
 }
