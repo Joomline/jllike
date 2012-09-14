@@ -15,36 +15,40 @@
 		<filename plugin="jllike">jllike.php</filename>
 		<filename>index.html</filename>
 	</files>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.plg_content_jllike.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.plg_content_jllike.ini</language>
+	</languages>
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field name="autoAdd" type="radio" default="0" label="Автодобавление" description="Укажите нужно ли автоматически добавлять форму комментариев к каждой статье">
-				  <option value="0">Нет</option>
-				  <option value="1">Да</option>
+				<field name="autoAdd" type="radio" default="0" label="PLG_JLLIKEPRO_AUTOADD_LABEL" description="PLG_JLLIKEPRO_AUTOADD_DESC">
+				  <option value="0">PLG_JLLIKEPRO_NO</option>
+				  <option value="1">PLG_JLLIKEPRO_YES</option>
 				</field>
 				<field name="categories" type="category" extension='com_content' default="0" multiple="multiple"
-						label="Исключить категории"
-						description="Укажите категории в которых не будет добавляться виджет комментариев"/>
-				<field name="pathbase" type="text" label="Укажите приоритетный домен" default="0" description="Укажите приоритетный домен: www.ваш_домен.ru - c www, либо ваш_домен.ru - без www."/>
-				<field name="addfacebook" type="radio" default="1" label="Включить facebook" description="">
-				  <option value="0">Нет</option>
-				  <option value="1">Да</option>
+						label="PLG_JLLIKEPRO_EXCLUDE_CATEGORY_LABEL"
+						description="PLG_JLLIKEPRO_EXCLUDE_CATEGORY_DESC"/>
+				<field name="pathbase" type="text" label="PLG_JLLIKEPRO_PRIORITE_DOMEN_LABEL" default="0" description="PLG_JLLIKEPRO_PRIORITE_DOMEN_DESC"/>
+				<field name="addfacebook" type="radio" default="1" label="PLG_JLLIKEPRO_ENABLE_FC" description="">
+				  <option value="0">PLG_JLLIKEPRO_NO</option>
+				  <option value="1">PLG_JLLIKEPRO_YES</option>
 				</field>
-				<field name="addvk" type="radio" default="1" label="Включить Vkontakte" description="">
-				  <option value="0">Нет</option>
-				  <option value="1">Да</option>
+				<field name="addvk" type="radio" default="1" label="PLG_JLLIKEPRO_ENABLE_VK" description="">
+				  <option value="0">PLG_JLLIKEPRO_NO</option>
+				  <option value="1">PLG_JLLIKEPRO_YES</option>
 				</field>
-				<field name="addtw" type="radio" default="1" label="Включить twitter" description="">
-				  <option value="0">Нет</option>
-				  <option value="1">Да</option>
+				<field name="addtw" type="radio" default="1" label="PLG_JLLIKEPRO_ENABLE_TW" description="">
+				  <option value="0">PLG_JLLIKEPRO_NO</option>
+				  <option value="1">PLG_JLLIKEPRO_YES</option>
 				</field>
-				<field name="addod" type="radio" default="1" label="Включить Odnoklassniki" description="">
-				  <option value="0">Нет</option>
-				  <option value="1">Да</option>
+				<field name="addod" type="radio" default="1" label="PLG_JLLIKEPRO_ENABLE_OD" description="">
+				  <option value="0">PLG_JLLIKEPRO_NO</option>
+				  <option value="1">PLG_JLLIKEPRO_YES</option>
 				</field>
-				<field name="addgp" type="radio" default="1" label="Включить google+" description="">
-				  <option value="0">Нет</option>
-				  <option value="1">Да</option>
+				<field name="addgp" type="radio" default="1" label="PLG_JLLIKEPRO_ENABLE_GG" description="">
+				  <option value="0">PLG_JLLIKEPRO_NO</option>
+				  <option value="1">PLG_JLLIKEPRO_YES</option>
 				</field>
 				
 			</fieldset>

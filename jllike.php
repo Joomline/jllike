@@ -30,7 +30,7 @@ class plgContentjllike extends JPlugin
 
 
 	public function onContentPrepare($context, &$article, &$params, $page = 0){
-
+		JPlugin::loadLanguage( 'plg_content_jllikepro' );
 		if (strpos($article->text, '{jllike-off}') !== false) {
 			$article->text = str_replace("{jllike-off}","",$article->text);
 			return true;
@@ -64,8 +64,12 @@ class plgContentjllike extends JPlugin
 				//$doc->addCustomTag("<script >jq = jQuery.noConflict();</script>");
 				$doc->addStyleSheet("plugins/content/jllike/js/buttons.css");
 	
+				$titlefc = JText::_( 'PLG_JLLIKEPRO_TITLE_FC' );
+				$titlevk = JText::_( 'PLG_JLLIKEPRO_TITLE_VK' );
+				$titletw = JText::_( 'PLG_JLLIKEPRO_TITLE_TW' );
+				$titleod = JText::_( 'PLG_JLLIKEPRO_TITLE_OD' );
+				$titlegg = JText::_( 'PLG_JLLIKEPRO_TITLE_GG' );
 				
-
 				$pagehash = $article->id;
 				$scriptPage = <<<HTML
 				<script>
@@ -79,7 +83,7 @@ class plgContentjllike extends JPlugin
 HTML;
 				if ($this->params->def('addfacebook')) {
 		 		$scriptPage .= <<<HTML
-					<a title="Facebook" href="$article_url" class="like l-fb">
+					<a title="$titlefc" href="$article_url" class="like l-fb">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
@@ -87,7 +91,7 @@ HTML;
 }			
 			if ($this->params->def('addvk')) {
 				$scriptPage .= <<<HTML
-					<a title="Вконтакте" href="$article_url" class="like l-vk">
+					<a title="$titlevk" href="$article_url" class="like l-vk">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
@@ -95,7 +99,7 @@ HTML;
 }			
 			if ($this->params->def('addtw')) {
 				$scriptPage .= <<<HTML
-					<a title="Twitter" href="$article_url" class="like l-tw">
+					<a title="$titletw" href="$article_url" class="like l-tw">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
@@ -103,7 +107,7 @@ HTML;
 }	
 			if ($this->params->def('addod')) {		
 				$scriptPage .= <<<HTML
-					<a title="Одноклассники" href="$article_url" class="like l-ok">
+					<a title="$titleod" href="$article_url" class="like l-ok">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
@@ -111,7 +115,7 @@ HTML;
 }
 			if ($this->params->def('addgp')) {
 				$scriptPage .= <<<HTML
-					<a title="Google+" href="$article_url" class="like l-gp">
+					<a title="$titlegg" href="$article_url" class="like l-gp">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
