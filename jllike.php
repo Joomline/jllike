@@ -30,7 +30,8 @@ class plgContentjllike extends JPlugin
 
 
 	public function onContentPrepare($context, &$article, &$params, $page = 0){
-		JPlugin::loadLanguage( 'plg_content_jllikepro' );
+		if($context == 'com_content.article'){
+		JPlugin::loadLanguage( 'plg_content_jllike' );
 		if (strpos($article->text, '{jllike-off}') !== false) {
 			$article->text = str_replace("{jllike-off}","",$article->text);
 			return true;
@@ -64,11 +65,11 @@ class plgContentjllike extends JPlugin
 				//$doc->addCustomTag("<script >jq = jQuery.noConflict();</script>");
 				$doc->addStyleSheet("plugins/content/jllike/js/buttons.css");
 	
-				$titlefc = JText::_( 'PLG_JLLIKEPRO_TITLE_FC' );
-				$titlevk = JText::_( 'PLG_JLLIKEPRO_TITLE_VK' );
-				$titletw = JText::_( 'PLG_JLLIKEPRO_TITLE_TW' );
-				$titleod = JText::_( 'PLG_JLLIKEPRO_TITLE_OD' );
-				$titlegg = JText::_( 'PLG_JLLIKEPRO_TITLE_GG' );
+				$titlefc = JText::_( 'PLG_JLLIKE_TITLE_FC' );
+				$titlevk = JText::_( 'PLG_JLLIKE_TITLE_VK' );
+				$titletw = JText::_( 'PLG_JLLIKE_TITLE_TW' );
+				$titleod = JText::_( 'PLG_JLLIKE_TITLE_OD' );
+				$titlegg = JText::_( 'PLG_JLLIKE_TITLE_GG' );
 				
 				$pagehash = $article->id;
 				$scriptPage = <<<HTML
@@ -144,7 +145,7 @@ HTML;
 
 	
 
-
+	}
 }
 
 	
