@@ -44,6 +44,7 @@ class plgContentjllike extends JPlugin
 			$article->catid='';	
 		}
 		$exceptcat = is_array($this->params->def('categories')) ? $this->params->def('categories') : array($this->params->def('categories'));
+		
 		if (!in_array($article->catid,$exceptcat)) {
 			$view = JRequest::getCmd('view');
 			if ($view == 'article') {
