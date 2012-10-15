@@ -142,6 +142,8 @@ var
 href = this.$context.attr(this.config.keys.shareLinkParam),
 origin = pathbs; //w.location.origin || w.location.href.replace(w.location.pathname + w.location.search, '');
 
+this.domenhref = pathbs;
+
 this.linkhref = w.location.href.replace(w.location.pathname + w.location.search, '') + href;
 this.linkToShare = href;
 if(!href) {
@@ -391,10 +393,10 @@ this.type = 'odnoklassniki';
 /*@methods*/
 
 countLikes: function() {
-var serviceURI = "http://www.odnoklassniki.ru/dk?st.cmd=extOneClickLike&uid=odklocs0&ref=" + encodeURIComponent(this.linkhref);
+var serviceURI = "http://www.odnoklassniki.ru/dk?st.cmd=extOneClickLike&uid=odklocs0&ref=" + this.linkhref;//encodeURIComponent(this.linkhref);
 //alert(serviceURI);
 execOd = this;
-return jq.post('plugins/content/jllike/models/ajax.php',{curl:serviceURI,variant:'od'}, function(data){
+return jq.post(this.domenhref + '/plugins/content/jllike/models/ajax.php',{curl:serviceURI,variant:'od'}, function(data){
 	if (data!=0) {
 		execOd.setCountValue(data);
 	}
@@ -424,10 +426,10 @@ this.type = 'gplusButton';
 /*@methods*/
 
 countLikes: function() {
-serviceURI = 'https://plusone.google.com/_/+1/fastbutton?url='+ encodeURIComponent(this.linkhref);
+serviceURI = 'https://plusone.google.com/_/+1/fastbutton?url='+ this.linkhref;//encodeURIComponent(this.linkhref);
 //alert(serviceURI);
 execGP = this;
-return jq.post('plugins/content/jllike/models/ajax.php',{curl:serviceURI,variant:'gp'}, function(data){
+return jq.post(this.domenhref + '/plugins/content/jllike/models/ajax.php',{curl:serviceURI,variant:'gp'}, function(data){
 	if (data!=0) {
 		execGP.setCountValue(data);
 	}
