@@ -31,14 +31,18 @@
 						label="PLG_JLLIKE_EXCLUDE_CATEGORY_LABEL"
 						description="PLG_JLLIKE_EXCLUDE_CATEGORY_DESC"/>
 				<field name="pathbase" type="text" label="PLG_JLLIKE_PRIORITE_DOMEN_LABEL" default="0" description="PLG_JLLIKE_PRIORITE_DOMEN_DESC"/>
-				<field name="addfacebook" type="radio" default="1" label="PLG_JLLIKE_ENABLE_FC" description="">
-				  <option value="0">PLG_JLLIKE_NO</option>
-				  <option value="1">PLG_JLLIKE_YES</option>
-				</field>
 				<field name="jqload" type="radio" default="1" label="PLG_JLLIKEPRO_JQLOAD_LABEL" description="PLG_JLLIKEPRO_JQLOAD_DESC">
 				  <option value="1">PLG_JLLIKEPRO_YES</option>
 				  <option value="0">PLG_JLLIKEPRO_NO</option>
 				</field>
+				<field name="typesget" type="list" default="0" label="PLG_JLLIKEPRO_TYPESGET_LABEL" description="PLG_JLLIKEPRO_TYPESGET_DESC">
+				  <option value="0">PLG_JLLIKEPRO_FILEGET</option>
+				  <option value="1">PLG_JLLIKEPRO_CURL</option>
+				</field>
+				<field name="addfacebook" type="radio" default="1" label="PLG_JLLIKE_ENABLE_FC" description="">
+				  <option value="0">PLG_JLLIKE_NO</option>
+				  <option value="1">PLG_JLLIKE_YES</option>
+				</field>				
 				<field name="addvk" type="radio" default="1" label="PLG_JLLIKE_ENABLE_VK" description="">
 				  <option value="0">PLG_JLLIKE_NO</option>
 				  <option value="1">PLG_JLLIKE_YES</option>

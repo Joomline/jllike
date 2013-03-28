@@ -396,7 +396,7 @@ countLikes: function() {
 var serviceURI = "http://www.odnoklassniki.ru/dk?st.cmd=extOneClickLike&uid=odklocs0&ref=" + this.linkhref;//encodeURIComponent(this.linkhref);
 //alert(serviceURI);
 execOd = this;
-return jq.post(this.domenhref + '/plugins/content/jllike/models/ajax.php',{curl:serviceURI,variant:'od'}, function(data){
+return jq.post(this.domenhref + '/plugins/content/jllike/models/ajax.php',{curl:serviceURI,variant:'od',tpget:typeGet}, function(data){
 	if (data!=0) {
 		execOd.setCountValue(data);
 	}
@@ -426,10 +426,11 @@ this.type = 'gplusButton';
 /*@methods*/
 
 countLikes: function() {
-serviceURI = 'https://plusone.google.com/_/+1/fastbutton?url='+ this.linkhref;//encodeURIComponent(this.linkhref);
+//serviceURI = 'https://plusone.google.com/_/+1/fastbutton?url='+ this.linkhref;//encodeURIComponent(this.linkhref);
+serviceURI = this.linkhref;//encodeURIComponent(this.linkhref);
 //alert(serviceURI);
 execGP = this;
-return jq.post(this.domenhref + '/plugins/content/jllike/models/ajax.php',{curl:serviceURI,variant:'gp'}, function(data){
+return jq.post(this.domenhref + '/plugins/content/jllike/models/ajax.php',{curl:serviceURI,variant:'gp',tpget:typeGet}, function(data){
 	if (data!=0) {
 		execGP.setCountValue(data);
 	}

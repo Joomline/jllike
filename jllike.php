@@ -53,7 +53,7 @@ class plgContentjllike extends JPlugin
 				$uri = JURI::getInstance();
 				$base = $uri->toString(array('scheme', 'host', 'port'));
 				$article_url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catid, $article->catslug));
-				$pathbase = 'var pathbs = "http://'.$this->params->def('pathbase').'";';
+				$pathbase = 'var pathbs = "http://'.$this->params->def('pathbase').'";var typeGet="'.$this->params->def('typesget').'";';
 				$doc->addScriptDeclaration($pathbase);
 				
 				if ($this->params->def('jqload')==1) {
