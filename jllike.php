@@ -38,7 +38,7 @@ class plgContentjllike extends JPlugin
 		}
 
 		if (strpos($article->text, '{jllike}') === false && !$this->params->def('autoAdd')) {
-			return true;
+			//return true;
 		}
 		if (!isset($article->catid)) {
 			$article->catid='';	
