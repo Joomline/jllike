@@ -35,6 +35,10 @@
 				  <option value="0">PLG_JLLIKE_NO</option>
 				  <option value="1">PLG_JLLIKE_YES</option>
 				</field>
+				<field name="jqload" type="radio" default="1" label="PLG_JLLIKEPRO_JQLOAD_LABEL" description="PLG_JLLIKEPRO_JQLOAD_DESC">
+				  <option value="1">PLG_JLLIKEPRO_YES</option>
+				  <option value="0">PLG_JLLIKEPRO_NO</option>
+				</field>
 				<field name="addvk" type="radio" default="1" label="PLG_JLLIKE_ENABLE_VK" description="">
 				  <option value="0">PLG_JLLIKE_NO</option>
 				  <option value="1">PLG_JLLIKE_YES</option>

@@ -56,7 +56,9 @@ class plgContentjllike extends JPlugin
 				$pathbase = 'var pathbs = "http://'.$this->params->def('pathbase').'";';
 				$doc->addScriptDeclaration($pathbase);
 				
-				$doc->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js");
+				if ($this->params->def('jqload')==1) {
+					$doc->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js");
+				}
 				$doc->addScript("plugins/content/jllike/js/buttons.js?5");
 				$doc->addCustomTag('<script type="text/javascript">var jqlike = jQuery.noConflict();</script>');
 				//$doc->addScript("plugins/content/jllike/js/pioneers-scroll.js?5");
