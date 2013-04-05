@@ -264,7 +264,7 @@ var images = '';
 for(var i in this.images) {
 images += ('&p[images][' + i +']=' + encodeURIComponent(this.images[i]));
 }
-
+images=this.images;
 return 'http://www.facebook.com/sharer/sharer.php?'
 + 's=' + 100
 + '&p[url]=' + encodeURIComponent(this.linkToShare)
