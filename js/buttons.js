@@ -142,7 +142,8 @@ var
 href = this.$context.attr(this.config.keys.shareLinkParam),
 origin = pathbs; //w.location.origin || w.location.href.replace(w.location.pathname + w.location.search, '');
 
-this.domenhref = pathbs;
+//this.domenhref = pathbs;
+this.domenhref = w.location.href.replace(w.location.pathname + w.location.search, '');
 
 this.linkhref = w.location.href.replace(w.location.pathname + w.location.search, '') + href;
 this.linkToShare = href;
