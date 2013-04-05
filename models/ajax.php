@@ -14,7 +14,7 @@ $variant = $_POST['variant'];
 	$curl = $_POST['curl'];
 	$typeGet = $_POST['tpget'];
 if ($variant!='gp'){
-	if ($typeGet==0){$request = file_get_contents($curl);/*$msg='GET FILEGETCONTENT';*/}
+	if ($typeGet==0){$request = @file_get_contents($curl);/*$msg='GET FILEGETCONTENT';*/}
 		else {
 			$ch = curl_init($curl);
 			curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 6.1; ru-RU; rv:1.9.2) Gecko/20100115 AdCentriaIM/1.7 Firefox/3.6 GTB6 (.NET CLR 3.5.30729)");
