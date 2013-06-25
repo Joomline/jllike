@@ -1,4 +1,5 @@
-(function(jq, w, d, undefined) {
+jQuery.noConflict();
+(function($, w, d, undefined) {
     
 function getParam(key) {
 	if(key) {
@@ -37,7 +38,7 @@ function file_get_contents( url ) { // Reads entire file into a string
     
 var ButtonConfiguration = function(params) {
     if(params) {
-		return jq.extend(true, ButtonConfiguration.defaults, params)
+		return $.extend(true, ButtonConfiguration.defaults, params)
     }    
 return ButtonConfiguration.defaults;
 }
@@ -96,8 +97,8 @@ this.config = conf;
 this.index = index;
 
 this.$context = $context;
-this.$count = jq(this.config.selectors.count, this.$context);
-this.$ico = jq(this.config.selectors.ico, this.$context);
+this.$count = $(this.config.selectors.count, this.$context);
+this.$ico = $(this.config.selectors.ico, this.$context);
 
 this.collectShareInfo();
 this.bindEvents();
@@ -143,7 +144,8 @@ href = this.$context.attr(this.config.keys.shareLinkParam),
 origin = pathbs; //w.location.origin || w.location.href.replace(w.location.pathname + w.location.search, '');
 
 //this.domenhref = pathbs;
-this.domenhref = w.location.href.replace(w.location.pathname + w.location.search, '');
+//this.domenhref = w.location.href.replace(w.location.pathname + w.location.search, '');
+this.domenhref = w.location.protocol + "//" + w.location.host;
 
 this.linkhref = w.location.href.replace(w.location.pathname + w.location.search, '') + href;
 this.linkToShare = href;
@@ -155,9 +157,9 @@ this.linkToShare
 }
 
 var
-$title = jq(this.config.selectors.shareTitle, $parent),
-$summary = jq(this.config.selectors.shareSumary, $parent),
-$images = jq(this.config.selectors.shareImages, $parent);
+$title = $(this.config.selectors.shareTitle, $parent),
+$summary = $(this.config.selectors.shareSumary, $parent),
+$images = $(this.config.selectors.shareImages, $parent);
 
 this.title = $title.text();
 if(this.config.forceAlternativeTitle) {
@@ -214,7 +216,7 @@ $count: null,
 $ico: null
     };
     
-    Button = jq.extend(Button, {
+    Button = $.extend(Button, {
 /*@methods*/
 returnFalse: function(e) {
 return false;
@@ -232,7 +234,7 @@ this.type = 'facebook';
     };
     FacebookButton.prototype = new Button;
     FacebookButton.prototype
-= jq.extend(FacebookButton.prototype,
+= $.extend(FacebookButton.prototype,
     {
 /*@methods*/
 countLikes: function() {
@@ -240,7 +242,7 @@ var
 serviceURI = this.getCountLink(this.linkToShare),
 execContext = this;
 
-return jq.ajax({
+return $.ajax({
 url: serviceURI,
 dataType: 'jsonp',
 success: function(data, status, jqXHR) {
@@ -285,7 +287,7 @@ this.type = 'twitter';
     };
     TwitterButton.prototype = new Button;
     TwitterButton.prototype
-= jq.extend(TwitterButton.prototype,
+= $.extend(TwitterButton.prototype,
     {
 /*@methods*/
 countLikes: function() {
@@ -293,7 +295,7 @@ var
 serviceURI = this.getCountLink(this.linkToShare),
 execContext = this;
 
-return jq.ajax({
+return $.ajax({
 url: serviceURI,
 dataType: 'jsonp',
 success: function(data, status, jqXHR) {
@@ -322,7 +324,7 @@ this.type = 'vkontakte';
     };
     VkontakteButton.prototype = new Button;
     VkontakteButton.prototype
-= jq.extend(VkontakteButton.prototype,
+= $.extend(VkontakteButton.prototype,
     {
 /*@methods*/
 countLikes: function() {
@@ -330,7 +332,7 @@ var serviceURI = this.getCountLink(this.linkToShare) + '&index=' + this.index;
 
 w.socialButtonCountObjects[this.index] = this;
 
-return jq.ajax({
+return $.ajax({
 url: serviceURI,
 dataType: 'jsonp'
 });
@@ -389,7 +391,7 @@ this.type = 'odnoklassniki';
     };
     odnoklassnikiButton.prototype = new Button;
     odnoklassnikiButton.prototype
-= jq.extend(odnoklassnikiButton.prototype,
+= $.extend(odnoklassnikiButton.prototype,
     {
 /*@methods*/
 
@@ -397,7 +399,7 @@ countLikes: function() {
 var serviceURI = "http://www.odnoklassniki.ru/dk?st.cmd=extOneClickLike&uid=odklocs0&ref=" + this.linkhref;//encodeURIComponent(this.linkhref);
 //alert(serviceURI);
 execOd = this;
-return jq.post(this.domenhref + '/plugins/content/jllike/models/ajax.php',{curl:serviceURI,variant:'od',tpget:typeGet}, function(data){
+return $.post(this.domenhref + '/plugins/content/jllike/models/ajax.php',{curl:serviceURI,variant:'od',tpget:typeGet}, function(data){
 	if (data!=0) {
 		execOd.setCountValue(data);
 	}
@@ -422,7 +424,7 @@ this.type = 'gplusButton';
     };
     gplusButton.prototype = new Button;
     gplusButton.prototype
-= jq.extend(gplusButton.prototype,
+= $.extend(gplusButton.prototype,
     {
 /*@methods*/
 
@@ -431,7 +433,7 @@ countLikes: function() {
 serviceURI = this.linkhref;//encodeURIComponent(this.linkhref);
 //alert(serviceURI);
 execGP = this;
-return jq.post(this.domenhref + '/plugins/content/jllike/models/ajax.php',{curl:serviceURI,variant:'gp',tpget:typeGet}, function(data){
+return $.post(this.domenhref + '/plugins/content/jllike/models/ajax.php',{curl:serviceURI,variant:'gp',tpget:typeGet}, function(data){
 	if (data!=0) {
 		execGP.setCountValue(data);
 	}
@@ -458,12 +460,12 @@ countServiceUrl: 'https://plusone.google.com/_/+1/fastbutton?url='
  
     
 
-    jq.fn.socialButton = function(config) {
+    $.fn.socialButton = function(config) {
 	
 this.each(function(index, element) {
 setTimeout(function() {
 var
-$element = jq(element),
+$element = $(element),
 conf = new ButtonConfiguration(config),
 b = false;
 
@@ -481,7 +483,7 @@ b = new odnoklassnikiButton($element, conf, Button.lastIndex);
 b = new gplusButton($element, conf, Button.lastIndex);
 }
 
-jq
+$
 .when(b.ajaxRequest)
 .then(
 function() {
@@ -497,14 +499,14 @@ $element.trigger('socialButton.done', [b.type]);
 return this;
     };
     
-    jq.scrollToButton = function(hashParam, duration) {
+    $.scrollToButton = function(hashParam, duration) {
 if(!w.location.hash) {
 if(w.location.search) {
 var currentHash = getParam(hashParam);
 if(currentHash) {
-var $to = jq('#' + currentHash);
+var $to = $('#' + currentHash);
 if($to.length > 0) {
-jq('html,body')
+$('html,body')
 .animate({
 scrollTop: $to.offset().top,
 scrollLeft: $to.offset().left
@@ -518,3 +520,7 @@ return this;
     };
         
 })(jQuery, window, document);
+
+	jQuery(document).ready(function($) {
+		$('.like').socialButton();
+	});
