@@ -2,7 +2,7 @@
     line-height:24px;
     height:24px;
     text-align:left;
-		padding:15px 0 5px;
+		padding:15px 12px 5px;
  
 }
  
@@ -28,7 +28,7 @@
     height:24px;
     position:absolute;
     top:0;
-    left:0px;
+    left:-12px;
     background-image:url("./images/likes-ico.png");
     background-repeat:no-repeat;
 }
