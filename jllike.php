@@ -49,7 +49,7 @@ class plgContentjllike extends JPlugin
 			$view = JRequest::getCmd('view');
 			if ($view == 'article') {
 
-				$doc = &JFactory::getDocument();
+				$doc = JFactory::getDocument();
 				$uri = JURI::getInstance();
 				$base = $uri->toString(array('scheme', 'host', 'port'));
 				$article_url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catid, $article->catslug));
