@@ -29,13 +29,14 @@ if ($variant!='gp'){
 }
 
 		switch ($variant) {
-			case 'od': $pattern = "/^ODKL.updateCountOC\('[\d\w]+','(\d+)','(\d+)','(\d+)'\);$/i";break;
+			case 'od': $pattern = "/({\"status\":\"noauth\",\"count\":\"(\d+)\"})/us";break;
 			//case 'gp': $pattern = "/\<div id\=\"aggregateCount\" class\=\"V1\"\>(\d+)\<\/div\>/i";break;			
 			case 'gp': $count = get_plusones($curl); echo $count; break;
 		}	
 		if ($variant!='gp'){		
 			preg_match($pattern,$request,$tmp);
 			if (isset($tmp[1])) {echo $tmp[1];}
+				elseif ($variant=='od') {if (isset($tmp[2])) {echo $tmp[2];}}
 		}
 		
 function get_plusones($url) {

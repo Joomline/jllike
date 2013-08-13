@@ -256,8 +256,7 @@ execContext.setCountValue(data[0].share_count)
 },
 
 getCountLink: function(url) {
-var fql = 'SELECT share_count FROM link_stat WHERE url="' + url + '"';
-return this.countServiceUrl + encodeURIComponent(fql);
+return this.countServiceUrl + encodeURIComponent(url) + '%27&format=json';
 },
 
 getShareLink: function() {
@@ -267,17 +266,14 @@ for(var i in this.images) {
 images += ('&p[images][' + i +']=' + encodeURIComponent(this.images[i]));
 }
 images=this.images;
-return 'http://www.facebook.com/sharer/sharer.php?'
-+ 's=' + 100
-+ '&p[url]=' + encodeURIComponent(this.linkToShare)
-+ (this.summary ? '&p[summary]=' + encodeURIComponent(this.summary) : '')
-+ '&p[title]=' + encodeURIComponent(this.title)
-+ (images ? images : '');
+return 'http://www.facebook.com/sharer/sharer.php'
++ '?src=sp&u=' + encodeURIComponent(this.linkToShare)
++ '&p[title]=' + encodeURIComponent(this.title);
 },
 
 /*@properties*/
-countServiceUrl: 'https://api.facebook.com/method/fql.query?format=json&query='
-    });
+countServiceUrl: 'https://api.facebook.com/method/fql.query?query=select%20total_count,like_count,comment_count,share_count,click_count%20from%20link_stat%20where%20url=%27'
+});
     
     
     
