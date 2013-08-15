@@ -148,6 +148,7 @@ origin = pathbs; //w.location.origin || w.location.href.replace(w.location.pathn
 this.domenhref = w.location.protocol + "//" + w.location.host;
 
 this.linkhref = w.location.href.replace(w.location.pathname + w.location.search, '') + href;
+//this.linkhref = pathbs+w.location.pathname+ w.location.search;
 this.linkToShare = href;
 if(!href) {
 href = w.location.origin + w.location.pathname;
@@ -155,7 +156,7 @@ href = w.location.origin + w.location.pathname;
 this.linkToShare
 = (href[0] == '/' ? origin + href : w.location.origin + w.location.pathname + href);
 }
-
+this.linkToShare=this.linkhref;
 var
 $title = $(this.config.selectors.shareTitle, $parent),
 $summary = $(this.config.selectors.shareSumary, $parent),
