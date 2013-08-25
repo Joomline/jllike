@@ -35,8 +35,8 @@ if ($variant!='gp'){
 		}	
 		if ($variant!='gp'){		
 			preg_match($pattern,$request,$tmp);
-			if (isset($tmp[1])) {echo $tmp[1];}
-				elseif ($variant=='od') {if (isset($tmp[2])) {echo $tmp[2];}}
+			//if (isset($tmp[1])) {echo $tmp[1];}
+				if ($variant=='od') {if (isset($tmp[2])) {echo $tmp[2];}}
 		}
 		
 function get_plusones($url) {

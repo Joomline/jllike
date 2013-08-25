@@ -421,7 +421,9 @@ this.type = 'odnoklassniki';
 /*@methods*/
 
 countLikes: function() {
-var serviceURI = "http://www.odnoklassniki.ru/dk?st.cmd=extOneClickLike&uid=odklocs0&ref=" + this.linkhref;//encodeURIComponent(this.linkhref);
+//var serviceURI = "http://www.odnoklassniki.ru/dk?st.cmd=extOneClickLike&uid=odklocs0&ref=" + this.linkhref;
+var serviceURI = "http://www.odnoklassniki.ru/dk?st.cmd=shareData&ref=" + this.linkhref + "&cb=?";
+//encodeURIComponent(this.linkhref);
 //alert(serviceURI);
 execOd = this;
 return $.post(this.domenhref + '/plugins/content/jllike/models/ajax.php',{curl:serviceURI,variant:'od',tpget:typeGet}, function(data){
