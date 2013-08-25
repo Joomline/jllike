@@ -75,7 +75,7 @@ class plgContentjllike extends JPlugin
 HTML;
 				if ($this->params->def('addfacebook')) {
 		 		$scriptPage .= <<<HTML
-					<a title="$titlefc" class="like l-fb">
+					<a title="$titlefc" href="$article_url" class="like l-fb">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
@@ -83,7 +83,7 @@ HTML;
 }			
 			if ($this->params->def('addvk')) {
 				$scriptPage .= <<<HTML
-					<a title="$titlevk" class="like l-vk">
+					<a title="$titlevk" href="$article_url" class="like l-vk">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
@@ -91,7 +91,7 @@ HTML;
 }			
 			if ($this->params->def('addtw')) {
 				$scriptPage .= <<<HTML
-					<a title="$titletw" class="like l-tw">
+					<a title="$titletw" href="$article_url" class="like l-tw">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
@@ -99,7 +99,7 @@ HTML;
 }	
 			if ($this->params->def('addod')) {		
 				$scriptPage .= <<<HTML
-					<a title="$titleod" class="like l-ok">
+					<a title="$titleod" href="$article_url" class="like l-ok">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
@@ -107,7 +107,7 @@ HTML;
 }
 			if ($this->params->def('addgp')) {
 				$scriptPage .= <<<HTML
-					<a title="$titlegg" class="like l-gp">
+					<a title="$titlegg" href="$article_url" class="like l-gp">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
