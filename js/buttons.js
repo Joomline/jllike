@@ -326,32 +326,7 @@ this.type = 'vkontakte';
 /*@methods*/
 countLikes: function() {
 var serviceURI = this.getCountLink(this.linkToShare) + '&index=' + this.index;
-
-w.socialButtonCountObjects[this.index] = this;
-
-return $.ajax({
-url: serviceURI,
-dataType: 'jsonp'
-});
-},
-
-getShareLink: function() {
-return 'http://vkontakte.ru/share.php?'
-+ 'url=' + encodeURIComponent(this.linkToShare)
-+ (this.summary ? '&description=' + encodeURIComponent(this.summary) : '')
-+ '&title=' + encodeURIComponent(this.title)
-+ '&image=' + encodeURIComponent(this.images[0]);
-},
-
-/*@properties*/
-countServiceUrl: 'http://vkontakte.ru/share.php?act=count&url='
-    });
-	
-	
-	
-	
-	   // костыль для Вконтакте
-    w.socialButtonCountObjects = {};
+w.socialButtonCountObjects = {};
     
     function vkShare(index, count) {
 var button = w.socialButtonCountObjects[index];
@@ -377,8 +352,61 @@ vkShare(index, count);
 originalVkCount.call(w.VK.Share, index, count);
 };
     }
+
+
+w.socialButtonCountObjects[this.index] = this;
+
+
+
+return $.ajax({
+url: serviceURI,
+dataType: 'jsonp'
+});
+},
+
+getShareLink: function() {
+return 'http://vkontakte.ru/share.php?'
++ 'url=' + encodeURIComponent(this.linkToShare)
++ (this.summary ? '&description=' + encodeURIComponent(this.summary) : '')
++ '&title=' + encodeURIComponent(this.title)
++ '&image=' + encodeURIComponent(this.images[0]);
+},
+
+/*@properties*/
+countServiceUrl: 'http://vkontakte.ru/share.php?act=count&url='
+    });
 	
 	
+	
+	
+	   // костыль для Вконтакте
+   /* w.socialButtonCountObjects = {};
+    
+    function vkShare(index, count) {
+var button = w.socialButtonCountObjects[index];
+if(count > 0) {
+button.setCountValue(count);
+}
+delete w.socialButtonCountObjects[index];
+    }
+    
+    if(!w.VK) {
+w.VK = {
+Share: {
+count: function(index, count) {
+vkShare(index, count);
+}
+}
+}
+    } else {
+var originalVkCount = w.VK.Share.count;
+
+w.VK.Share.count = function(index, count) {
+vkShare(index, count);
+originalVkCount.call(w.VK.Share, index, count);
+};
+    }
+	*/
 	
 	
 // +++++++++	   
