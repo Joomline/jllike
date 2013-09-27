@@ -336,7 +336,7 @@ button.setCountValue(count);
 delete w.socialButtonCountObjects[index];
     }
     
-    if(!w.VK) {
+    if (!w.VK || !w.VK.Share) {
 w.VK = {
 Share: {
 count: function(index, count) {
