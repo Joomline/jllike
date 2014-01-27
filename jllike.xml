@@ -1,68 +1,257 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" type="plugin" group="content" method="upgrade">
-	<name>JoomLine Like</name>
-	<author>JoomLine</author>
-	<creationDate>Mar 2012</creationDate>
-	<copyright>(C) 2012 by Vadim Kunicin(http://www.joomline.ru)</copyright>
-	<license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
-	<authorEmail>vadim@joomline.ru</authorEmail>
-	<authorUrl>http://joomline.ru</authorUrl>
-	<version>1.4.4</version>
-	<description>PLG_JLLIKE_DES1</description>
-	<files>
-
-		<folder>js</folder>
-		<folder>models</folder>
-		<filename plugin="jllike">jllike.php</filename>
+    <name>JoomLine Like</name>
+    <author>JoomLine</author>
+    <creationDate>01.2014</creationDate>
+    <copyright>(C) 2012-2014 by Artem Zhukov, Arkadiy Sedelnikov and Vadim Kunicin(http://www.joomline.ru)</copyright>
+    <license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
+    <authorEmail>sale@joomline.ru</authorEmail>
+    <authorUrl>http://joomline.ru</authorUrl>
+    <version>2.0</version>
+    <description>PLG_JLLIKE_DESC_ALL</description>
+    <files>
+        <folder>js</folder>
+        <folder>models</folder>
+        <filename plugin="jllike">jllike.php</filename>
+        <filename>helper.php</filename>
 		<filename>index.html</filename>
-	</files>
-	<languages folder="language">
-		<language tag="en-GB">en-GB/en-GB.plg_content_jllike.ini</language>
-		<language tag="ru-RU">ru-RU/ru-RU.plg_content_jllike.ini</language>
-		<language tag="uk-UA">uk-UA/uk-UA.plg_content_jllike.ini</language>
-	</languages>
-	<config>
-		<fields name="params">
-			<fieldset name="basic">
-				<field name="autoAdd" type="radio" default="0" label="PLG_JLLIKE_AUTOADD_LABEL" description="PLG_JLLIKE_AUTOADD_DESC">
-				  <option value="0">PLG_JLLIKE_NO</option>
-				  <option value="1">PLG_JLLIKE_YES</option>
-				</field>
-				<field name="categories" type="category" extension='com_content' default="0" multiple="multiple"
-						label="PLG_JLLIKE_EXCLUDE_CATEGORY_LABEL"
-						description="PLG_JLLIKE_EXCLUDE_CATEGORY_DESC"/>
-				<field name="pathbase" type="text" label="PLG_JLLIKE_PRIORITE_DOMEN_LABEL" default="0" description="PLG_JLLIKE_PRIORITE_DOMEN_DESC"/>
-				<field name="jqload" type="radio" default="1" label="PLG_JLLIKEPRO_JQLOAD_LABEL" description="PLG_JLLIKEPRO_JQLOAD_DESC">
-				  <option value="1">PLG_JLLIKE_YES</option>
-				  <option value="0">PLG_JLLIKE_NO</option>
-				</field>
-				<field name="typesget" type="list" default="0" label="PLG_JLLIKEPRO_TYPESGET_LABEL" description="PLG_JLLIKEPRO_TYPESGET_DESC">
-				  <option value="0">PLG_JLLIKEPRO_FILEGET</option>
-				  <option value="1">PLG_JLLIKEPRO_CURL</option>
-				</field>
-				<field name="addfacebook" type="radio" default="1" label="PLG_JLLIKE_ENABLE_FC" description="">
-				  <option value="0">PLG_JLLIKE_NO</option>
-				  <option value="1">PLG_JLLIKE_YES</option>
-				</field>				
-				<field name="addvk" type="radio" default="1" label="PLG_JLLIKE_ENABLE_VK" description="">
-				  <option value="0">PLG_JLLIKE_NO</option>
-				  <option value="1">PLG_JLLIKE_YES</option>
-				</field>
-				<field name="addtw" type="radio" default="1" label="PLG_JLLIKE_ENABLE_TW" description="">
-				  <option value="0">PLG_JLLIKE_NO</option>
-				  <option value="1">PLG_JLLIKE_YES</option>
-				</field>
-				<field name="addod" type="radio" default="1" label="PLG_JLLIKE_ENABLE_OD" description="">
-				  <option value="0">PLG_JLLIKE_NO</option>
-				  <option value="1">PLG_JLLIKE_YES</option>
-				</field>
-				<field name="addgp" type="radio" default="1" label="PLG_JLLIKE_ENABLE_GG" description="">
-				  <option value="0">PLG_JLLIKE_NO</option>
-				  <option value="1">PLG_JLLIKE_YES</option>
-				</field>
-				
-			</fieldset>
-		</fields>
-	</config>
+    </files>
+
+    <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.plg_content_jllike.ini</language>
+		<language tag="en-GB">en-GB/en-GB.plg_content_jllike.sys.ini</language>
+        <language tag="ru-RU">ru-RU/ru-RU.plg_content_jllike.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.plg_content_jllike.sys.ini</language>
+    </languages>
+    <config>
+        <fields
+                name="params">
+            <fieldset
+                    label="PLG_JLLIKEPRO_PROVIDERS"
+                    name="providers"
+                    >
+                <field
+                        name="addfacebook"
+                        type="radio"
+                        default="1"
+                        label="PLG_JLLIKEPRO_ENABLE_FC"
+                        description=""
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="addvk"
+                        type="radio"
+                        default="1"
+                        label="PLG_JLLIKEPRO_ENABLE_VK"
+                        description=""
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="addtw"
+                        type="radio"
+                        default="1"
+                        label="PLG_JLLIKEPRO_ENABLE_TW"
+                        description=""
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="addod"
+                        type="radio"
+                        default="1"
+                        label="PLG_JLLIKEPRO_ENABLE_OD"
+                        description=""
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="addgp"
+                        type="radio" default="1"
+                        label="PLG_JLLIKEPRO_ENABLE_GG"
+                        description=""
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="addmail"
+                        type="radio"
+                        default="1"
+                        label="PLG_JLLIKEPRO_ENABLE_MM"
+                        description=""
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="addlin"
+                        type="radio"
+                        default="1"
+                        label="PLG_JLLIKEPRO_ENABLE_LI"
+                        description=""
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field name="addya"
+                       type="radio"
+                       default="1"
+                       label="PLG_JLLIKEPRO_ENABLE_YA"
+                       description=""
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field name="addpi"
+                       type="radio"
+                       default="1"
+                       label="PLG_JLLIKEPRO_ENABLE_PI"
+                       description=""
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+            </fieldset>
+            <fieldset
+                    name="basic"
+                    >
+                <field
+                        name="jqload"
+                        type="radio"
+                        default="1"
+                        label="PLG_JLLIKEPRO_JQLOAD_LABEL"
+                        description="PLG_JLLIKEPRO_JQLOAD_DESC"
+                        >
+					<option value="0">PLG_JLLIKEPRO_NO</option>	
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="jqloadcont"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_JQLOADC_LABEL"
+                        description="PLG_JLLIKEPRO_JQLOADC_DESC">                    
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+					<option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="load_libs"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_LOADLIBS_LABEL"
+                        description="PLG_JLLIKEPRO_LOADLIBS_DESC"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_SEC1</option>
+                    <option value="1">PLG_JLLIKEPRO_SEC2</option>
+                </field>
+                <field
+                        name="autoAdd"
+                        type="radio" default="1"
+                        label="PLG_JLLIKEPRO_AUTOADD_LABEL"
+                        description="PLG_JLLIKEPRO_AUTOADD_DESC"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="position_content"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_POSITION_LABEL"
+                        description="PLG_JLLIKEPRO_POSITION_DESC"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_LEFT</option>
+                    <option value="1">PLG_JLLIKEPRO_RIGHT</option>
+                </field>
+                <field
+                        name="shares_position"
+                        type="list"
+                        default="1"
+                        label="PLG_JLLIKEPRO_LOAD_SHARES"
+                        description="PLG_JLLIKEPRO_LOAD_SHARES_DESC"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_TOP</option>
+                    <option value="1">PLG_JLLIKEPRO_BOTTOM</option>
+                </field>
+                <field
+                        name="allow_in_category"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_ALLOW_IN_CAT"
+                        description="PLG_JLLIKEPRO_ALLOW_IN_CAT_DESC"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="typesget"
+                        type="list"
+                        default="0"
+                        label="PLG_JLLIKEPRO_TYPESGET_LABEL"
+                        description="PLG_JLLIKEPRO_TYPESGET_DESC"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_FILEGET</option>
+                    <option value="1">PLG_JLLIKEPRO_CURL</option>
+                </field>
+                <field
+                        name="pathbase"
+                        type="list"
+                        default=""
+                        label="PLG_JLLIKEPRO_PRIORITE_DOMEN_LABEL"
+                        description="PLG_JLLIKEPRO_PRIORITE_DOMEN_DESC"
+                        >
+                    <option value="">PLG_JLLIKEPRO_WITHOUT_WWW</option>
+                    <option value="www.">PLG_JLLIKEPRO__WITH_WWW</option>
+                </field>
+                <field
+                        name="buttons_contayner"
+                        type="text"
+                        default=""
+                        label="PLG_JLLIKEPRO_METKAVM_LABEL"
+                        description="PLG_JLLIKEPRO_METKAVM_DESC"
+                        />
+                <field
+                        name="punycode_convert"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_PUNYCODDE_CONVERT"
+                        description="PLG_JLLIKEPRO_PUNYCODDE_CONVERT_DESC"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+            </fieldset>
+            <fieldset
+                    label="PLG_JLLIKEPRO_SETTINGS_CONTENT"
+                    name="content"
+                    >
+                <field
+                        name="categories"
+                        type="category"
+                        extension='com_content'
+                        default="0"
+                        multiple="multiple"
+                        label="PLG_JLLIKEPRO_EXCLUDE_CATEGORY_LABEL"
+                        description="PLG_JLLIKEPRO_EXCLUDE_CATEGORY_DESC"
+                        />
+                <field
+                        name="content_images"
+                        type="list"
+                        default="fields"
+                        label="PLG_JLLIKEPRO_IMAGES"
+                        description="PLG_JLLIKEPRO_IMAGES_DESC"
+                        >
+                    <option value="fields">PLG_JLLIKEPRO_FROM_FIELDS</option>
+                    <option value="text">PLG_JLLIKEPRO_FROM_TEXT</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
 <updateservers><server type="extension" priority="1" name="Joomline">http://joomline.net/index.php?option=com_ars&amp;view=update&amp;task=stream&amp;format=xml&amp;id=3&amp;dummy=extension.xml</server></updateservers>
 </extension>

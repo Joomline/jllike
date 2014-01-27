@@ -2,10 +2,10 @@
 /**
  * jllike
  *
- * @version 1.2
- * @author Vadim Kunicin (vadim@joomline.ru)
- * @copyright (C) 2012 by Vadim Kunicin (http://www.joomline.ru)
- * @license GNU/GPL: http://www.gnu.org/copyleft/gpl.html
+ * @version 2.0
+ * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
+ * @copyright (C) 2010-2013 by Vadim Kunicin (http://www.joomline.ru)
+ * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 
 // no direct access
@@ -13,132 +13,160 @@ defined('_JEXEC') or die;
 
 jimport('joomla.plugin.plugin');
 
+require_once JPATH_ROOT.'/plugins/content/jllike/helper.php';
+
 class plgContentjllike extends JPlugin
 {
-/*
-    private $_networks;
-    private $_url;
-    private $_result = null;
+    public function onContentPrepare($context, &$article, &$params, $page = 0)
+    {
 
-    function __construct ($url,$networks = null) {
-        $this->_networks = ($networks!=null)?$networks:$this->_getAllSocials();
-        $this->_url = urlencode($url);
-    }*/
-	
+        $allowContext = array( 'com_content.article');
 
-	
+        $allow_in_category = $this->params->get('allow_in_category', 0);
+
+        if($allow_in_category)
+        {
+            $allowContext[] = 'com_content.category';
+        }
+
+        if(!in_array($context, $allowContext)){
+            return true;
+        }
+
+        if (strpos($article->text, '{jllike-off}') !== false) {
+            $article->text = str_replace("{jllike-off}", "", $article->text);
+            return true;
+        }
+
+        $autoAdd = $this->params->get('autoAdd',0);
+        $sharePos = (int)$this->params->get('shares_position', 1);
+        $option = JRequest::getCmd('option');
+        $helper = PlgJLLikeHelper::getInstance($this->params);
+
+        if (strpos($article->text, '{jllike}') === false && !$autoAdd)
+        {
+            return true;
+        }
+
+        if (!isset($article->catid))
+        {
+            $article->catid = '';
+        }
+
+        $print = JRequest::getInt('print', 0);
+
+        $url = 'http://' . $this->params->get('pathbase', '') . str_replace('www.', '', $_SERVER['HTTP_HOST']);
+
+        if($this->params->get('punycode_convert',0))
+        {
+            $file = JPATH_ROOT.'/libraries/idna_convert/idna_convert.class.php';
+            if(!JFile::exists($file))
+            {
+                return JText::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
+            }
+
+            include_once $file;
+
+            if($url)
+            {
+                if (class_exists('idna_convert'))
+                {
+                    $idn = new idna_convert;
+                    $url = $idn->encode($url);
+                }
+            }
+        }
+
+        switch ($option) {
+            case 'com_content':
+
+                if(!$article->id)
+                {
+                    //если категория, то завершаем
+                    return true;
+                }
+
+                if($print)
+                {
+                    $article->text = str_replace("{jllike}", "", $article->text);
+                    return true;
+                }
+
+                $cat = $this->params->get('categories', array());
+                $exceptcat = is_array($cat) ? $cat : array($cat);
+
+                if (in_array($article->catid, $exceptcat))
+                {
+                    $article->text = str_replace("{jllike}", "", $article->text);
+                    return true;
+                }
 
 
-	public function onContentPrepare($context, &$article, &$params, $page = 0){
-		if($context == 'com_content.article'){
-		JPlugin::loadLanguage( 'plg_content_jllike' );
-		if (strpos($article->text, '{jllike-off}') !== false) {
-			$article->text = str_replace("{jllike-off}","",$article->text);
-			return true;
-		}
+                include_once JPATH_ROOT.'/components/com_content/helpers/route.php';
+                $link = $url . JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catid));
 
-		if (strpos($article->text, '{jllike}') === false && !$this->params->def('autoAdd')) {
-			//return true;
-		}
-		if (!isset($article->catid)) {
-			$article->catid='';	
-		}
-		$exceptcat = is_array($this->params->def('categories')) ? $this->params->def('categories') : array($this->params->def('categories'));
-		
-		if (!in_array($article->catid,$exceptcat)) {
-			$view = JRequest::getCmd('view');
-			if ($view == 'article') {
+                $image = '';
+                if($this->params->get('content_images', 'fields') == 'fields')
+                {
+                    $images = json_decode($article->images);
 
-				$doc = JFactory::getDocument();
-				$uri = JURI::getInstance();
-				$base = $uri->toString(array('scheme', 'host', 'port'));
-				$article_url = JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catid, $article->catslug));
-				$pathbase = 'var pathbs = "http://'.$this->params->def('pathbase').'";var typeGet="'.$this->params->def('typesget').'";';
-				$doc->addScriptDeclaration($pathbase);
-				
-				if ($this->params->def('jqload')==1) {
-					$doc->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js");
-				}
-				$doc->addScript("plugins/content/jllike/js/buttons.js?5");
-				$doc->addStyleSheet("plugins/content/jllike/js/buttons.css");
-	
-				$titlefc = JText::_( 'PLG_JLLIKE_TITLE_FC' );
-				$titlevk = JText::_( 'PLG_JLLIKE_TITLE_VK' );
-				$titletw = JText::_( 'PLG_JLLIKE_TITLE_TW' );
-				$titleod = JText::_( 'PLG_JLLIKE_TITLE_OD' );
-				$titlegg = JText::_( 'PLG_JLLIKE_TITLE_GG' );
-				
-				$pagehash = $article->id;
-				$scriptPage = <<<HTML
-				<div class="event-container" >
-				<div class="likes-block">
-HTML;
-				if ($this->params->def('addfacebook')) {
-		 		$scriptPage .= <<<HTML
-					<a title="$titlefc" href="$article_url" class="like l-fb">
-					<i class="l-ico"></i>
-					<span class="l-count"></span>
-					</a>
-HTML;
-}			
-			if ($this->params->def('addvk')) {
-				$scriptPage .= <<<HTML
-					<a title="$titlevk" href="$article_url" class="like l-vk">
-					<i class="l-ico"></i>
-					<span class="l-count"></span>
-					</a>
-HTML;
-}			
-			if ($this->params->def('addtw')) {
-				$scriptPage .= <<<HTML
-					<a title="$titletw" href="$article_url" class="like l-tw">
-					<i class="l-ico"></i>
-					<span class="l-count"></span>
-					</a>
-HTML;
-}	
-			if ($this->params->def('addod')) {		
-				$scriptPage .= <<<HTML
-					<a title="$titleod" href="$article_url" class="like l-ok">
-					<i class="l-ico"></i>
-					<span class="l-count"></span>
-					</a>
-HTML;
-}
-			if ($this->params->def('addgp')) {
-				$scriptPage .= <<<HTML
-					<a title="$titlegg" href="$article_url" class="like l-gp">
-					<i class="l-ico"></i>
-					<span class="l-count"></span>
-					</a>
-HTML;
-}
-				$scriptPage .= <<<HTML
-				</div>
-				</div>
-				<div style="text-align: left;">
-					<a style="text-decoration:none; color: #c0c0c0; font-family: arial,helvetica,sans-serif; font-size: 5pt; " target="_blank" href="http://joomline.ru/rasshirenija/plugin/jllike.html">Social Like</a>
-				</div>
-					
-HTML;
+                    if(!empty($images->image_intro))
+                    {
+                        $image = $images->image_intro;
+                    }
+                    else if(!empty($images->image_fulltext))
+                    {
+                        $image = $images->image_fulltext;
+                    }
 
-				
-				if ($this->params->def('autoAdd') == 1) {
-					$article->text .= $scriptPage;
-				} else {
-					$article->text = str_replace("{jllike}",$scriptPage,$article->text);
-				}
+                    if(!empty($image))
+                    {
+                        $image = JURI::root().$image;
+                    }
+                }
+                else
+                {
+                    $image = PlgJLLikeHelper::extractImageFromText($article->introtext, $article->fulltext);
+                }
 
-			}
-		} else {
-			$article->text = str_replace("{jllike}","",$article->text);
-		}
+                $shares = $helper->ShowIN($article->id, $link, $article->title, $image);
 
-	
+                if ($context == 'com_content.article')
+                {
 
-	}
-}
+                    $view = JRequest::getCmd('view');
+                    if ($view == 'article')
+                    {
+                        if ($autoAdd == 1 || strpos($article->text, '{jllike}') == true)
+                        {
+                            $helper->loadScriptAndStyle(0);
 
-	
-	
+                            PlgJLLikeHelper::addOpenGraphTags($article->title, $article->text, $image);
+
+                            switch($sharePos)
+                            {
+                                case 0:
+                                    $article->text = $shares . str_replace("{jllike}", "", $article->text);
+                                    break;
+                                default:
+                                    $article->text = str_replace("{jllike}", "", $article->text) . $shares;
+                                    break;
+                            }
+                        }
+                    }
+                }
+                else if ($context == 'com_content.category')
+                {
+                    if ($autoAdd == 1 || strpos($article->text, '{jllike}') == true)
+                    {
+                        $helper->loadScriptAndStyle(1);
+                        $article->text = str_replace("{jllike}", "", $article->text) . $shares;
+                    }
+                }
+                break;
+ 
+            default:
+                break;
+        }
+    }
 }

@@ -2,8 +2,29 @@
     line-height:24px;
     height:24px;
     text-align:left;
-		padding:15px 12px 5px;
+	padding:15px 0 5px;
  
+}
+.likes-block_left {
+    line-height:24px;
+    height:24px;
+    text-align:left;
+	padding:15px 0 5px;
+	text-align:left;
+ 
+}
+.likes-block_right {
+    line-height:24px;
+    height:24px;
+    text-align:right;
+	padding:15px 0 5px;
+	text-align:right;
+ 
+}
+
+.event-container {
+    padding-left: 10px;
+    padding-right: 10px;
 }
  
 .like {
@@ -52,7 +73,22 @@
 .l-gp .l-ico {
     background-position:-116px 0;
 }
- 
+
+.l-ml .l-ico {
+    background-position:-145px 0;
+}
+
+.l-ya .l-ico {
+    background-position:-174px 0;
+}
+
+.l-ln .l-ico {
+    background-position:-203px 0;
+}
+
+.l-pinteres .l-ico {
+    background-position:-290px 0;
+} 
  
  
 .l-fb:hover .l-ico {
@@ -74,6 +110,22 @@
 .l-gp:hover .l-ico {
     background-position:-116px -48px;
 }
+
+.l-ml:hover .l-ico {
+    background-position:-145px -48px;
+}
+
+.l-ya:hover .l-ico {
+    background-position:-174px -48px;
+}
+
+.l-ln:hover .l-ico {
+    background-position:-203px -48px;
+}
+
+.l-pinteres:hover .l-ico {
+    background-position:-290px -48px;
+}
  
 .like .l-count {
     vertical-align:middle;
@@ -89,4 +141,5 @@
  
 a.like {
     text-decoration: none;
+    cursor: pointer;
 }
