@@ -481,7 +481,7 @@ jQuery.noConflict();
             {
                 serviceURI = this.linkToShare;
                 var id = this.id;
-                return $.post(this.domenhref + '/plugins/content/jllikepro/models/ajax.php', {curl: serviceURI, variant: 'gp', tpget: jllickeproSettings.typeGet}, function (data) {
+                return $.post(this.domenhref + '/plugins/content/jllike/models/ajax.php', {curl: serviceURI, variant: 'gp', tpget: jllickeproSettings.typeGet}, function (data) {
                     if (data != 0) {
                         var elem = $('#'+id);
                         elem.addClass('like-not-empty');
@@ -622,7 +622,7 @@ jQuery.noConflict();
             {
                 serviceURI = 'http://wow.ya.ru/ajax/share-counter.xml?url=' + this.linkToShare;//encodeURIComponent(this.linkToShare);
                 var id = this.id;
-                return $.post(this.domenhref + '/plugins/content/jllikepro/models/ajax.php', {curl: serviceURI, variant: 'ya', tpget: jllickeproSettings.typeGet}, function (data) {
+                return $.post(this.domenhref + '/plugins/content/jllike/models/ajax.php', {curl: serviceURI, variant: 'ya', tpget: jllickeproSettings.typeGet}, function (data) {
                     if (data != 0) {
                         var elem = $('#'+id);
                         elem.addClass('like-not-empty');
