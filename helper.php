@@ -2,9 +2,9 @@
 /**
  * jllike
  *
- * @version 2.0
+ * @version 2.1
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2010-2013 by Vadim Kunicin (http://www.joomline.ru)
+ * @copyright (C) 2010-2015 by Vadim Kunicin (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 defined('_JEXEC') or die;
@@ -17,15 +17,8 @@ class PlgJLLikeHelper
 
     protected static $instance = null;
 
-    /**
-     * Кнопки шары
-     * @param $id не нужный параметр, на будущее
-     * @return string
-     */
     function ShowIn($id, $link='', $title='', $image='')
     {
-        JPlugin::loadLanguage('plg_content_jllike');
-
         $position_content = $this->params->get('position_content', 0);
 
         if ($position_content == 1)
@@ -49,16 +42,23 @@ class PlgJLLikeHelper
         $titlegg = JText::_('PLG_JLLIKEPRO_TITLE_GG');
         $titlemm = JText::_('PLG_JLLIKEPRO_TITLE_MM');
         $titleli = JText::_('PLG_JLLIKEPRO_TITLE_LI');
-        $titleya = JText::_('PLG_JLLIKEPRO_TITLE_YA');
         $titlepi = JText::_('PLG_JLLIKEPRO_TITLE_PI');
-
-        $scriptPage = <<<HTML
+        $scriptPage = '';
+        $scriptPage .= <<<HTML
 				<div class="jllikeproSharesContayner jllikepro_{$id}">
 				<input type="hidden" class="link-to-share" id="link-to-share-$id" value="$link"/>
 				<input type="hidden" class="share-title" id="share-title-$id" value="$title"/>
 				<input type="hidden" class="share-image" id="share-image-$id" value="$image"/>
+				<input type="hidden" class="share-id" value="{$id}"/>
+HTML;
+
+if($this->params->get('disable_more_likes', 0) && !empty($_COOKIE['jllikepro_article_'.$id])){
+        $scriptPage .= '<div class="disable_more_likes"></div>';
+}
+        $scriptPage .= <<<HTML
+
 				<div class="event-container" >
-				<div class="likes-block$position_buttons">			
+				<div class="likes-block$position_buttons">
 HTML;
         if ($this->params->get('addfacebook', 0)) {
             $scriptPage .= <<<HTML
@@ -118,23 +118,12 @@ HTML;
 HTML;
         }
 
-
-        if ($this->params->get('addya', 0)) {
-            $scriptPage .= <<<HTML
-					<a title="$titleya" class="like l-ya" id="l-ya-$id">
-					<i class="l-ico"></i>
-					<span class="l-count"></span>
-					</a>
-HTML;
-        }
-
         if ($this->params->get('addpi', 1)) {
             $scriptPage .= <<<HTML
 					<a title="$titlepi" class="like l-pinteres" id="l-pinteres-$id">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
-					
 HTML;
         }
 
@@ -173,6 +162,7 @@ HTML;
             var jllickeproSettings = {
                 url : "$url",
                 typeGet : "{$this->params->get('typesget', 0)}",
+                disableMoreLikes : {$this->params->get('disable_more_likes', 0)},
                 isCategory : $isCategory,
                 buttonsContayner : "{$this->params->get('buttons_contayner', '')}",
             };
@@ -180,7 +170,12 @@ SCRIPT;
 
         $doc->addScriptDeclaration($script);
 
-        if ($this->params->get('load_libs',0) == 0)
+        if(version_compare(JVERSION, '3.0', 'ge'))
+        {
+            JHtml::_('jquery.framework');
+			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.js?5");
+        }
+        else if ($this->params->get('load_libs',0) == 0)
         {
             if ($this->params->get('jqload',0) == 1)
             {
@@ -282,26 +277,5 @@ SCRIPT;
             $doc->setMetaData('og:title', $title);
         if($desc)
             $doc->setMetaData('og:description', $desc);
-    }
-
-    public static function getVMImage($id)
-    {
-        $db = JFactory::getDbo();
-        $image = '';
-        $query = $db->getQuery(true);
-        $query->select('`file_url`')
-            ->from('#__virtuemart_medias as m')
-            ->from('#__virtuemart_product_medias as pm')
-            ->where('pm.virtuemart_product_id = '.(int)$id)
-            ->where('pm.virtuemart_media_id = m.virtuemart_media_id')
-            ->order('pm.ordering ASC');
-        $db->setQuery($query,0,1);
-        $res = $db->loadResult();
-
-        if($res)
-        {
-            $image = JURI::root().$res;
-        }
-        return $image;
     }
 }

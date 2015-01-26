@@ -2,9 +2,9 @@
 /**
  * jllike
  *
- * @version 2.0
+ * @version 2.1
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2010-2013 by Vadim Kunicin (http://www.joomline.ru)
+ * @copyright (C) 2010-2015 by Vadim Kunicin (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 
@@ -17,16 +17,25 @@ require_once JPATH_ROOT.'/plugins/content/jllike/helper.php';
 
 class plgContentjllike extends JPlugin
 {
+    public function __construct(& $subject, $config)
+    {
+        parent::__construct($subject, $config);
+        $this->loadLanguage();
+    }
+
     public function onContentPrepare($context, &$article, &$params, $page = 0)
     {
-
-        $allowContext = array( 'com_content.article');
-
+        if(JFactory::getApplication()->isAdmin())
+        {
+            return true;
+        }
+		$allowContext = array( 'com_content.article');
         $allow_in_category = $this->params->get('allow_in_category', 0);
 
         if($allow_in_category)
         {
             $allowContext[] = 'com_content.category';
+            $allowContext[] = 'com_content.featured';
         }
 
         if(!in_array($context, $allowContext)){
@@ -80,7 +89,7 @@ class plgContentjllike extends JPlugin
         switch ($option) {
             case 'com_content':
 
-                if(!$article->id)
+                if(empty($article->id))
                 {
                     //если категория, то завершаем
                     return true;
@@ -108,21 +117,25 @@ class plgContentjllike extends JPlugin
                 $image = '';
                 if($this->params->get('content_images', 'fields') == 'fields')
                 {
-                    $images = json_decode($article->images);
-
-                    if(!empty($images->image_intro))
-                    {
-                        $image = $images->image_intro;
-                    }
-                    else if(!empty($images->image_fulltext))
-                    {
-                        $image = $images->image_fulltext;
-                    }
-
-                    if(!empty($image))
-                    {
-                        $image = JURI::root().$image;
-                    }
+					If(!empty($article->images))
+					{
+						$images = json_decode($article->images);
+	
+						if(!empty($images->image_intro))
+						{
+							$image = $images->image_intro;
+						}
+						else if(!empty($images->image_fulltext))
+						{
+							$image = $images->image_fulltext;
+						}
+	
+						if(!empty($image))
+						{
+							$image = JURI::root().$image;
+						}
+					}
+                    
                 }
                 else
                 {
@@ -141,7 +154,9 @@ class plgContentjllike extends JPlugin
                         {
                             $helper->loadScriptAndStyle(0);
 
-                            PlgJLLikeHelper::addOpenGraphTags($article->title, $article->text, $image);
+                            $text = ($this->params->get('desc_source_com_content', 'intro') == 'intro') ? $article->introtext : $article->text;
+
+                            PlgJLLikeHelper::addOpenGraphTags($article->title, $text, $image);
 
                             switch($sharePos)
                             {
@@ -164,7 +179,7 @@ class plgContentjllike extends JPlugin
                     }
                 }
                 break;
- 
+           
             default:
                 break;
         }

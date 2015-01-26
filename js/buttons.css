@@ -143,3 +143,10 @@ a.like {
     text-decoration: none;
     cursor: pointer;
 }
+
+div.disable_more_likes{
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    z-index: 1000000000;
+}

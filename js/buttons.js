@@ -215,6 +215,17 @@ jQuery.noConflict();
             counter.text(count + 1);
         },
 
+        disableMoreLikes: function () {
+            if(jllickeproSettings.disableMoreLikes){
+                var parent = $('#'+this.id).parents('.jllikeproSharesContayner');
+                var id = parent.children('.share-id').val();
+                var date = new Date( new Date().getTime() + 60*60*24*30*1000 );
+                document.cookie="jllikepro_article_"+id+"=1; path=/; expires="+date.toUTCString();
+                var div = $('<div/>').addClass('disable_more_likes');
+                parent.prepend(div);
+            }
+        },
+
         openShareWindow: function (e) {
             var
                 button = e.data,
@@ -225,6 +236,7 @@ jQuery.noConflict();
                 newWindow = w.open(shareUri, '', windowOptions);
 
             button.plusOne();
+            button.disableMoreLikes();
 
             if (w.focus) {
                 newWindow.focus()
