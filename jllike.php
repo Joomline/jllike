@@ -77,7 +77,7 @@ class plgContentjllike extends JPlugin
             $file = JPATH_ROOT.'/libraries/idna_convert/idna_convert.class.php';
             if(!JFile::exists($file))
             {
-                return JText::_('PLG_jllike_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
+                return JText::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
             }
 
             include_once $file;
