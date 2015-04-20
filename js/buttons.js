@@ -39,7 +39,6 @@ jQuery.noConflict();
             gplusButton: '.l-gp',
             mailButton: '.l-ml',
             linButton: '.l-ln',
-            yaButton: '.l-ya',
             pinteresButton: '.l-pinteres',
             count: '.l-count',
             ico: '.l-ico',
@@ -47,7 +46,6 @@ jQuery.noConflict();
             shareSumary: 'p:eq(0)',
             shareImages: 'img[src]'
         },
-        parent: 'div.jllikeproSharesContayner',
         buttonDepth: 2,
         alternativeImage: '',
         alternativeSummary: '',
@@ -125,7 +123,7 @@ jQuery.noConflict();
                 $parent = this.$context,
                 button = this;
 
-            $parent = $parent.parents(this.config.parent).parent();
+            $parent = $parent.parents(jllickeproSettings.parentContayner).parent();
 
 
             var
@@ -135,14 +133,17 @@ jQuery.noConflict();
                 image = $('input.share-image', $parent).val(),
                 origin = jllickeproSettings.url,
                 $title = $(this.config.selectors.shareTitle, $parent),
-                $summary = $(this.config.selectors.shareSumary, $parent);
+                $summary = $(this.config.selectors.shareSumary, $parent).text();
 
             if(!$title.length){
                 $title = $(this.config.selectors.shareTitle, $tmpParent);
             }
 
             if(!$summary.length){
-                $summary = $(this.config.selectors.shareSumary, $tmpParent);
+                $summary = $parent.text();
+            }
+            if(!$summary.length){
+                $summary = $parent.parent().text();
             }
             
             this.domenhref = w.location.protocol + "//" + w.location.host;
@@ -165,12 +166,12 @@ jQuery.noConflict();
             }
 
             if ($summary.length > 0 & !this.config.forceAlternativeSummary) {
-                this.summary = $summary.text();
+                this.summary = $summary;
             } else {
                 this.summary = this.config.alternativeSummary ? this.config.alternativeSummary : '';
             }
 
-            this.summary = (this.summary.length > 200) ? this.summary.substring(0,200) + '...' : this.summary;
+            this.summary = (this.summary.length > 200) ? cropText(this.summary, 200) + '...' : this.summary;
 
             this.images = [];
 
@@ -192,6 +193,7 @@ jQuery.noConflict();
                     $images.each(function (index, element) {
                         button.images[index] = element.src;
                     });
+                    this.images = button.images;
                 } else {
                     this.images[0] = this.config.alternativeImage ? this.config.alternativeImage : undefined;
                 }
@@ -265,6 +267,25 @@ jQuery.noConflict();
 
     });
 
+    var cropText = function (text, length) {
+        var result = '';
+        text
+            .split(' ')
+            .every( function(item)
+            {
+                var tmp = $.trim(item);
+                if((result.length + tmp.length) <= length)
+                {
+                    if(tmp != '')
+                    {
+                        result += ' '+tmp;
+                    }
+                    return true;
+                }
+                return false;
+            });
+        return result;
+    };
 
     var FacebookButton = function ($context, conf, index) {
         this.init($context, conf, index);
@@ -283,11 +304,11 @@ jQuery.noConflict();
                     url: serviceURI,
                     dataType: 'jsonp',
                     success: function (data, status, jqXHR) {
-                        if (status == 'success' && data[0]) {
-                            if (data[0].share_count > 0) {
+                        if (status == 'success' && typeof data.shares != 'undefined') {
+                            if (data.shares > 0) {
                                 var elem = $('#'+id);
                                 elem.addClass('like-not-empty');
-                                $('span.l-count', elem).text(data[0].share_count);
+                                $('span.l-count', elem).text(data.shares);
                             }
                         }
                     }
@@ -295,14 +316,11 @@ jQuery.noConflict();
             },
 
             getCountLink: function (url) {
-                return this.countServiceUrl + encodeURIComponent(url) + '%27&format=json';
+                return this.countServiceUrl + encodeURIComponent(url);
             },
 
             getShareLink: function ()
             {
-//                var url  = 'https://www.facebook.com/sharer/sharer.php?';
-//                url += '&u=' + encodeURIComponent(this.linkToShare);
-//                return url;
                 var url = 'https://www.facebook.com/sharer/sharer.php?s=100';
                 url += '&p[url]=' + encodeURIComponent(this.linkToShare);
                 url += '&p[title]=' + encodeURIComponent(this.title);
@@ -312,7 +330,7 @@ jQuery.noConflict();
             },
 
             /*@properties*/
-            countServiceUrl: 'https://api.facebook.com/method/fql.query?query=select%20total_count,like_count,comment_count,share_count,click_count%20from%20link_stat%20where%20url=%27'
+            countServiceUrl: 'http://graph.facebook.com/'
         });
 
     var TwitterButton = function ($context, conf, index) {
@@ -341,12 +359,10 @@ jQuery.noConflict();
             },
 
             getShareLink: function () {
-//                return 'https://twitter.com/share'
-//                    + '?url=' + encodeURIComponent(this.linkToShare)
-//                    + (this.title ? '&text=' + encodeURIComponent(this.title) : '');
+                var text = cropText(this.summary,(140 - this.title.length - this.linkToShare.length));
                 return 'https://twitter.com/intent/tweet'
                     + '?url=' + encodeURIComponent(this.linkToShare)
-                    + '&text=' + encodeURIComponent(this.title+ ' ' + this.summary);
+                    + '&text=' + encodeURIComponent(this.title+ '. ' + text);
             },
 
             /*@properties*/
@@ -376,14 +392,14 @@ jQuery.noConflict();
                     }
                 }
 
-                if (!w.VK || !w.VK.Share || !w.VK.Share.count) {
-                    w.VK = {
-                        Share: {
-                            count: function (index, count) {
-                                vkShare(index, count);
-                            }
-                        }
-                    }
+                if(typeof w.VK == 'undefined')
+                    w.VK = {};
+                if(typeof w.VK.Share == 'undefined')
+                    w.VK.Share = {};
+                if(typeof w.VK.Share.count == 'undefined'){
+                    w.VK.Share.count = function (index, count) {
+                        vkShare(index, count);
+                    };
                 } else {
                     var originalVkCount = w.VK.Share.count;
 
@@ -618,42 +634,6 @@ jQuery.noConflict();
 
     /***LINKIN ***/////
 
-
-    /***YA ***/////
-    var yaButton = function ($context, conf, index) {
-        this.init($context, conf, index);
-        this.type = 'yaButton';
-    };
-    yaButton.prototype = new Button;
-    yaButton.prototype
-        = $.extend(yaButton.prototype,
-        {
-            /*@methods*/
-
-            countLikes: function ()
-            {
-                serviceURI = 'http://wow.ya.ru/ajax/share-counter.xml?url=' + this.linkToShare;//encodeURIComponent(this.linkToShare);
-                var id = this.id;
-                return $.post(this.domenhref + '/plugins/content/jllike/models/ajax.php', {curl: serviceURI, variant: 'ya', tpget: jllickeproSettings.typeGet}, function (data) {
-                    if (data != 0) {
-                        var elem = $('#'+id);
-                        elem.addClass('like-not-empty');
-                        $('span.l-count', elem).text(data);
-                    }
-                });
-
-            },
-
-            getShareLink: function () {
-                return 'http://my.ya.ru/posts_share_link.xml?url='
-                    + this.linkToShare + '&title=' + this.title + '&body=' + this.summary;
-            },
-
-            /*@properties*/
-            countServiceUrl: 'http://wow.ya.ru/ajax/share-counter.xml?url='
-        });
-
-    /***YA ***/////
 
     /***pinteres ***/////
     var pinteresButton = function ($context, conf, index) {

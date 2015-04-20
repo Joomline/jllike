@@ -1,8 +1,8 @@
 <?php
 /**
- * jllike
+ * jllikepro
  *
- * @version 2.1
+ * @version 2.1.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
  * @copyright (C) 2010-2015 by Vadim Kunicin (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -42,6 +42,7 @@ class PlgJLLikeHelper
         $titlegg = JText::_('PLG_JLLIKEPRO_TITLE_GG');
         $titlemm = JText::_('PLG_JLLIKEPRO_TITLE_MM');
         $titleli = JText::_('PLG_JLLIKEPRO_TITLE_LI');
+        $titleya = JText::_('PLG_JLLIKEPRO_TITLE_YA');
         $titlepi = JText::_('PLG_JLLIKEPRO_TITLE_PI');
         $scriptPage = '';
         $scriptPage .= <<<HTML
@@ -52,9 +53,16 @@ class PlgJLLikeHelper
 				<input type="hidden" class="share-id" value="{$id}"/>
 HTML;
 
-if($this->params->get('disable_more_likes', 0) && !empty($_COOKIE['jllikepro_article_'.$id])){
-        $scriptPage .= '<div class="disable_more_likes"></div>';
-}
+        if($this->params->get('disable_more_likes', 0) && !empty($_COOKIE['jllikepro_article_'.$id])){
+            $scriptPage .= '<div class="disable_more_likes"></div>';
+        }
+
+        $buttonText = JString::trim($this->params->get('button_text', ''));
+
+        if(!empty($buttonText)){
+            $scriptPage .= '<div class="button_text">'.$buttonText.'</div>';
+        }
+
         $scriptPage .= <<<HTML
 
 				<div class="event-container" >
@@ -165,6 +173,7 @@ HTML;
                 disableMoreLikes : {$this->params->get('disable_more_likes', 0)},
                 isCategory : $isCategory,
                 buttonsContayner : "{$this->params->get('buttons_contayner', '')}",
+                parentContayner : "{$this->params->get('parent_contayner', 'div.jllikeproSharesContayner')}",
             };
 SCRIPT;
 
@@ -174,6 +183,7 @@ SCRIPT;
         {
             JHtml::_('jquery.framework');
 			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.js?5");
+
         }
         else if ($this->params->get('load_libs',0) == 0)
         {
@@ -186,6 +196,7 @@ SCRIPT;
                 $doc->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js");
             }
             $doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.js?5");
+      
         }
         else
         {
@@ -198,6 +209,7 @@ SCRIPT;
                 $doc->addCustomTag('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>');
             }
             $doc->addCustomTag('<script src="' . JURI::base() . 'plugins/content/jllike/js/buttons.js?5"></script>');
+            
         }
 
         $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.css");
@@ -215,7 +227,7 @@ SCRIPT;
             if (!$params) {
                 $params = self::getPluginParams($folder, $plugin);
             }
-            self::$instance = new PlgJLLikeHelper($params);
+            self::$instance = new PlgJLLikeProHelper($params);
         }
 
         return self::$instance;
@@ -256,6 +268,12 @@ SCRIPT;
         if (!preg_match("#^http|^https|^ftp#i", $image))
         {
             $image = JFile::exists( JPATH_SITE . DS . $image ) ? $image : '';
+
+            if(strpos($image, '/') === 0)
+            {
+                $image = substr($image, 1);
+            }
+
             $image = JURI::root().$image;
         }
 
@@ -278,4 +296,6 @@ SCRIPT;
         if($desc)
             $doc->setMetaData('og:description', $desc);
     }
+
+    
 }

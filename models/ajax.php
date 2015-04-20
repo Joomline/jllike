@@ -1,8 +1,8 @@
 <?php
 /**
- * jllike
+ * jllikepro
  *
- * @version 2.0
+ * @version 2.4.4
  * @author Vadim Kunicin (vadim@joomline.ru)
  * @copyright (C) 2010-2013 by Vadim Kunicin (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html

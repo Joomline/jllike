@@ -2,7 +2,7 @@
 <extension version="2.5" type="plugin" group="content" method="upgrade">
     <name>JoomLine Like</name>
     <author>JoomLine</author>
-    <creationDate>26.01.2015</creationDate>
+    <creationDate>20.04.2015</creationDate>
     <copyright>(C) 2012-2015 by Artem Zhukov, Arkadiy Sedelnikov and Vadim Kunicin(http://www.joomline.ru)</copyright>
     <license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
     <authorEmail>sale@joomline.ru</authorEmail>
@@ -23,7 +23,7 @@
         <language tag="ru-RU">ru-RU/ru-RU.plg_content_jllike.ini</language>
 		<language tag="ru-RU">ru-RU/ru-RU.plg_content_jllike.sys.ini</language>
     </languages>
-    <config>
+<config>
         <fields
                 name="params">
             <fieldset
@@ -109,7 +109,7 @@
                     <option value="1">PLG_JLLIKEPRO_YES</option>
                 </field>
             </fieldset>
-			<fieldset
+            <fieldset
                     name="basic"
                     >
                 <field
@@ -208,6 +208,13 @@
                         description="PLG_JLLIKEPRO_METKAVM_DESC"
                         />
                 <field
+                        name="parent_contayner"
+                        type="text"
+                        default="div.jllikeproSharesContayner"
+                        label="PLG_JLLIKEPRO_PARENT_CONTAYNER_LABEL"
+                        description="PLG_JLLIKEPRO_PARENT_CONTAYNER_DESC"
+                        />
+                <field
                         name="punycode_convert"
                         type="radio"
                         default="0"
@@ -227,6 +234,15 @@
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
+                <field
+                        name="button_text"
+                        type="textarea"
+                        cols="100"
+                        rows="5"
+                        default=""
+                        label="PLG_JLLIKEPRO_BUTTON_TEXT"
+                        description="PLG_JLLIKEPRO_BUTTON_TEXT_DESC"
+                        />
             </fieldset>
             <fieldset
                     label="PLG_JLLIKEPRO_SETTINGS_CONTENT"
@@ -262,7 +278,9 @@
                     <option value="full">PLG_JLLIKELOCK_FULL</option>
                 </field>
             </fieldset>
+        
+
         </fields>
-    </config>
+</config>
 <updateservers><server type="extension" priority="1" name="Joomline">http://joomline.net/index.php?option=com_ars&amp;view=update&amp;task=stream&amp;format=xml&amp;id=3&amp;dummy=extension.xml</server></updateservers>
 </extension>

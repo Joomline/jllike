@@ -11,7 +11,7 @@
     text-align:left;
 	padding:15px 0 5px;
 	text-align:left;
- 
+
 }
 .likes-block_right {
     line-height:24px;
@@ -19,12 +19,12 @@
     text-align:right;
 	padding:15px 0 5px;
 	text-align:right;
- 
+
 }
 
 .event-container {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
 }
  
 .like {
@@ -149,4 +149,8 @@ div.disable_more_likes{
     width: 100%;
     height: 50px;
     z-index: 1000000000;
+}
+
+.jllikeproSharesContayner .button_text{
+    font-weight: bold;
 }

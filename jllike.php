@@ -2,7 +2,7 @@
 /**
  * jllike
  *
- * @version 2.1
+ * @version 2.1.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
  * @copyright (C) 2010-2015 by Vadim Kunicin (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -29,7 +29,13 @@ class plgContentjllike extends JPlugin
         {
             return true;
         }
-		$allowContext = array( 'com_content.article');
+
+        $allowContext = array(
+            'com_content.article',
+            'easyblog.blog',
+            'com_virtuemart.productdetails'
+        );
+
         $allow_in_category = $this->params->get('allow_in_category', 0);
 
         if($allow_in_category)
@@ -50,7 +56,7 @@ class plgContentjllike extends JPlugin
         $autoAdd = $this->params->get('autoAdd',0);
         $sharePos = (int)$this->params->get('shares_position', 1);
         $option = JRequest::getCmd('option');
-        $helper = PlgJLLikeHelper::getInstance($this->params);
+        $helper = PlgjllikeHelper::getInstance($this->params);
 
         if (strpos($article->text, '{jllike}') === false && !$autoAdd)
         {
@@ -71,7 +77,7 @@ class plgContentjllike extends JPlugin
             $file = JPATH_ROOT.'/libraries/idna_convert/idna_convert.class.php';
             if(!JFile::exists($file))
             {
-                return JText::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
+                return JText::_('PLG_jllike_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
             }
 
             include_once $file;
@@ -139,7 +145,7 @@ class plgContentjllike extends JPlugin
                 }
                 else
                 {
-                    $image = PlgJLLikeHelper::extractImageFromText($article->introtext, $article->fulltext);
+                    $image = PlgjllikeHelper::extractImageFromText($article->introtext, $article->fulltext);
                 }
 
                 $shares = $helper->ShowIN($article->id, $link, $article->title, $image);
@@ -156,7 +162,7 @@ class plgContentjllike extends JPlugin
 
                             $text = ($this->params->get('desc_source_com_content', 'intro') == 'intro') ? $article->introtext : $article->text;
 
-                            PlgJLLikeHelper::addOpenGraphTags($article->title, $text, $image);
+                            PlgjllikeHelper::addOpenGraphTags($article->title, $text, $image);
 
                             switch($sharePos)
                             {
@@ -179,7 +185,7 @@ class plgContentjllike extends JPlugin
                     }
                 }
                 break;
-           
+          
             default:
                 break;
         }
