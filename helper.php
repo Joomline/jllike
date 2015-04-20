@@ -227,7 +227,7 @@ SCRIPT;
             if (!$params) {
                 $params = self::getPluginParams($folder, $plugin);
             }
-            self::$instance = new PlgJLLikeProHelper($params);
+            self::$instance = new PlgJLLikeHelper($params);
         }
 
         return self::$instance;
