@@ -321,11 +321,9 @@ jQuery.noConflict();
 
             getShareLink: function ()
             {
-                var url = 'https://www.facebook.com/sharer/sharer.php?s=100';
-                url += '&p[url]=' + encodeURIComponent(this.linkToShare);
-                url += '&p[title]=' + encodeURIComponent(this.title);
-                url += '&p[images][0]=' + encodeURIComponent(this.images[0]);
-                url += '&p[summary]=' + encodeURIComponent(this.summary);
+                var url = 'https://www.facebook.com/sharer/sharer.php?app_id=114545895322903&sdk=joey&u='
+                    + encodeURIComponent(this.linkToShare)
+                    +'&display=popup&ref=plugin&src=share_button';     
                 return url;
             },
 
