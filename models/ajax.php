@@ -8,9 +8,9 @@
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 
-$variant = $_REQUEST['variant'];
-$typeGet = $_REQUEST['tpget'];
-$curl = $_REQUEST['curl'];
+$variant = isset($_REQUEST['variant']) ? $_REQUEST['variant'] : '';
+$typeGet = isset($_REQUEST['tpget']) ? $_REQUEST['tpget'] : '';
+$curl =    isset($_REQUEST['curl']) ? $_REQUEST['curl'] : '';
 
 switch ($variant)
 {
