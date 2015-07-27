@@ -164,7 +164,8 @@ HTML;
 
         $isCategory = (int)$isCategory;
 
-        $url = 'http://' . $this->params->get('pathbase', '') . str_replace('www.', '', $_SERVER['HTTP_HOST']);
+        $prefix = (JFactory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
+        $url = $prefix . $this->params->get('pathbase', '') . str_replace('www.', '', $_SERVER['HTTP_HOST']);
 
         $script = <<<SCRIPT
             var jllickeproSettings = {

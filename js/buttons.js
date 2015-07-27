@@ -328,7 +328,7 @@ jQuery.noConflict();
             },
 
             /*@properties*/
-            countServiceUrl: 'http://graph.facebook.com/'
+            countServiceUrl: 'https://graph.facebook.com/'
         });
 
     var TwitterButton = function ($context, conf, index) {
@@ -364,7 +364,7 @@ jQuery.noConflict();
             },
 
             /*@properties*/
-            countServiceUrl: 'http://urls.api.twitter.com/1/urls/count.json?url='
+            countServiceUrl: 'https://urls.api.twitter.com/1/urls/count.json?url='
         });
 
 
@@ -423,7 +423,7 @@ jQuery.noConflict();
             },
 
             /*@properties*/
-            countServiceUrl: 'http://vkontakte.ru/share.php?act=count&url='
+            countServiceUrl: 'https://vk.com/share.php?act=count&url='
         });
 
 
@@ -453,7 +453,7 @@ jQuery.noConflict();
                     }
                 }
 
-                var serviceURI = 'http://www.odnoklassniki.ru/dk?st.cmd=extLike&uid=' + this.id + '&ref=' + this.linkToShare;
+                var serviceURI = this.getCountLink(this.id, this.linkToShare);
 
                 if (!w.ODKL)
                 {
@@ -485,9 +485,12 @@ jQuery.noConflict();
                     + this.linkToShare
                     +'&st.comments=' + encodeURIComponent(this.summary);
             },
+			getCountLink: function (id, linkToShare) {
+				return this.countServiceUrl + id + '&ref=' + linkToShare;
+			},
 
             /*@properties*/
-            countServiceUrl: 'http://www.odnoklassniki.ru/dk?st.cmd=extLike&uid=' + this.id + '&ref=' + this.linkToShare
+            countServiceUrl: 'https://connect.ok.ru/dk?st.cmd=extLike&uid='
         });
     /***odnoklassniki ***/////
 
@@ -577,7 +580,7 @@ jQuery.noConflict();
             },
 
             /*@properties*/
-            countServiceUrl: 'http://connect.mail.ru/share_count?callback=1&func=setMailRuCount&url_list='
+            countServiceUrl: 'https://connect.mail.ru/share_count?callback=1&func=setMailRuCount&url_list='
         });
 
     /***MAIL ***/////
@@ -627,7 +630,7 @@ jQuery.noConflict();
             },
 
             /*@properties*/
-            countServiceUrl: 'http://www.linkedin.com/countserv/count/share?&callback=setLinkedInCount&format=jsonp&url='
+            countServiceUrl: 'https://www.linkedin.com/countserv/count/share?&callback=setLinkedInCount&format=jsonp&url='
         });
 
     /***LINKIN ***/////
@@ -682,7 +685,7 @@ jQuery.noConflict();
             },
 
             /*@properties*/
-            countServiceUrl: 'http://api.pinterest.com/v1/urls/count.json?callback=setPinteresCount&url='
+            countServiceUrl: 'https://api.pinterest.com/v1/urls/count.json?callback=setPinteresCount&url=' 
         });
 
     /***pinteres ***/////

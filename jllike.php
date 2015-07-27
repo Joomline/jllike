@@ -17,10 +17,12 @@ require_once JPATH_ROOT.'/plugins/content/jllike/helper.php';
 
 class plgContentjllike extends JPlugin
 {
+	private $protokol;
     public function __construct(& $subject, $config)
     {
         parent::__construct($subject, $config);
         $this->loadLanguage();
+		$this->protokol = (JFactory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
     }
 
     public function onContentPrepare($context, &$article, &$params, $page = 0)
@@ -70,7 +72,8 @@ class plgContentjllike extends JPlugin
 
         $print = JRequest::getInt('print', 0);
 
-        $url = 'http://' . $this->params->get('pathbase', '') . str_replace('www.', '', $_SERVER['HTTP_HOST']);
+		$root = JURI::getInstance()->toString(array('host'));
+        $url = $this->protokol . $this->params->get('pathbase', '') . str_replace('www.', '', $root);
 
         if($this->params->get('punycode_convert',0))
         {
