@@ -1,15 +1,17 @@
 <?php
 /**
- * jllikepro
+ * jllike
  *
- * @version 2.1.0
+ * @version 2.3.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2010-2015 by Vadim Kunicin (http://www.joomline.ru)
+ * @copyright (C) 2010-2016 by Vadim Kunicin (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 defined('_JEXEC') or die;
 
 jimport('joomla.plugin.plugin');
+
+use \Joomla\String\String;
 
 class PlgJLLikeHelper
 {
@@ -17,8 +19,33 @@ class PlgJLLikeHelper
 
     protected static $instance = null;
 
-    function ShowIn($id, $link='', $title='', $image='')
+
+    function __construct($params = null)
     {
+        $this->params = $params;
+    }
+
+    public static function getInstance($params = null, $folder = 'content', $plugin = 'jllike')
+    {
+        if (self::$instance === null) {
+            if (!$params) {
+                $params = self::getPluginParams($folder, $plugin);
+            }
+            self::$instance = new PlgJLLikeHelper($params);
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * Кнопки шары
+     * @param $id не нужный параметр, на будущее
+     * @return string
+     */
+    function ShowIn($id, $link='', $title='', $image='', $desc='', $enable_opengraph=1)
+    {
+        JPluginHelper::importPlugin('content', 'jllike');
+
         $position_content = $this->params->get('position_content', 0);
 
         if ($position_content == 1)
@@ -35,6 +62,22 @@ class PlgJLLikeHelper
             $position_buttons = '';
         }
 
+        if(empty($image))
+        {
+            $image = trim($this->params->get('default_image', ''));
+            $image = !empty($image) ? JUri::root() . $image : '';
+        }
+
+        $desc = strip_tags($desc);
+        $desc = $this->limittext($desc, 200);
+        $desc = str_replace(array('"', "'"), '', $desc);
+        $desc = str_replace("\n", ' ', $desc);
+
+        if($enable_opengraph)
+        {
+            $this->addOpenGraphTags($title, $desc, $image);
+        }
+
         $titlefc = JText::_('PLG_JLLIKEPRO_TITLE_FC');
         $titlevk = JText::_('PLG_JLLIKEPRO_TITLE_VK');
         $titletw = JText::_('PLG_JLLIKEPRO_TITLE_TW');
@@ -42,14 +85,15 @@ class PlgJLLikeHelper
         $titlegg = JText::_('PLG_JLLIKEPRO_TITLE_GG');
         $titlemm = JText::_('PLG_JLLIKEPRO_TITLE_MM');
         $titleli = JText::_('PLG_JLLIKEPRO_TITLE_LI');
-        $titleya = JText::_('PLG_JLLIKEPRO_TITLE_YA');
         $titlepi = JText::_('PLG_JLLIKEPRO_TITLE_PI');
+        $titleAll = JText::_('PLG_JLLIKEPRO_TITLE_ALL');
         $scriptPage = '';
         $scriptPage .= <<<HTML
 				<div class="jllikeproSharesContayner jllikepro_{$id}">
 				<input type="hidden" class="link-to-share" id="link-to-share-$id" value="$link"/>
 				<input type="hidden" class="share-title" id="share-title-$id" value="$title"/>
 				<input type="hidden" class="share-image" id="share-image-$id" value="$image"/>
+				<input type="hidden" class="share-desc" id="share-desc-$id" value="$desc"/>
 				<input type="hidden" class="share-id" value="{$id}"/>
 HTML;
 
@@ -57,7 +101,7 @@ HTML;
             $scriptPage .= '<div class="disable_more_likes"></div>';
         }
 
-        $buttonText = JString::trim($this->params->get('button_text', ''));
+        $buttonText = String::trim($this->params->get('button_text', ''));
 
         if(!empty($buttonText)){
             $scriptPage .= '<div class="button_text">'.$buttonText.'</div>';
@@ -134,11 +178,15 @@ HTML;
 					</a>
 HTML;
         }
-
+		if ($this->params->get('addall', 1)) {
         $scriptPage .= <<<HTML
-						<div>
-							<a style="text-decoration:none; color: #c0c0c0; font-family: arial,helvetica,sans-serif; font-size: 5pt; " target="_blank" href="http://joomline.ru/rasshirenija/plugin/jllike.html">Social Like</a>
-						</div>
+					<a title="$titleAll" class="l-all" id="l-all-$id">
+					<i class="l-ico"></i>
+					<span class="l-count l-all-count" id="l-all-count-$id">0</span>
+					</a>
+HTML;
+		}
+        $scriptPage .= <<<HTML
 					</div>
 				</div>
 			</div>
@@ -197,7 +245,7 @@ SCRIPT;
                 $doc->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js");
             }
             $doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.js?5");
-      
+
         }
         else
         {
@@ -210,28 +258,90 @@ SCRIPT;
                 $doc->addCustomTag('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>');
             }
             $doc->addCustomTag('<script src="' . JURI::base() . 'plugins/content/jllike/js/buttons.js?5"></script>');
-            
+
         }
 
-        $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.css");
+        $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.css?2");
+
+        $btn_border_radius = (int)$this->params->get('btn_border_radius',15);
+        $btn_dimensions = (int)$this->params->get('btn_dimensions',30);
+        $btn_margin = (int)$this->params->get('btn_margin',6);
+        $font_size = (float)$this->params->get('font_size',1);
+        $doc->addStyleDeclaration('
+            .jllikeproSharesContayner a {border-radius: '.$btn_border_radius.'px; margin-left: '.$btn_margin.'px;}
+            .jllikeproSharesContayner i {width: '.$btn_dimensions.'px;height: '.$btn_dimensions.'px;}
+            .jllikeproSharesContayner span {height: '.$btn_dimensions.'px;line-height: '.$btn_dimensions.'px;font-size: '.$font_size.'rem;}
+        ');
+
     }
 
-
-    function __construct($params = null)
+    function getShareText($metadesc, $introtext, $text)
     {
-        $this->params = $params;
-    }
+        $desc_source_one = $this->params->get('desc_source_one', 'desc');
+        $desc_source_two = $this->params->get('desc_source_two', 'full');
+        $desc_source_three = $this->params->get('desc_source_three', 'meta');
 
-    public static function getInstance($params = null, $folder = 'content', $plugin = 'jllike')
-    {
-        if (self::$instance === null) {
-            if (!$params) {
-                $params = self::getPluginParams($folder, $plugin);
-            }
-            self::$instance = new PlgJLLikeHelper($params);
+        switch($desc_source_one)
+        {
+            case 'full':
+                $source_one = $text;
+                break;
+            case 'meta':
+                $source_one = $metadesc;
+                break;
+            default:
+                $source_one = $introtext;
+                break;
         }
 
-        return self::$instance;
+        switch($desc_source_two)
+        {
+            case 'desc':
+                $source_two = $introtext;
+                break;
+            case 'meta':
+                $source_two = $metadesc;
+                break;
+            default:
+                $source_two = $text;
+                break;
+        }
+
+        switch($desc_source_three)
+        {
+            case 'desc':
+                $source_three = $introtext;
+                break;
+            case 'full':
+                $source_three = $text;
+                break;
+            default:
+                $source_three = $metadesc;
+                break;
+        }
+
+        $source_one = trim($source_one);
+        $source_two = trim($source_two);
+        $source_three = trim($source_three);
+
+        $desc = '';
+
+        if(!empty($source_one))
+        {
+            $desc = $source_one;
+        }
+        else if(!empty($source_two))
+        {
+            $desc = $source_two;
+        }
+        else if(!empty($source_three))
+        {
+            $desc = $source_three;
+        }
+
+		$desc = strip_tags($desc);
+		
+        return $desc;
     }
 
     private static function getPluginParams($folder = 'content', $name = 'jllike')
@@ -266,9 +376,11 @@ SCRIPT;
             $image = $images[2];
         }
 
+        if(!empty($image))
+        {
         if (!preg_match("#^http|^https|^ftp#i", $image))
         {
-            $image = JFile::exists( JPATH_SITE . DS . $image ) ? $image : '';
+            $image = JFile::exists( JPATH_SITE . '/' . $image ) ? $image : '';
 
             if(strpos($image, '/') === 0)
             {
@@ -276,27 +388,55 @@ SCRIPT;
             }
 
             $image = JURI::root().$image;
+
+            }
+        }
+        else
+        {
+            $image = '';
         }
 
         return $image;
     }
 
-    public static function addOpenGraphTags($title='', $text='', $image='')
+    private function limittext($wordtext, $maxchar)
+    {
+        $text = '';
+        $textLength = String::strlen($wordtext);
+
+        if($textLength <= $maxchar)
+        {
+            return $wordtext;
+        }
+
+        $words = explode(' ', $wordtext);
+
+        foreach ($words as $word)
+        {
+            if(String::strlen($text . ' ' . $word) > $maxchar - 1)
+            {
+                break;
+            }
+            $text .= ' ' . $word;
+        }
+
+        return $text;
+    }
+
+    private function addOpenGraphTags($title='', $text='', $image='')
     {
         $doc = JFactory::getDocument();
 
-        $desc = JString::substr(strip_tags($text),0,200);
-        $desc = str_replace(array('"', "'"), '', $desc);
-
         $doc->setMetaData('og:type', 'article');
 
-        if($image)
+        if($image){
             $doc->setMetaData('og:image', $image);
+            JFactory::getApplication()->setUserState('jllike.image', $image);
+        }
+
         if($title)
             $doc->setMetaData('og:title', $title);
-        if($desc)
-            $doc->setMetaData('og:description', $desc);
+        if($text)
+            $doc->setMetaData('og:description', $text);
     }
-
-    
 }

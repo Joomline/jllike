@@ -2,7 +2,7 @@
 /**
  * jllike
  *
- * @version 2.1.0
+ * @version 2.3.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
  * @copyright (C) 2010-2015 by Vadim Kunicin (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -14,16 +14,36 @@ defined('_JEXEC') or die;
 jimport('joomla.plugin.plugin');
 
 require_once JPATH_ROOT.'/plugins/content/jllike/helper.php';
+use \Joomla\String\String;
 
 class plgContentjllike extends JPlugin
 {
-	private $protokol;
+    private $protokol;
+
     public function __construct(& $subject, $config)
     {
         parent::__construct($subject, $config);
         $this->loadLanguage();
-		$this->protokol = (JFactory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
+        $this->protokol = (JFactory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
     }
+
+    public function onAfterRender()
+    {
+        $app = JFactory::getApplication();
+        $image = $app->getUserState('jllike.image', '');
+        if(!empty($image))
+        {
+            $app->setUserState('jllike.image', '');
+            $buffer = $app->getBody();
+            if($buffer !== null)
+            {
+                $html = "  <link rel=\"image_src\" href=\"". $image ."\" />\n</head>";
+                $buffer = String::str_ireplace('</head>', $html, $buffer, 1);
+                $app->setBody($buffer);
+            }
+        }
+    }
+
 
     public function onContentPrepare($context, &$article, &$params, $page = 0)
     {
@@ -57,6 +77,7 @@ class plgContentjllike extends JPlugin
 
         $autoAdd = $this->params->get('autoAdd',0);
         $sharePos = (int)$this->params->get('shares_position', 1);
+        $enableOpenGraph = $this->params->get('enable_opengraph',1);
         $option = JRequest::getCmd('option');
         $helper = PlgjllikeHelper::getInstance($this->params);
 
@@ -71,7 +92,7 @@ class plgContentjllike extends JPlugin
         }
 
         $print = JRequest::getInt('print', 0);
-
+		
 		$root = JURI::getInstance()->toString(array('host'));
         $url = $this->protokol . $this->params->get('pathbase', '') . str_replace('www.', '', $root);
 
@@ -151,21 +172,18 @@ class plgContentjllike extends JPlugin
                     $image = PlgjllikeHelper::extractImageFromText($article->introtext, $article->fulltext);
                 }
 
-                $shares = $helper->ShowIN($article->id, $link, $article->title, $image);
+                $text = $helper->getShareText($article->metadesc, $article->introtext, $article->text);
+                $enableOG = $context == 'com_content.article' ? $enableOpenGraph : 0;
+                $shares = $helper->ShowIN($article->id, $link, $article->title, $image, $text, $enableOG);
 
                 if ($context == 'com_content.article')
                 {
-
                     $view = JRequest::getCmd('view');
                     if ($view == 'article')
                     {
                         if ($autoAdd == 1 || strpos($article->text, '{jllike}') == true)
                         {
                             $helper->loadScriptAndStyle(0);
-
-                            $text = ($this->params->get('desc_source_com_content', 'intro') == 'intro') ? $article->introtext : $article->text;
-
-                            PlgjllikeHelper::addOpenGraphTags($article->title, $text, $image);
 
                             switch($sharePos)
                             {
@@ -188,7 +206,7 @@ class plgContentjllike extends JPlugin
                     }
                 }
                 break;
-          
+
             default:
                 break;
         }
