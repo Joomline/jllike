@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="2.5" type="plugin" group="content" method="upgrade">
+<extension version="3.1" type="plugin" group="content" method="upgrade">
     <name>JoomLine Like</name>
     <author>JoomLine</author>
-    <creationDate>20.04.2015</creationDate>
-    <copyright>(C) 2012-2015 by Artem Zhukov, Arkadiy Sedelnikov and Vadim Kunicin(http://www.joomline.ru)</copyright>
+    <creationDate>26.01.2016</creationDate>
+    <copyright>(C) 2012-2016 by Artem Zhukov, Arkadiy Sedelnikov and Vadim Kunicin(http://www.joomline.ru)</copyright>
     <license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
     <authorEmail>sale@joomline.ru</authorEmail>
     <authorUrl>http://joomline.ru</authorUrl>
-    <version>2.2.0</version>
+    <version>2.3.0</version>
     <description>PLG_JLLIKE_DESC_ALL</description>
     <files>
         <folder>js</folder>
@@ -24,7 +24,7 @@
 		<language tag="ru-RU">ru-RU/ru-RU.plg_content_jllike.sys.ini</language>
     </languages>
 <config>
-        <fields
+ <fields
                 name="params">
             <fieldset
                     label="PLG_JLLIKEPRO_PROVIDERS"
@@ -108,39 +108,19 @@
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
                 </field>
+				<field name="addall"
+                       type="radio"
+                       default="1"
+                       label="PLG_JLLIKEPRO_ENABLE_ALL"
+                       description="PLG_JLLIKEPRO_ENABLE_ALL_DESC"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
             </fieldset>
             <fieldset
                     name="basic"
-                    >
-                <field
-                        name="jqload"
-                        type="radio"
-                        default="1"
-                        label="PLG_JLLIKEPRO_JQLOAD_LABEL"
-                        description="PLG_JLLIKEPRO_JQLOAD_DESC"
-                        >
-					<option value="0">PLG_JLLIKEPRO_NO</option>	
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
-                </field>
-                <field
-                        name="jqloadcont"
-                        type="radio"
-                        default="0"
-                        label="PLG_JLLIKEPRO_JQLOADC_LABEL"
-                        description="PLG_JLLIKEPRO_JQLOADC_DESC">                    
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-					<option value="1">PLG_JLLIKEPRO_YES</option>
-                </field>
-                <field
-                        name="load_libs"
-                        type="radio"
-                        default="0"
-                        label="PLG_JLLIKEPRO_LOADLIBS_LABEL"
-                        description="PLG_JLLIKEPRO_LOADLIBS_DESC"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_SEC1</option>
-                    <option value="1">PLG_JLLIKEPRO_SEC2</option>
-                </field>
+                    >                
                 <field
                         name="autoAdd"
                         type="radio" default="1"
@@ -150,36 +130,59 @@
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
                 </field>
+            
                 <field
-                        name="position_content"
-                        type="radio"
-                        default="0"
-                        label="PLG_JLLIKEPRO_POSITION_LABEL"
-                        description="PLG_JLLIKEPRO_POSITION_DESC"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_LEFT</option>
-                    <option value="1">PLG_JLLIKEPRO_RIGHT</option>
-                </field>
-                <field
-                        name="shares_position"
+                        name="desc_source_one"
                         type="list"
-                        default="1"
-                        label="PLG_JLLIKEPRO_LOAD_SHARES"
-                        description="PLG_JLLIKEPRO_LOAD_SHARES_DESC"
+                        default="desc"
+                        label="PLG_JLLIKEPRO_DESC_SOURCE_ONE"
+                        description="PLG_JLLIKEPRO_DESC_SOURCE_ONE_DESC"
                         >
-                    <option value="0">PLG_JLLIKEPRO_TOP</option>
-                    <option value="1">PLG_JLLIKEPRO_BOTTOM</option>
+                    <option value="desc">PLG_JLLIKEPRO_DESC</option>
+                    <option value="full">PLG_JLLIKEPRO_FULL</option>
+                    <option value="meta">PLG_JLLIKEPRO_META</option>
                 </field>
                 <field
-                        name="allow_in_category"
+                        name="desc_source_two"
+                        type="list"
+                        default="full"
+                        label="PLG_JLLIKEPRO_DESC_SOURCE_TWO"
+                        description="PLG_JLLIKEPRO_DESC_SOURCE_TWO_DESC"
+                        >
+                    <option value="desc">PLG_JLLIKEPRO_DESC</option>
+                    <option value="full">PLG_JLLIKEPRO_FULL</option>
+                    <option value="meta">PLG_JLLIKEPRO_META</option>
+                </field>
+                <field
+                        name="desc_source_three"
+                        type="list"
+                        default="meta"
+                        label="PLG_JLLIKEPRO_DESC_SOURCE_THREE"
+                        description="PLG_JLLIKEPRO_DESC_SOURCE_THREE_DESC"
+                        >
+                    <option value="desc">PLG_JLLIKEPRO_DESC</option>
+                    <option value="full">PLG_JLLIKEPRO_FULL</option>
+                    <option value="meta">PLG_JLLIKEPRO_META</option>
+                </field>
+                <field
+                        name="default_image"
+                        type="media"
+                        default=""
+                        label="PLG_JLLIKEPRO_DEFAULT_IMAGE"
+                        description="PLG_JLLIKEPRO_DEFAULT_IMAGE_DESC"
+                />
+
+                <field
+                        name="enable_opengraph"
                         type="radio"
-                        default="0"
-                        label="PLG_JLLIKEPRO_ALLOW_IN_CAT"
-                        description="PLG_JLLIKEPRO_ALLOW_IN_CAT_DESC"
+                        default="1"
+                        label="PLG_JLLIKEPRO_ENABLE_OPENGRAPH"
+                        description="PLG_JLLIKEPRO_ENABLE_OPENGRAPH_DESC"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
                 </field>
+
                 <field
                         name="typesget"
                         type="list"
@@ -234,7 +237,86 @@
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
+				<field
+                        name="jqload"
+                        type="radio"
+                        default="1"
+                        label="PLG_JLLIKEPRO_JQLOAD_LABEL"
+                        description="PLG_JLLIKEPRO_JQLOAD_DESC"
+                        >
+					<option value="0">PLG_JLLIKEPRO_NO</option>	
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
                 <field
+                        name="jqloadcont"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_JQLOADC_LABEL"
+                        description="PLG_JLLIKEPRO_JQLOADC_DESC">                    
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+					<option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="load_libs"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_LOADLIBS_LABEL"
+                        description="PLG_JLLIKEPRO_LOADLIBS_DESC"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_SEC1</option>
+                    <option value="1">PLG_JLLIKEPRO_SEC2</option>
+                </field>
+                
+            </fieldset>
+
+
+            <fieldset
+                label="PLG_JLLIKEPRO_SETTINGS_BUTTONS_STYLE"
+                name="style"
+            >
+			    <field
+                        name="position_content"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_POSITION_LABEL"
+                        description="PLG_JLLIKEPRO_POSITION_DESC"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_LEFT</option>
+                    <option value="1">PLG_JLLIKEPRO_RIGHT</option>
+                </field>
+                <field
+                        name="btn_border_radius"
+                        type="text"
+                        default="15"
+                        label="PLG_JLLIKEPRO_BUTTONS_BORDER_RADIUS"
+                        description="PLG_JLLIKEPRO_BUTTONS_BORDER_RADIUS_DESC"
+                        filter="integer"
+                />
+                <field
+                        name="btn_dimensions"
+                        type="text"
+                        default="30"
+                        label="PLG_JLLIKEPRO_BUTTONS_DIMENSIONS"
+                        description="PLG_JLLIKEPRO_BUTTONS_DIMENSIONS_DESC"
+                        filter="integer"
+                />
+                <field
+                        name="btn_margin"
+                        type="text"
+                        default="6"
+                        label="PLG_JLLIKEPRO_BUTTONS_MARGIN"
+                        description="PLG_JLLIKEPRO_BUTTONS_MARGIN_DESC"
+                        filter="integer"
+                />
+                <field
+                        name="font_size"
+                        type="text"
+                        default="1"
+                        label="PLG_JLLIKEPRO_BUTTONS_FONT_SIZE"
+                        description="PLG_JLLIKEPRO_BUTTONS_FONT_SIZE_DESC"
+                        filter="float"
+                />
+				<field
                         name="button_text"
                         type="textarea"
                         cols="100"
@@ -243,7 +325,29 @@
                         label="PLG_JLLIKEPRO_BUTTON_TEXT"
                         description="PLG_JLLIKEPRO_BUTTON_TEXT_DESC"
                         />
+				<field
+                        name="enable_twit"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_ENABLE_TWIT"
+                        description="PLG_JLLIKEPRO_ENABLE_TWIT_DESC"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+				 <field
+                        name="allow_in_category"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_ALLOW_IN_CAT"
+                        description="PLG_JLLIKEPRO_ALLOW_IN_CAT_DESC"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+				
             </fieldset>
+			
             <fieldset
                     label="PLG_JLLIKEPRO_SETTINGS_CONTENT"
                     name="content"
@@ -257,6 +361,16 @@
                         label="PLG_JLLIKEPRO_EXCLUDE_CATEGORY_LABEL"
                         description="PLG_JLLIKEPRO_EXCLUDE_CATEGORY_DESC"
                         />
+				<field
+                        name="shares_position"
+                        type="list"
+                        default="1"
+                        label="PLG_JLLIKEPRO_LOAD_SHARES"
+                        description="PLG_JLLIKEPRO_LOAD_SHARES_DESC"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_TOP</option>
+                    <option value="1">PLG_JLLIKEPRO_BOTTOM</option>
+                </field>		
                 <field
                         name="content_images"
                         type="list"
