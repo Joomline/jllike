@@ -4,6 +4,7 @@ var jllikeproShareUrls = {
     pinteres: {},
     linkedin: {}
 };
+var jllikeproAllCounerValue = 0;
 
 jQuery.noConflict();
 (function ($, w, d, undefined) {
@@ -133,12 +134,19 @@ jQuery.noConflict();
                 image = $('input.share-image', $parent).val(),
                 origin = jllickeproSettings.url,
                 $title = $(this.config.selectors.shareTitle, $parent),
-                $summary = $(this.config.selectors.shareSumary, $parent).text();
+                $summary;
+
+
 
             if(!$title.length){
                 $title = $(this.config.selectors.shareTitle, $tmpParent);
             }
 
+            $summary = $('input.share-desc', $parent).val();
+
+            if(!$summary.length){
+                $summary = $(this.config.selectors.shareSumary, $parent).text();
+            }
             if(!$summary.length){
                 $summary = $parent.text();
             }
@@ -165,9 +173,12 @@ jQuery.noConflict();
                 this.title = d.title;
             }
 
-            if ($summary.length > 0 & !this.config.forceAlternativeSummary) {
+            if ($summary.length > 0)
+            {
                 this.summary = $summary;
-            } else {
+            }
+            else
+            {
                 this.summary = this.config.alternativeSummary ? this.config.alternativeSummary : '';
             }
 
@@ -175,7 +186,7 @@ jQuery.noConflict();
 
             this.images = [];
 
-            if(!image.length)
+            if(typeof(image) == 'undefined' || !image.length)
             {
                 var $images = $(this.config.selectors.shareImages, $parent);
 
@@ -301,7 +312,7 @@ jQuery.noConflict();
                 var id = this.id;
 
                 return $.ajax({
-                    url: serviceURI,
+                        url: serviceURI,
                     dataType: 'jsonp',
                     success: function (data, status, jqXHR) {
                         if (status == 'success' && typeof data.shares != 'undefined') {
@@ -309,6 +320,7 @@ jQuery.noConflict();
                                 var elem = $('#'+id);
                                 elem.addClass('like-not-empty');
                                 $('span.l-count', elem).text(data.shares);
+                                jllikeproAllCouner(elem, data.shares);
                             }
                         }
                     }
@@ -323,7 +335,12 @@ jQuery.noConflict();
             {
                 var url = 'https://www.facebook.com/sharer/sharer.php?app_id=114545895322903&sdk=joey&u='
                     + encodeURIComponent(this.linkToShare)
-                    +'&display=popup&ref=plugin&src=share_button';     
+                    +'&display=popup&ref=plugin&src=share_button';
+                //var url = 'https://www.facebook.com/sharer/sharer.php?s=100';
+                //url += '&p[url]=' + encodeURIComponent(this.linkToShare);
+                //url += '&p[title]=' + encodeURIComponent(this.title);
+                //url += '&p[images][0]=' + encodeURIComponent(this.images[0]);
+                //url += '&p[summary]=' + encodeURIComponent(this.summary);
                 return url;
             },
 
@@ -351,6 +368,7 @@ jQuery.noConflict();
                             var elem = $('#'+id);
                             elem.addClass('like-not-empty');
                             $('span.l-count', elem).text(data.count);
+                            jllikeproAllCouner(elem, data.count);
                         }
                     }
                 });
@@ -387,6 +405,7 @@ jQuery.noConflict();
                         var elem = $('#'+id);
                         elem.addClass('like-not-empty');
                         $('span.l-count', elem).text(count);
+                        jllikeproAllCouner(elem, count);
                     }
                 }
 
@@ -450,6 +469,7 @@ jQuery.noConflict();
                         var elem = $('#'+elementId);
                         elem.addClass('like-not-empty');
                         $('span.l-count', elem).text(count);
+                        jllikeproAllCouner(elem, count);
                     }
                 }
 
@@ -485,9 +505,10 @@ jQuery.noConflict();
                     + this.linkToShare
                     +'&st.comments=' + encodeURIComponent(this.summary);
             },
-			getCountLink: function (id, linkToShare) {
-				return this.countServiceUrl + id + '&ref=' + linkToShare;
-			},
+
+            getCountLink: function (id, linkToShare) {
+                return this.countServiceUrl + id + '&ref=' + linkToShare;
+            },
 
             /*@properties*/
             countServiceUrl: 'https://connect.ok.ru/dk?st.cmd=extLike&uid='
@@ -515,6 +536,7 @@ jQuery.noConflict();
                         var elem = $('#'+id);
                         elem.addClass('like-not-empty');
                         $('span.l-count', elem).text(data);
+                        jllikeproAllCouner(elem, data);
                     }
                 });
 
@@ -559,6 +581,7 @@ jQuery.noConflict();
                             var elem = $('#'+id);
                             elem.addClass('like-not-empty');
                             $('span.l-count', elem).text(shares);
+                            jllikeproAllCouner(elem, shares);
                         }
                     }
                 }
@@ -613,6 +636,7 @@ jQuery.noConflict();
                         var elem = $('#'+id);
                         elem.addClass('like-not-empty');
                         $('span.l-count', elem).text(shares);
+                        jllikeproAllCouner(elem, shares);
                     }
 
                 }
@@ -665,6 +689,7 @@ jQuery.noConflict();
                             var elem = $('#'+id);
                             elem.addClass('like-not-empty');
                             $('span.l-count', elem).text(data.count);
+                            jllikeproAllCouner(elem, data.count);
                         }
                     }
                 }
@@ -691,6 +716,12 @@ jQuery.noConflict();
     /***pinteres ***/////
 //+++++++++    
 
+    var jllikeproAllCouner = function(element, plus)
+    {
+        var counterSpan = $(element).parents('.jllikeproSharesContayner').find('span.l-all-count');
+        jllikeproAllCounerValue += parseInt(plus);
+        counterSpan.text(jllikeproAllCounerValue);
+    };
 
     $.fn.socialButton = function (config) {
 
@@ -717,9 +748,7 @@ jQuery.noConflict();
                     b = new mailButton($element, conf, Button.lastIndex);
                 } else if ($element.is(conf.selectors.linButton)) {
                     b = new linButton($element, conf, Button.lastIndex);
-                } else if ($element.is(conf.selectors.yaButton)) {
-                    b = new yaButton($element, conf, Button.lastIndex);
-                }else if ($element.is(conf.selectors.pinteresButton)) {
+                } else if ($element.is(conf.selectors.pinteresButton)) {
                     b = new pinteresButton($element, conf, Button.lastIndex);
                 }
 
