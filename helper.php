@@ -77,7 +77,7 @@ class PlgJLLikeHelper
         {
             $this->addOpenGraphTags($title, $desc, $image);
         }
-
+		$donatelink = JText::_('PLG_JLLIKEPRO_DONATE_LINK');
         $titlefc = JText::_('PLG_JLLIKEPRO_TITLE_FC');
         $titlevk = JText::_('PLG_JLLIKEPRO_TITLE_VK');
         $titletw = JText::_('PLG_JLLIKEPRO_TITLE_TW');
@@ -187,9 +187,12 @@ HTML;
 HTML;
 		}
         $scriptPage .= <<<HTML
+
 					</div>
 				</div>
+				
 			</div>
+			$donatelink
 HTML;
 
         return $scriptPage;
