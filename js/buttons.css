@@ -75,6 +75,7 @@ body>p:first-child { display: none }
 .jllikeproSharesContayner a:hover { opacity: 0.85; }
 .jllikeproSharesContayner a {margin-bottom: 6px;}
 
+/*
 @media screen and (max-width:800px) {
 .jllikeproSharesContayner {position: fixed;right: 0;bottom: 0; z-index: 999999; background-color: #fff!important;width: 100%;}
 .jllikeproSharesContayner .event-container > div {border-radius: 0; padding: 0; display: block;}
@@ -87,4 +88,4 @@ body>p:first-child { display: none }
 .button_text {display: none;}
 .blog .jllikeproSharesContayner{display:none}
 .itemListView .jllikeproSharesContayner{display:none}
-}
+}*/
