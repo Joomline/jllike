@@ -192,7 +192,9 @@ HTML;
 				</div>
 				
 			</div>
+			<div class="likes-block$position_buttons">
 			$donatelink
+			</div>
 HTML;
 
         return $scriptPage;
