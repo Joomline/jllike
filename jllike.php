@@ -2,9 +2,9 @@
 /**
  * jllike
  *
- * @version 2.3.0
+ * @version 2.4.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2010-2015 by Vadim Kunicin (http://www.joomline.ru)
+ * @copyright (C) 2010-2016 by Vadim Kunicin (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 
@@ -30,17 +30,18 @@ class plgContentjllike extends JPlugin
     public function onAfterRender()
     {
         $app = JFactory::getApplication();
-        $image = $app->getUserState('jllike.image', '');
-        if(!empty($image))
+        $buffer = $app->getBody();
+        if($buffer !== null)
         {
-            $app->setUserState('jllike.image', '');
-            $buffer = $app->getBody();
-            if($buffer !== null)
+            $image = $app->getUserState('jllike.image', '');
+            if(!empty($image))
             {
+            $app->setUserState('jllike.image', '');
                 $html = "  <link rel=\"image_src\" href=\"". $image ."\" />\n</head>";
                 $buffer = String::str_ireplace('</head>', $html, $buffer, 1);
-                $app->setBody($buffer);
             }
+            $buffer = String::str_ireplace('<meta name="og:', '<meta property="og:', $buffer);
+            $app->setBody($buffer);
         }
     }
 
@@ -92,7 +93,7 @@ class plgContentjllike extends JPlugin
         }
 
         $print = JRequest::getInt('print', 0);
-		
+
 		$root = JURI::getInstance()->toString(array('host'));
         $url = $this->protokol . $this->params->get('pathbase', '') . str_replace('www.', '', $root);
 
@@ -150,7 +151,7 @@ class plgContentjllike extends JPlugin
 					If(!empty($article->images))
 					{
 						$images = json_decode($article->images);
-	
+
 						if(!empty($images->image_intro))
 						{
 							$image = $images->image_intro;
@@ -159,13 +160,13 @@ class plgContentjllike extends JPlugin
 						{
 							$image = $images->image_fulltext;
 						}
-	
+
 						if(!empty($image))
 						{
 							$image = JURI::root().$image;
 						}
 					}
-                    
+
                 }
                 else
                 {
@@ -206,7 +207,6 @@ class plgContentjllike extends JPlugin
                     }
                 }
                 break;
-
             default:
                 break;
         }

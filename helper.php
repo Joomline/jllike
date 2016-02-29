@@ -2,7 +2,7 @@
 /**
  * jllike
  *
- * @version 2.3.0
+ * @version 2.4.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
  * @copyright (C) 2010-2016 by Vadim Kunicin (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -57,6 +57,11 @@ class PlgJLLikeHelper
         {
             $position_buttons = '_left';
         }
+        else if
+        ($position_content == 2)
+        {
+            $position_buttons = '_center';
+        }
         else
         {
             $position_buttons = '';
@@ -75,7 +80,7 @@ class PlgJLLikeHelper
 
         if($enable_opengraph)
         {
-            $this->addOpenGraphTags($title, $desc, $image);
+            $this->addOpenGraphTags($title, $desc, $image, $link);
         }
 		$donatelink = JText::_('PLG_JLLIKEPRO_DONATE_LINK');
         $titlefc = JText::_('PLG_JLLIKEPRO_TITLE_FC');
@@ -87,6 +92,44 @@ class PlgJLLikeHelper
         $titleli = JText::_('PLG_JLLIKEPRO_TITLE_LI');
         $titlepi = JText::_('PLG_JLLIKEPRO_TITLE_PI');
         $titleAll = JText::_('PLG_JLLIKEPRO_TITLE_ALL');
+
+        $providers = array();
+        if ($this->params->get('addfacebook', 1)) {
+            $order = $this->params->get('facebook_order', 1);
+            $providers[$order] = array('title' => $titlefc, 'class' => 'fb');
+        }
+        if ($this->params->get('addvk', 1)) {
+            $order = $this->params->get('vk_order', 2);
+            $providers[$order] = array('title' => $titlevk, 'class' => 'vk');
+        }
+        if ($this->params->get('addtw', 1)) {
+            $order = $this->params->get('tw_order', 3);
+            $providers[$order] = array('title' => $titletw, 'class' => 'tw');
+        }
+        if ($this->params->get('addod', 1)) {
+            $order = $this->params->get('od_order', 4);
+            $providers[$order] = array('title' => $titleod, 'class' => 'ok');
+        }
+        if ($this->params->get('addgp', 1)) {
+            $order = $this->params->get('gp_order', 5);
+            $providers[$order] = array('title' => $titlegg, 'class' => 'gp');
+        }
+        if ($this->params->get('addmail', 1)) {
+            $order = $this->params->get('mail_order', 6);
+            $providers[$order] = array('title' => $titlemm, 'class' => 'ml');
+        }
+        if ($this->params->get('addlin', 1)) {
+            $order = $this->params->get('lin_order', 7);
+            $providers[$order] = array('title' => $titleli, 'class' => 'ln');
+        }
+        if ($this->params->get('addpi', 1)) {
+            $order = $this->params->get('pi_order', 8);
+            $providers[$order] = array('title' => $titlepi, 'class' => 'pinteres');
+        }
+
+        ksort($providers);
+        reset($providers);
+
         $scriptPage = '';
         $scriptPage .= <<<HTML
 				<div class="jllikeproSharesContayner jllikepro_{$id}">
@@ -104,7 +147,7 @@ HTML;
         $buttonText = String::trim($this->params->get('button_text', ''));
 
         if(!empty($buttonText)){
-            $scriptPage .= '<div class="button_text">'.$buttonText.'</div>';
+            $scriptPage .= '<div class="button_text likes-block'.$position_buttons.'">'.$buttonText.'</div>';
         }
 
         $scriptPage .= <<<HTML
@@ -112,72 +155,17 @@ HTML;
 				<div class="event-container" >
 				<div class="likes-block$position_buttons">
 HTML;
-        if ($this->params->get('addfacebook', 0)) {
+
+        foreach($providers as $v)
+        {
             $scriptPage .= <<<HTML
-					<a title="$titlefc" class="like l-fb" id="l-fb-$id">
-					<i class="l-ico"></i>
-					<span class="l-count"></span>
-					</a>
-HTML;
-        }
-        if ($this->params->get('addvk', 0)) {
-            $scriptPage .= <<<HTML
-					<a title="$titlevk" class="like l-vk" id="l-vk-$id">
-					<i class="l-ico"></i>
-					<span class="l-count"></span>
-					</a>
-HTML;
-        }
-        if ($this->params->get('addtw', 0)) {
-            $scriptPage .= <<<HTML
-					<a title="$titletw" class="like l-tw" id="l-tw-$id">
-					<i class="l-ico"></i>
-					<span class="l-count"></span>
-					</a>
-HTML;
-        }
-        if ($this->params->get('addod', 0)) {
-            $scriptPage .= <<<HTML
-					<a title="$titleod" class="like l-ok" id="l-ok-$id">
-					<i class="l-ico"></i>
-					<span class="l-count"></span>
-					</a>
-HTML;
-        }
-        if ($this->params->get('addgp', 0)) {
-            $scriptPage .= <<<HTML
-					<a title="$titlegg" class="like l-gp" id="l-gp-$id">
-					<i class="l-ico"></i>
-					<span class="l-count"></span>
-					</a>
-HTML;
-        }
-        if ($this->params->get('addmail', 0)) {
-            $scriptPage .= <<<HTML
-					<a title="$titlemm" class="like l-ml" id="l-ml-$id">
+					<a title="{$v['title']}" class="like l-{$v['class']}" id="l-{$v['class']}-$id">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
 					</a>
 HTML;
         }
 
-        if ($this->params->get('addlin', 0)) {
-            $scriptPage .= <<<HTML
-					<a title="$titleli" class="like l-ln" id="l-ln-$id">
-					<i class="l-ico"></i>
-					<span class="l-count"></span>
-					</a>
-HTML;
-        }
-
-        if ($this->params->get('addpi', 1)) {
-            $scriptPage .= <<<HTML
-					<a title="$titlepi" class="like l-pinteres" id="l-pinteres-$id">
-					<i class="l-ico"></i>
-					<span class="l-count"></span>
-					</a>
-HTML;
-        }
 		if ($this->params->get('addall', 1)) {
         $scriptPage .= <<<HTML
 					<a title="$titleAll" class="l-all" id="l-all-$id">
@@ -187,10 +175,8 @@ HTML;
 HTML;
 		}
         $scriptPage .= <<<HTML
-
 					</div>
 				</div>
-				
 			</div>
 			<div class="likes-block$position_buttons">
 			$donatelink
@@ -278,6 +264,23 @@ SCRIPT;
             .jllikeproSharesContayner span {height: '.$btn_dimensions.'px;line-height: '.$btn_dimensions.'px;font-size: '.$font_size.'rem;}
         ');
 
+        if(!$isCategory && $this->params->get('enable_mobile_css',1) == 1){
+            $doc->addStyleDeclaration('
+            @media screen and (max-width:800px) {
+                .jllikeproSharesContayner {position: fixed;right: 0;bottom: 0; z-index: 999999; background-color: #fff!important;width: 100%;}
+                .jllikeproSharesContayner .event-container > div {border-radius: 0; padding: 0; display: block;}
+                .like .l-count {display:none}
+                .jllikeproSharesContayner a {border-radius: 0!important;margin: 0!important;}
+                .l-all-count {margin-left: 10px; margin-right: 10px;}
+                .jllikeproSharesContayner i {width: 44px!important; border-radius: 0!important;}
+                .l-ico {background-position: 50%!important}
+                .likes-block_left {text-align:left;}
+                .likes-block_right {text-align:right;}
+                .likes-block_center {text-align:center;}
+                .button_text {display: none;}
+            }
+            ');
+        }
     }
 
     function getShareText($metadesc, $introtext, $text)
@@ -345,7 +348,7 @@ SCRIPT;
         }
 
 		$desc = strip_tags($desc);
-		
+
         return $desc;
     }
 
@@ -428,7 +431,7 @@ SCRIPT;
         return $text;
     }
 
-    private function addOpenGraphTags($title='', $text='', $image='')
+    private function addOpenGraphTags($title='', $text='', $image='', $url='')
     {
         $doc = JFactory::getDocument();
 
@@ -443,5 +446,8 @@ SCRIPT;
             $doc->setMetaData('og:title', $title);
         if($text)
             $doc->setMetaData('og:description', $text);
+        if($url)
+            $doc->setMetaData('og:url', $url);
     }
+
 }

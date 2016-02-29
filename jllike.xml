@@ -217,6 +217,15 @@
                         label="PLG_JLLIKEPRO_PARENT_CONTAYNER_LABEL"
                         description="PLG_JLLIKEPRO_PARENT_CONTAYNER_DESC"
                         />
+				 <field
+						name="enable_mobile_css"
+						 type="radio"
+						default="1"
+						label="PLG_JLLIKEPRO_ENABLE_MOBILE_CSS"
+						 description="PLG_JLLIKEPRO_ENABLE_MOBILE_CSS_DESC">
+						<option value="0">PLG_JLLIKEPRO_NO</option>
+						<option value="1">PLG_JLLIKEPRO_YES</option>
+				</field>
                 <field
                         name="punycode_convert"
                         type="radio"
