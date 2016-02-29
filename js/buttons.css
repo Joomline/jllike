@@ -70,22 +70,8 @@ body>p:first-child { display: none }
 .l-all-count {margin-left: 20px;margin-right: 20px;}
 .likes-block_left {text-align:left;}
 .likes-block_right {text-align:right;}
+.likes-block_center {text-align:center;}
 .event-container {padding-left: 12px;padding-right: 12px;}
 .event-container .like .l-count {color: #FFF;}
 .jllikeproSharesContayner a:hover { opacity: 0.85; }
-.jllikeproSharesContayner a {margin-bottom: 6px;}
-
-/*
-@media screen and (max-width:800px) {
-.jllikeproSharesContayner {position: fixed;right: 0;bottom: 0; z-index: 999999; background-color: #fff!important;width: 100%;}
-.jllikeproSharesContayner .event-container > div {border-radius: 0; padding: 0; display: block;}
-.like .l-count {display:none}
-.jllikeproSharesContayner a {border-radius: 0!important;margin: 0!important;}
-.l-all-count {margin-left: 10px; margin-right: 10px;}	
-.jllikeproSharesContayner i {width: 44px!important; border-radius: 0!important;}
-.l-ico {background-position: 50%!important}
-.likes-block_right {text-align:left;}
-.button_text {display: none;}
-.blog .jllikeproSharesContayner{display:none}
-.itemListView .jllikeproSharesContayner{display:none}
-}*/
+.jllikeproSharesContayner a {margin-bottom: 6px; text-decoration: none !important;}

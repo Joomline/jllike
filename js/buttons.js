@@ -4,7 +4,6 @@ var jllikeproShareUrls = {
     pinteres: {},
     linkedin: {}
 };
-var jllikeproAllCounerValue = 0;
 
 jQuery.noConflict();
 (function ($, w, d, undefined) {
@@ -320,7 +319,7 @@ jQuery.noConflict();
                                 var elem = $('#'+id);
                                 elem.addClass('like-not-empty');
                                 $('span.l-count', elem).text(data.shares);
-                                jllikeproAllCouner(elem, data.shares);
+                                jllikeproAllCouner(elem);
                             }
                         }
                     }
@@ -368,7 +367,7 @@ jQuery.noConflict();
                             var elem = $('#'+id);
                             elem.addClass('like-not-empty');
                             $('span.l-count', elem).text(data.count);
-                            jllikeproAllCouner(elem, data.count);
+                            jllikeproAllCouner(elem);
                         }
                     }
                 });
@@ -382,7 +381,7 @@ jQuery.noConflict();
             },
 
             /*@properties*/
-            countServiceUrl: 'https://urls.api.twitter.com/1/urls/count.json?url='
+         //   countServiceUrl: 'https://urls.api.twitter.com/1/urls/count.json?url='
         });
 
 
@@ -405,7 +404,7 @@ jQuery.noConflict();
                         var elem = $('#'+id);
                         elem.addClass('like-not-empty');
                         $('span.l-count', elem).text(count);
-                        jllikeproAllCouner(elem, count);
+                        jllikeproAllCouner(elem);
                     }
                 }
 
@@ -469,7 +468,7 @@ jQuery.noConflict();
                         var elem = $('#'+elementId);
                         elem.addClass('like-not-empty');
                         $('span.l-count', elem).text(count);
-                        jllikeproAllCouner(elem, count);
+                        jllikeproAllCouner(elem);
                     }
                 }
 
@@ -536,7 +535,7 @@ jQuery.noConflict();
                         var elem = $('#'+id);
                         elem.addClass('like-not-empty');
                         $('span.l-count', elem).text(data);
-                        jllikeproAllCouner(elem, data);
+                        jllikeproAllCouner(elem);
                     }
                 });
 
@@ -581,7 +580,7 @@ jQuery.noConflict();
                             var elem = $('#'+id);
                             elem.addClass('like-not-empty');
                             $('span.l-count', elem).text(shares);
-                            jllikeproAllCouner(elem, shares);
+                            jllikeproAllCouner(elem);
                         }
                     }
                 }
@@ -636,7 +635,7 @@ jQuery.noConflict();
                         var elem = $('#'+id);
                         elem.addClass('like-not-empty');
                         $('span.l-count', elem).text(shares);
-                        jllikeproAllCouner(elem, shares);
+                        jllikeproAllCouner(elem);
                     }
 
                 }
@@ -689,7 +688,7 @@ jQuery.noConflict();
                             var elem = $('#'+id);
                             elem.addClass('like-not-empty');
                             $('span.l-count', elem).text(data.count);
-                            jllikeproAllCouner(elem, data.count);
+                            jllikeproAllCouner(elem);
                         }
                     }
                 }
@@ -716,11 +715,19 @@ jQuery.noConflict();
     /***pinteres ***/////
 //+++++++++    
 
-    var jllikeproAllCouner = function(element, plus)
+    var jllikeproAllCouner = function(element)
     {
-        var counterSpan = $(element).parents('.jllikeproSharesContayner').find('span.l-all-count');
-        jllikeproAllCounerValue += parseInt(plus);
-        counterSpan.text(jllikeproAllCounerValue);
+        var parent = $(element).parents('.jllikeproSharesContayner');
+        var counterSpan = parent.find('span.l-all-count');
+        var counterValue = 0;
+        var tmpVal;
+        parent.find('.l-count').not('.l-all-count').each(function(){
+            tmpVal = $(this).text();
+            if(tmpVal != ''){
+                counterValue += parseInt(tmpVal);
+            }
+        });
+        counterSpan.text(counterValue);
     };
 
     $.fn.socialButton = function (config) {
