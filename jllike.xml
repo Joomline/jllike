@@ -7,7 +7,7 @@
     <license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
     <authorEmail>sale@joomline.ru</authorEmail>
     <authorUrl>http://joomline.ru</authorUrl>
-    <version>2.3.0</version>
+    <version>2.4.0</version>
     <description>PLG_JLLIKE_DESC_ALL</description>
     <files>
         <folder>js</folder>
@@ -41,6 +41,15 @@
                     <option value="1">PLG_JLLIKEPRO_YES</option>
                 </field>
                 <field
+                        name="facebook_order"
+                        type="text"
+                        label="PLG_JLLIKEPRO_ORDER"
+                        description="PLG_JLLIKEPRO_ORDER_DESC"
+                        default="1"
+                        required="true"
+                        filter="integer"
+                />
+                <field
                         name="addvk"
                         type="radio"
                         default="1"
@@ -50,6 +59,15 @@
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
                 </field>
+                <field
+                        name="vk_order"
+                        type="text"
+                        label="PLG_JLLIKEPRO_ORDER"
+                        description="PLG_JLLIKEPRO_ORDER_DESC"
+                        default="2"
+                        required="true"
+                        filter="integer"
+                />
                 <field
                         name="addtw"
                         type="radio"
@@ -61,6 +79,15 @@
                     <option value="1">PLG_JLLIKEPRO_YES</option>
                 </field>
                 <field
+                        name="tw_order"
+                        type="text"
+                        label="PLG_JLLIKEPRO_ORDER"
+                        description="PLG_JLLIKEPRO_ORDER_DESC"
+                        default="3"
+                        required="true"
+                        filter="integer"
+                />
+                <field
                         name="addod"
                         type="radio"
                         default="1"
@@ -71,6 +98,15 @@
                     <option value="1">PLG_JLLIKEPRO_YES</option>
                 </field>
                 <field
+                        name="od_order"
+                        type="text"
+                        label="PLG_JLLIKEPRO_ORDER"
+                        description="PLG_JLLIKEPRO_ORDER_DESC"
+                        default="4"
+                        required="true"
+                        filter="integer"
+                />
+                <field
                         name="addgp"
                         type="radio" default="1"
                         label="PLG_JLLIKEPRO_ENABLE_GG"
@@ -79,6 +115,15 @@
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
                 </field>
+                <field
+                        name="gp_order"
+                        type="text"
+                        label="PLG_JLLIKEPRO_ORDER"
+                        description="PLG_JLLIKEPRO_ORDER_DESC"
+                        default="5"
+                        required="true"
+                        filter="integer"
+                />
                 <field
                         name="addmail"
                         type="radio"
@@ -90,6 +135,15 @@
                     <option value="1">PLG_JLLIKEPRO_YES</option>
                 </field>
                 <field
+                        name="mail_order"
+                        type="text"
+                        label="PLG_JLLIKEPRO_ORDER"
+                        description="PLG_JLLIKEPRO_ORDER_DESC"
+                        default="6"
+                        required="true"
+                        filter="integer"
+                />
+                <field
                         name="addlin"
                         type="radio"
                         default="1"
@@ -99,6 +153,15 @@
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
                 </field>
+                <field
+                        name="lin_order"
+                        type="text"
+                        label="PLG_JLLIKEPRO_ORDER"
+                        description="PLG_JLLIKEPRO_ORDER_DESC"
+                        default="7"
+                        required="true"
+                        filter="integer"
+                />
                 <field name="addpi"
                        type="radio"
                        default="1"
@@ -108,6 +171,15 @@
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
                 </field>
+                <field
+                        name="pi_order"
+                        type="text"
+                        label="PLG_JLLIKEPRO_ORDER"
+                        description="PLG_JLLIKEPRO_ORDER_DESC"
+                        default="8"
+                        required="true"
+                        filter="integer"
+                />
 				<field name="addall"
                        type="radio"
                        default="1"
@@ -292,6 +364,7 @@
                         >
                     <option value="0">PLG_JLLIKEPRO_LEFT</option>
                     <option value="1">PLG_JLLIKEPRO_RIGHT</option>
+					<option value="2">PLG_JLLIKEPRO_CENTER</option>
                 </field>
                 <field
                         name="btn_border_radius"
