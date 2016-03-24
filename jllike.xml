@@ -7,10 +7,11 @@
     <license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
     <authorEmail>sale@joomline.ru</authorEmail>
     <authorUrl>http://joomline.ru</authorUrl>
-    <version>2.4.0</version>
+    <version>2.5.0</version>
     <description>PLG_JLLIKE_DESC_ALL</description>
     <files>
         <folder>js</folder>
+		<folder>language</folder>
         <folder>models</folder>
         <filename plugin="jllike">jllike.php</filename>
         <filename>helper.php</filename>
@@ -236,6 +237,16 @@
                     <option value="full">PLG_JLLIKEPRO_FULL</option>
                     <option value="meta">PLG_JLLIKEPRO_META</option>
                 </field>
+				<field
+						name="clear_plugin_tags"
+						type="radio"
+						default="1"
+						label="PLG_JLLIKEPRO_CLEAR_PLUGIN_TAGS"
+						description="PLG_JLLIKEPRO_CLEAR_PLUGIN_TAGS_DESC"
+						>
+					<option value="0">PLG_JLLIKEPRO_NO</option>
+					<option value="1">PLG_JLLIKEPRO_YES</option>
+				</field>
                 <field
                         name="default_image"
                         type="media"

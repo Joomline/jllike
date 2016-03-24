@@ -326,10 +326,6 @@ jQuery.noConflict();
                 });
             },
 
-            getCountLink: function (url) {
-                return this.countServiceUrl + encodeURIComponent(url);
-            },
-
             getShareLink: function ()
             {
                 var url = 'https://www.facebook.com/sharer/sharer.php?app_id=114545895322903&sdk=joey&u='
@@ -506,7 +502,7 @@ jQuery.noConflict();
             },
 
             getCountLink: function (id, linkToShare) {
-                return this.countServiceUrl + id + '&ref=' + linkToShare;
+                return this.countServiceUrl + id + '&ref=' + encodeURIComponent(linkToShare);
             },
 
             /*@properties*/

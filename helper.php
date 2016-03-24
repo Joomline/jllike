@@ -74,6 +74,15 @@ class PlgJLLikeHelper
         }
 
         $desc = strip_tags($desc);
+		$desc = preg_replace('/&nbsp;/', ' ', $desc);
+		$desc = preg_replace('/&amp;/', ' ', $desc);
+		$desc = preg_replace('/&quot;/', ' ', $desc);
+		
+		if($clear_plugin_tags)
+			{
+				$desc = preg_replace('/{.+?}/', '', $desc);
+			}	
+		
         $desc = $this->limittext($desc, 200);
         $desc = str_replace(array('"', "'"), '', $desc);
         $desc = str_replace("\n", ' ', $desc);
@@ -288,6 +297,7 @@ SCRIPT;
         $desc_source_one = $this->params->get('desc_source_one', 'desc');
         $desc_source_two = $this->params->get('desc_source_two', 'full');
         $desc_source_three = $this->params->get('desc_source_three', 'meta');
+		$clear_plugin_tags = $this->params->get('clear_plugin_tags', 1);
 
         switch($desc_source_one)
         {
