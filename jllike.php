@@ -23,7 +23,7 @@ class plgContentjllike extends JPlugin
     public function __construct(& $subject, $config)
     {
         parent::__construct($subject, $config);
-        $this->loadLanguage('plg_content_jllikepro', JPATH_ROOT.'/plugins/content/jllikepro');
+        $this->loadLanguage('plg_content_jllike', JPATH_ROOT.'/plugins/content/jllike');
         $this->protokol = (JFactory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
     }
 
