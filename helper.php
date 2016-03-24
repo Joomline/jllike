@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.plugin.plugin');
 
-use \Joomla\String\String;
+use \Joomla\String\StringHelper;
 
 class PlgJLLikeHelper
 {
@@ -153,7 +153,7 @@ HTML;
             $scriptPage .= '<div class="disable_more_likes"></div>';
         }
 
-        $buttonText = String::trim($this->params->get('button_text', ''));
+        $buttonText = StringHelper::trim($this->params->get('button_text', ''));
 
         if(!empty($buttonText)){
             $scriptPage .= '<div class="button_text likes-block'.$position_buttons.'">'.$buttonText.'</div>';
@@ -420,7 +420,7 @@ SCRIPT;
     private function limittext($wordtext, $maxchar)
     {
         $text = '';
-        $textLength = String::strlen($wordtext);
+        $textLength = StringHelper::strlen($wordtext);
 
         if($textLength <= $maxchar)
         {
@@ -431,7 +431,7 @@ SCRIPT;
 
         foreach ($words as $word)
         {
-            if(String::strlen($text . ' ' . $word) > $maxchar - 1)
+            if(StringHelper::strlen($text . ' ' . $word) > $maxchar - 1)
             {
                 break;
             }

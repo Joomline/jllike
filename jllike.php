@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 jimport('joomla.plugin.plugin');
 
 require_once JPATH_ROOT.'/plugins/content/jllike/helper.php';
-use \Joomla\String\String;
+use \Joomla\String\StringHelper;
 
 class plgContentjllike extends JPlugin
 {
@@ -38,9 +38,9 @@ class plgContentjllike extends JPlugin
             {
             $app->setUserState('jllike.image', '');
                 $html = "  <link rel=\"image_src\" href=\"". $image ."\" />\n</head>";
-                $buffer = String::str_ireplace('</head>', $html, $buffer, 1);
+                $buffer = StringHelper::str_ireplace('</head>', $html, $buffer, 1);
             }
-            $buffer = String::str_ireplace('<meta name="og:', '<meta property="og:', $buffer);
+            $buffer = StringHelper::str_ireplace('<meta name="og:', '<meta property="og:', $buffer);
             $app->setBody($buffer);
         }
     }
