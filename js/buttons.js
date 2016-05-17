@@ -123,9 +123,13 @@ jQuery.noConflict();
                 $parent = this.$context,
                 button = this;
 
-            $parent = $parent.parents(jllickeproSettings.parentContayner).parent();
-
-
+            if(jQuery(jllickeproSettings.parentContayner).length > 0)
+            {
+                $parent = $parent.parents(jllickeproSettings.parentContayner).parent();
+            }
+            else{
+                $parent = $parent.parents('.jllikeproSharesContayner').parent();
+            }
             var
                 $tmpParent,
                 href = $('input.link-to-share', $parent).val(),
@@ -152,7 +156,7 @@ jQuery.noConflict();
             if(!$summary.length){
                 $summary = $parent.parent().text();
             }
-            
+
             this.domenhref = w.location.protocol + "//" + w.location.host;
 
             this.linkhref = jllickeproSettings.url + w.location.pathname + w.location.search;
@@ -377,7 +381,7 @@ jQuery.noConflict();
             },
 
             /*@properties*/
-         //   countServiceUrl: 'https://urls.api.twitter.com/1/urls/count.json?url='
+            countServiceUrl: 'https://urls.api.twitter.com/1/urls/count.json?url='
         });
 
 
@@ -526,12 +530,33 @@ jQuery.noConflict();
             {
                 serviceURI = this.linkToShare;
                 var id = this.id;
-                return $.post(this.domenhref + '/plugins/content/jllike/models/ajax.php', {curl: serviceURI, variant: 'gp', tpget: jllickeproSettings.typeGet}, function (data) {
-                    if (data != 0) {
-                        var elem = $('#'+id);
-                        elem.addClass('like-not-empty');
-                        $('span.l-count', elem).text(data);
-                        jllikeproAllCouner(elem);
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://clients6.google.com/rpc',
+                    processData: true,
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        'method': 'pos.plusones.get',
+                        'id': this.linkToShare,
+                        'params': {
+                            'nolog': true,
+                            'id': this.linkToShare,
+                            'source': 'widget',
+                            'userId': '@viewer',
+                            'groupId': '@self'
+                        },
+                        'jsonrpc': '2.0',
+                        'key': 'p',
+                        'apiVersion': 'v1'
+                    }),
+                    success: function(response) {
+                        if (response.result.metadata.globalCounts.count > 0) {
+                            var elem = $('#'+id);
+                            elem.addClass('like-not-empty');
+                            $('span.l-count', elem).text(response.result.metadata.globalCounts.count);
+                            jllikeproAllCouner(elem);
+                        }
                     }
                 });
 

@@ -2,7 +2,7 @@
 /**
  * jllike
  *
- * @version 2.4.0
+ * @version 2.6.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
  * @copyright (C) 2010-2016 by Vadim Kunicin (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.plugin.plugin');
 
-use \Joomla\String\StringHelper;
+use Joomla\String\StringHelper;
 
 class PlgJLLikeHelper
 {
@@ -74,15 +74,6 @@ class PlgJLLikeHelper
         }
 
         $desc = strip_tags($desc);
-		$desc = preg_replace('/&nbsp;/', ' ', $desc);
-		$desc = preg_replace('/&amp;/', ' ', $desc);
-		$desc = preg_replace('/&quot;/', ' ', $desc);
-		
-		if($clear_plugin_tags)
-			{
-				$desc = preg_replace('/{.+?}/', '', $desc);
-			}	
-		
         $desc = $this->limittext($desc, 200);
         $desc = str_replace(array('"', "'"), '', $desc);
         $desc = str_replace("\n", ' ', $desc);
@@ -228,40 +219,17 @@ SCRIPT;
 
         $doc->addScriptDeclaration($script);
 
-        if(version_compare(JVERSION, '3.0', 'ge'))
-        {
-            JHtml::_('jquery.framework');
-			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.js?5");
-
-        }
-        else if ($this->params->get('load_libs',0) == 0)
-        {
-            if ($this->params->get('jqload',0) == 1)
+			JHtml::_('jquery.framework');		
+			 
+			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.js?6");
+	
+            if($this->params->get('enable_twit',0))
             {
-                $doc->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js");
+                $doc->addScript(JURI::base() . "plugins/content/jllike/js/twit.js");
             }
-            else if ($this->params->get('jqloadcont',0) == 1)
-            {
-                $doc->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js");
-            }
-            $doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.js?5");
 
-        }
-        else
-        {
-            if ($this->params->get('jqload',0) == 1)
-            {
-                $doc->addCustomTag('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>');
-            }
-            else if ($this->params->get('jqloadcont',0) == 1)
-            {
-                $doc->addCustomTag('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>');
-            }
-            $doc->addCustomTag('<script src="' . JURI::base() . 'plugins/content/jllike/js/buttons.js?5"></script>');
-
-        }
-
-        $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.css?2");
+       
+        $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.css?3");
 
         $btn_border_radius = (int)$this->params->get('btn_border_radius',15);
         $btn_dimensions = (int)$this->params->get('btn_dimensions',30);
@@ -297,7 +265,7 @@ SCRIPT;
         $desc_source_one = $this->params->get('desc_source_one', 'desc');
         $desc_source_two = $this->params->get('desc_source_two', 'full');
         $desc_source_three = $this->params->get('desc_source_three', 'meta');
-		$clear_plugin_tags = $this->params->get('clear_plugin_tags', 1);
+        $clear_plugin_tags = $this->params->get('clear_plugin_tags', 1);
 
         switch($desc_source_one)
         {
@@ -358,6 +326,14 @@ SCRIPT;
         }
 
 		$desc = strip_tags($desc);
+        $desc = preg_replace('/&nbsp;/', ' ', $desc);
+        $desc = preg_replace('/&amp;/', ' ', $desc);
+        $desc = preg_replace('/&quot;/', ' ', $desc);
+
+        if($clear_plugin_tags)
+        {
+            $desc = preg_replace('/{.+?}/', '', $desc);
+        }
 
         return $desc;
     }

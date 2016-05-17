@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.5" type="plugin" group="content" method="upgrade">
+<extension version="3.5.0" type="plugin" group="content" method="upgrade">
     <name>JoomLine Like</name>
     <author>JoomLine</author>
     <creationDate>26.01.2016</creationDate>
@@ -328,37 +328,7 @@
                         >
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
-                </field>
-				<field
-                        name="jqload"
-                        type="radio"
-                        default="1"
-                        label="PLG_JLLIKEPRO_JQLOAD_LABEL"
-                        description="PLG_JLLIKEPRO_JQLOAD_DESC"
-                        >
-					<option value="0">PLG_JLLIKEPRO_NO</option>	
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
-                </field>
-                <field
-                        name="jqloadcont"
-                        type="radio"
-                        default="0"
-                        label="PLG_JLLIKEPRO_JQLOADC_LABEL"
-                        description="PLG_JLLIKEPRO_JQLOADC_DESC">                    
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-					<option value="1">PLG_JLLIKEPRO_YES</option>
-                </field>
-                <field
-                        name="load_libs"
-                        type="radio"
-                        default="0"
-                        label="PLG_JLLIKEPRO_LOADLIBS_LABEL"
-                        description="PLG_JLLIKEPRO_LOADLIBS_DESC"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_SEC1</option>
-                    <option value="1">PLG_JLLIKEPRO_SEC2</option>
-                </field>
-                
+                </field>				               
             </fieldset>
 
 

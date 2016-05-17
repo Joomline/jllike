@@ -2,7 +2,7 @@
 /**
  * jllike
  *
- * @version 2.4.0
+ * @version 2.6.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
  * @copyright (C) 2010-2016 by Vadim Kunicin (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 jimport('joomla.plugin.plugin');
 
 require_once JPATH_ROOT.'/plugins/content/jllike/helper.php';
-use \Joomla\String\StringHelper;
+use Joomla\String\StringHelper;
 
 class plgContentjllike extends JPlugin
 {
@@ -206,7 +206,7 @@ class plgContentjllike extends JPlugin
                         $article->text = str_replace("{jllike}", "", $article->text) . $shares;
                     }
                 }
-                break;
+                break;            
             default:
                 break;
         }
