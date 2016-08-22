@@ -11,7 +11,19 @@ defined('_JEXEC') or die;
 
 jimport('joomla.plugin.plugin');
 
-use Joomla\String\StringHelper;
+if (version_compare(JVERSION, '3.5.0', 'ge'))
+{
+    if(!class_exists('StringHelper1')){
+        class StringHelper1 extends \Joomla\String\StringHelper{}
+    }
+}
+else
+{
+    if(!class_exists('StringHelper1')){
+        jimport('joomla.string.string');
+        class StringHelper1 extends JString{}
+    }
+}
 
 class PlgJLLikeHelper
 {
@@ -144,7 +156,7 @@ HTML;
             $scriptPage .= '<div class="disable_more_likes"></div>';
         }
 
-        $buttonText = StringHelper::trim($this->params->get('button_text', ''));
+        $buttonText = StringHelper1::trim($this->params->get('button_text', ''));
 
         if(!empty($buttonText)){
             $scriptPage .= '<div class="button_text likes-block'.$position_buttons.'">'.$buttonText.'</div>';
@@ -221,7 +233,7 @@ SCRIPT;
 
 			JHtml::_('jquery.framework');		
 			 
-			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.js?6");
+			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.js?7");
 	
             if($this->params->get('enable_twit',0))
             {
@@ -396,7 +408,7 @@ SCRIPT;
     private function limittext($wordtext, $maxchar)
     {
         $text = '';
-        $textLength = StringHelper::strlen($wordtext);
+        $textLength = StringHelper1::strlen($wordtext);
 
         if($textLength <= $maxchar)
         {
@@ -407,7 +419,7 @@ SCRIPT;
 
         foreach ($words as $word)
         {
-            if(StringHelper::strlen($text . ' ' . $word) > $maxchar - 1)
+            if(StringHelper1::strlen($text . ' ' . $word) > $maxchar - 1)
             {
                 break;
             }

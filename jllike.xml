@@ -7,7 +7,7 @@
     <license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
     <authorEmail>sale@joomline.ru</authorEmail>
     <authorUrl>http://joomline.ru</authorUrl>
-    <version>2.5.0</version>
+    <version>2.6.1</version>
     <description>PLG_JLLIKE_DESC_ALL</description>
     <files>
         <folder>js</folder>

@@ -318,11 +318,11 @@ jQuery.noConflict();
                         url: serviceURI,
                     dataType: 'jsonp',
                     success: function (data, status, jqXHR) {
-                        if (status == 'success' && typeof data.shares != 'undefined') {
-                            if (data.shares > 0) {
+                        if (status == 'success' && typeof data.share != 'undefined' && typeof data.share.share_count != 'undefined') {
+                            if (data.share.share_count > 0) {
                                 var elem = $('#'+id);
                                 elem.addClass('like-not-empty');
-                                $('span.l-count', elem).text(data.shares);
+                                $('span.l-count', elem).text(data.share.share_count);
                                 jllikeproAllCouner(elem);
                             }
                         }
@@ -356,22 +356,7 @@ jQuery.noConflict();
         = $.extend(TwitterButton.prototype,
         {
             /*@methods*/
-            countLikes: function () {
-                var serviceURI = this.getCountLink(this.linkToShare);
-                var id = this.id;
-                return $.ajax({
-                    url: serviceURI,
-                    dataType: 'jsonp',
-                    success: function (data, status, jqXHR) {
-                        if (status == 'success' & data.count > 0) {
-                            var elem = $('#'+id);
-                            elem.addClass('like-not-empty');
-                            $('span.l-count', elem).text(data.count);
-                            jllikeproAllCouner(elem);
-                        }
-                    }
-                });
-            },
+            countLikes: function () {},
 
             getShareLink: function () {
                 var text = cropText(this.summary,(140 - this.title.length - this.linkToShare.length));
