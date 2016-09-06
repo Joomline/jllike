@@ -40,6 +40,9 @@ jQuery.noConflict();
             mailButton: '.l-ml',
             linButton: '.l-ln',
             pinteresButton: '.l-pinteres',
+			LivejournalButton: '.l-lj',
+			BloggerButton: '.l-bl',
+			WeiboButton: '.l-wb',
             count: '.l-count',
             ico: '.l-ico',
             shareTitle: 'h2:eq(0)',
@@ -719,6 +722,75 @@ jQuery.noConflict();
         });
 
     /***pinteres ***/////
+	
+	/*** LiveJournal ***///	
+	 var LivejournalButton = function ($context, conf, index) {
+        this.init($context, conf, index);
+        this.type = 'livejournal';
+    };
+    LivejournalButton.prototype = new Button;
+    LivejournalButton.prototype
+        = $.extend(LivejournalButton.prototype,
+        {
+            /*@methods*/
+            countLikes: function () {},
+
+            getShareLink: function () {
+                return 'http://livejournal.com/update.bml?'
+                    + 'subject=' + encodeURIComponent(this.title)
+                    + '&event=' + encodeURIComponent('<a href="' + this.linkToShare + '">' + this.title + '</a> ' + this.summary);
+            },
+
+            /*@properties*/
+            countServiceUrl: 'http://livejournal.com/'
+        });
+	/*** LiveJournal ***///
+	
+	/*** Blogger ***///	
+	 var BloggerButton = function ($context, conf, index) {
+        this.init($context, conf, index);
+        this.type = 'Blogger';
+    };
+    BloggerButton.prototype = new Button;
+    BloggerButton.prototype
+        = $.extend(BloggerButton.prototype,
+        {
+            /*@methods*/
+            countLikes: function () {},
+
+            getShareLink: function () {
+                return 'https://www.blogger.com/blog-this.g?'
+                    + 'u=' + encodeURIComponent(this.linkToShare)
+                    + '&n=' + encodeURIComponent(this.title);
+            },
+
+            /*@properties*/
+            countServiceUrl: 'https://www.blogger.com/'
+        });
+		
+	
+	/*** Weibo ***///	
+	var WeiboButton = function ($context, conf, index) {
+        this.init($context, conf, index);
+        this.type = 'Weibo';
+    };
+   WeiboButton.prototype = new Button;
+    WeiboButton.prototype
+        = $.extend(WeiboButton.prototype,
+        {
+            /*@methods*/
+            countLikes: function () {},
+            getShareLink: function () {
+                return 'http://service.weibo.com/share/share.php?'
+                    + 'url=' + encodeURIComponent(this.linkToShare)
+                    + '&title=' + encodeURIComponent(this.title);
+            },
+
+            /*@properties*/
+            countServiceUrl: 'http://service.weibo.com/'
+        });
+	/*** Weibo ***///
+	
 //+++++++++    
 
     var jllikeproAllCouner = function(element)
@@ -763,7 +835,16 @@ jQuery.noConflict();
                     b = new linButton($element, conf, Button.lastIndex);
                 } else if ($element.is(conf.selectors.pinteresButton)) {
                     b = new pinteresButton($element, conf, Button.lastIndex);
+                } else if ($element.is(conf.selectors.LivejournalButton)) {
+                    b = new LivejournalButton($element, conf, Button.lastIndex);
+                } else if ($element.is(conf.selectors.BloggerButton)) {
+                    b = new BloggerButton($element, conf, Button.lastIndex);
+                } else if ($element.is(conf.selectors.WeiboButton)) {
+                    b = new WeiboButton($element, conf, Button.lastIndex);
                 }
+				
+				
+				
 
                 $
                     .when(b.ajaxRequest)

@@ -103,6 +103,9 @@ class PlgJLLikeHelper
         $titlemm = JText::_('PLG_JLLIKEPRO_TITLE_MM');
         $titleli = JText::_('PLG_JLLIKEPRO_TITLE_LI');
         $titlepi = JText::_('PLG_JLLIKEPRO_TITLE_PI');
+		$titlelj = JText::_('PLG_JLLIKEPRO_TITLE_LJ');
+		$titlebl = JText::_('PLG_JLLIKEPRO_TITLE_BL');
+		$titlewb = JText::_('PLG_JLLIKEPRO_TITLE_WB');
         $titleAll = JText::_('PLG_JLLIKEPRO_TITLE_ALL');
 
         $providers = array();
@@ -138,6 +141,18 @@ class PlgJLLikeHelper
             $order = $this->params->get('pi_order', 8);
             $providers[$order] = array('title' => $titlepi, 'class' => 'pinteres');
         }
+		if ($this->params->get('addlj', 1)) {
+            $order = $this->params->get('lj_order', 9);
+            $providers[$order] = array('title' => $titlelj, 'class' => 'lj');
+        }
+		if ($this->params->get('addbl', 1)) {
+            $order = $this->params->get('bl_order', 10);
+            $providers[$order] = array('title' => $titlebl, 'class' => 'bl');
+        }		
+				if ($this->params->get('addwb', 1)) {
+            $order = $this->params->get('wb_order', 11);
+            $providers[$order] = array('title' => $titlewb, 'class' => 'wb');
+        }		
 
         ksort($providers);
         reset($providers);
@@ -233,7 +248,7 @@ SCRIPT;
 
 			JHtml::_('jquery.framework');		
 			 
-			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.js?7");
+			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.js?8");
 	
             if($this->params->get('enable_twit',0))
             {
@@ -241,7 +256,7 @@ SCRIPT;
             }
 
        
-        $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.css?3");
+        $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.css?4");
 
         $btn_border_radius = (int)$this->params->get('btn_border_radius',15);
         $btn_dimensions = (int)$this->params->get('btn_dimensions',30);

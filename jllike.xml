@@ -180,7 +180,61 @@
                         default="8"
                         required="true"
                         filter="integer"
-                />
+                />				
+				<field name="addlj"
+                       type="radio"
+                       default="1"
+                       label="PLG_JLLIKEPRO_ENABLE_LJ"
+                       description=""
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="lj_order"
+                        type="text"
+                        label="PLG_JLLIKEPRO_ORDER"
+                        description="PLG_JLLIKEPRO_ORDER_DESC"
+                        default="9"
+                        required="true"
+                        filter="integer"
+                />				
+					<field name="addbl"
+                       type="radio"
+                       default="1"
+                       label="PLG_JLLIKEPRO_ENABLE_BL"
+                       description=""
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="bl_order"
+                        type="text"
+                        label="PLG_JLLIKEPRO_ORDER"
+                        description="PLG_JLLIKEPRO_ORDER_DESC"
+                        default="10"
+                        required="true"
+                        filter="integer"
+                />				
+				<field name="addwb"
+                       type="radio"
+                       default="1"
+                       label="PLG_JLLIKEPRO_ENABLE_WB"
+                       description=""
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="wb_order"
+                        type="text"
+                        label="PLG_JLLIKEPRO_ORDER"
+                        description="PLG_JLLIKEPRO_ORDER_DESC"
+                        default="12"
+                        required="true"
+                        filter="integer"
+                />					
 				<field name="addall"
                        type="radio"
                        default="1"
