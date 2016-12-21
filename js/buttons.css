@@ -1,31 +1,8 @@
 .jllikeproSharesContayner { padding: 0 }
 .jllikeproSharesContayner .event-container { padding: 0; width: auto; height: auto;}
-.jllikeproSharesContayner .event-container>div {
-padding: 10px 10px 10px 5px;
-width: auto;
-height: auto;
-
-}
+.jllikeproSharesContayner .event-container>div {padding: 10px 10px 10px 5px; width: auto; height: auto;}
 .jllikeproSharesContayner
-a {
-float: none;
-width: auto;
-height: auto;
-display: inline-block;
-background-image: none;
-font-size: 0;
-vertical-align: top;
-padding: 0;
-margin: 0 0 0 5px;
-background-color: rgba(18,35,52,.1);
--webkit-border-radius: 15px;
--webkit-background-clip: padding-box;
--moz-border-radius: 15px;
--moz-background-clip: padding;
-border-radius: 15px;
-background-clip: padding-box;
-background-position: 0 center;
-}
+a {float: none; width: auto; height: auto; display: inline-block; background-image: none; font-size: 0; vertical-align: top; padding: 0; margin: 0 0 0 5px; background-color: rgba(18,35,52,.1); -webkit-border-radius: 15px; -webkit-background-clip: padding-box; -moz-border-radius: 15px; -moz-background-clip: padding; border-radius: 15px; background-clip: padding-box; background-position: 0 center;}
 .jllikeproSharesContayner a.like-not-empty
 span { padding: 0 10px }
 .jllikeproSharesContayner a.l-fb .l-ico {
@@ -75,8 +52,8 @@ background-repeat: no-repeat;}
 i {vertical-align: top;float: none;display: inline-block;width: 30px;height: 30px;background-image: none;-webkit-border-radius: 50%;-webkit-background-clip: padding-box;-moz-border-radius: 50%;-moz-background-clip: padding;border-radius: 50%;background-clip: padding-box;position: static;}
 .jllikeproSharesContayner span {vertical-align: top;float: none;display: inline-block;width: auto;height: 30px;background-image: none;position: static;font-size: 1rem;line-height: 30px;color: #122334;-webkit-transition: all .2s;-moz-transition: all .2s;-o-transition: all .2s;transition: all .2s;}
 body>p:first-child { display: none }
-.like .l-count { cursor: default }
-.like i { cursor: pointer }
+.like { cursor: default }
+.like i, .l-count { cursor: pointer }
 .l-all i {display: none;}
 .l-all-count {margin-left: 20px;margin-right: 20px;}
 .likes-block_left {text-align:left;}

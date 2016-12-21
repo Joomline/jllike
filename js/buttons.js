@@ -102,9 +102,9 @@ jQuery.noConflict();
                 .bind('click', Button.returnFalse);
 
             this
-                .$ico
+                .$ico.parent()
                 .bind('click', this, this.openShareWindow);
-
+						
         },
 
         setCountValue: function (count) {
@@ -423,9 +423,10 @@ jQuery.noConflict();
 //                return 'http://vkontakte.ru/share.php?'
                 return 'http://vk.com/share.php?'
                     + 'url=' + encodeURIComponent(this.linkToShare)
-                    + '&title=' + encodeURIComponent(this.title)
-                    + '&image=' + encodeURIComponent(this.images[0])
-                    + (this.summary ? '&description=' + encodeURIComponent(this.summary) : '');
+                    // + '&title=' + encodeURIComponent(this.title)
+                    // + '&image=' + encodeURIComponent(this.images[0])
+                    // + (this.summary ? '&description=' + encodeURIComponent(this.summary) : '')
+                    ;
             },
 
             /*@properties*/
