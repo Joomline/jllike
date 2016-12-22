@@ -30,57 +30,57 @@
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
         </field>
-        <field default="1" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="facebook_order" required="true" type="text"/>
+        <field default="1" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="facebook_order" required="true" type="text" />
         <field default="1" description="" label="PLG_JLLIKEPRO_ENABLE_VK" name="addvk" type="radio">
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
         </field>
-        <field default="2" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="vk_order" required="true" type="text"/>
+        <field default="2" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="vk_order" required="true" type="text" />
         <field default="1" description="" label="PLG_JLLIKEPRO_ENABLE_TW" name="addtw" type="radio">
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
         </field>
-        <field default="3" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="tw_order" required="true" type="text"/>
+        <field default="3" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="tw_order" required="true" type="text" />
         <field default="1" description="" label="PLG_JLLIKEPRO_ENABLE_OD" name="addod" type="radio">
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
         </field>
-        <field default="4" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="od_order" required="true" type="text"/>
+        <field default="4" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="od_order" required="true" type="text" />
         <field default="1" description="" label="PLG_JLLIKEPRO_ENABLE_GG" name="addgp" type="radio">
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
         </field>
-        <field default="5" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="gp_order" required="true" type="text"/>
+        <field default="5" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="gp_order" required="true" type="text" />
         <field default="1" description="" label="PLG_JLLIKEPRO_ENABLE_MM" name="addmail" type="radio">
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
         </field>
-        <field default="6" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="mail_order" required="true" type="text"/>
+        <field default="6" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="mail_order" required="true" type="text" />
         <field default="1" description="" label="PLG_JLLIKEPRO_ENABLE_LI" name="addlin" type="radio">
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
         </field>
-        <field default="7" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="lin_order" required="true" type="text"/>
+        <field default="7" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="lin_order" required="true" type="text" />
         <field default="1" description="" label="PLG_JLLIKEPRO_ENABLE_PI" name="addpi" type="radio">
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
         </field>
-        <field default="8" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="pi_order" required="true" type="text"/>
+        <field default="8" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="pi_order" required="true" type="text" />
         <field default="1" description="" label="PLG_JLLIKEPRO_ENABLE_LJ" name="addlj" type="radio">
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
         </field>
-        <field default="9" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="lj_order" required="true" type="text"/>
+        <field default="9" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="lj_order" required="true" type="text" />
         <field default="1" description="" label="PLG_JLLIKEPRO_ENABLE_BL" name="addbl" type="radio">
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
         </field>
-        <field default="10" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="bl_order" required="true" type="text"/>
+        <field default="10" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="bl_order" required="true" type="text" />
         <field default="1" description="" label="PLG_JLLIKEPRO_ENABLE_WB" name="addwb" type="radio">
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
         </field>
-        <field default="12" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="wb_order" required="true" type="text"/>
+        <field default="12" description="PLG_JLLIKEPRO_ORDER_DESC" filter="integer" label="PLG_JLLIKEPRO_ORDER" name="wb_order" required="true" type="text" />
         <field default="1" description="PLG_JLLIKEPRO_ENABLE_ALL_DESC" label="PLG_JLLIKEPRO_ENABLE_ALL" name="addall" type="radio">
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -110,7 +110,7 @@
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
         </field>
-        <field default="" description="PLG_JLLIKEPRO_DEFAULT_IMAGE_DESC" label="PLG_JLLIKEPRO_DEFAULT_IMAGE" name="default_image" type="media"/>
+        <field default="" description="PLG_JLLIKEPRO_DEFAULT_IMAGE_DESC" label="PLG_JLLIKEPRO_DEFAULT_IMAGE" name="default_image" type="media" />
         <field default="1" description="PLG_JLLIKEPRO_ENABLE_OPENGRAPH_DESC" label="PLG_JLLIKEPRO_ENABLE_OPENGRAPH" name="enable_opengraph" type="radio">
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -123,8 +123,8 @@
           <option value="">PLG_JLLIKEPRO_WITHOUT_WWW</option>
           <option value="www.">PLG_JLLIKEPRO__WITH_WWW</option>
         </field>
-        <field default="" description="PLG_JLLIKEPRO_METKAVM_DESC" label="PLG_JLLIKEPRO_METKAVM_LABEL" name="buttons_contayner" type="text"/>
-        <field default="div.jllikeproSharesContayner" description="PLG_JLLIKEPRO_PARENT_CONTAYNER_DESC" label="PLG_JLLIKEPRO_PARENT_CONTAYNER_LABEL" name="parent_contayner" type="text"/>
+        <field default="" description="PLG_JLLIKEPRO_METKAVM_DESC" label="PLG_JLLIKEPRO_METKAVM_LABEL" name="buttons_contayner" type="text" />
+        <field default="div.jllikeproSharesContayner" description="PLG_JLLIKEPRO_PARENT_CONTAYNER_DESC" label="PLG_JLLIKEPRO_PARENT_CONTAYNER_LABEL" name="parent_contayner" type="text" />
         <field default="1" description="PLG_JLLIKEPRO_ENABLE_MOBILE_CSS_DESC" label="PLG_JLLIKEPRO_ENABLE_MOBILE_CSS" name="enable_mobile_css" type="radio">
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -144,18 +144,18 @@
           <option value="1">PLG_JLLIKEPRO_RIGHT</option>
           <option value="2">PLG_JLLIKEPRO_CENTER</option>
         </field>
-        <field default="15" description="PLG_JLLIKEPRO_BUTTONS_BORDER_RADIUS_DESC" filter="integer" label="PLG_JLLIKEPRO_BUTTONS_BORDER_RADIUS" name="btn_border_radius" type="text"/>
-        <field default="30" description="PLG_JLLIKEPRO_BUTTONS_DIMENSIONS_DESC" filter="integer" label="PLG_JLLIKEPRO_BUTTONS_DIMENSIONS" name="btn_dimensions" type="text"/>
-        <field default="6" description="PLG_JLLIKEPRO_BUTTONS_MARGIN_DESC" filter="integer" label="PLG_JLLIKEPRO_BUTTONS_MARGIN" name="btn_margin" type="text"/>
-        <field default="1" description="PLG_JLLIKEPRO_BUTTONS_FONT_SIZE_DESC" filter="float" label="PLG_JLLIKEPRO_BUTTONS_FONT_SIZE" name="font_size" type="text"/>
-        <field cols="100" default="" description="PLG_JLLIKEPRO_BUTTON_TEXT_DESC" label="PLG_JLLIKEPRO_BUTTON_TEXT" name="button_text" rows="5" type="textarea"/>
+        <field default="15" description="PLG_JLLIKEPRO_BUTTONS_BORDER_RADIUS_DESC" filter="integer" label="PLG_JLLIKEPRO_BUTTONS_BORDER_RADIUS" name="btn_border_radius" type="text" />
+        <field default="30" description="PLG_JLLIKEPRO_BUTTONS_DIMENSIONS_DESC" filter="integer" label="PLG_JLLIKEPRO_BUTTONS_DIMENSIONS" name="btn_dimensions" type="text" />
+        <field default="6" description="PLG_JLLIKEPRO_BUTTONS_MARGIN_DESC" filter="integer" label="PLG_JLLIKEPRO_BUTTONS_MARGIN" name="btn_margin" type="text" />
+        <field default="1" description="PLG_JLLIKEPRO_BUTTONS_FONT_SIZE_DESC" filter="float" label="PLG_JLLIKEPRO_BUTTONS_FONT_SIZE" name="font_size" type="text" />
+        <field cols="100" default="" description="PLG_JLLIKEPRO_BUTTON_TEXT_DESC" label="PLG_JLLIKEPRO_BUTTON_TEXT" name="button_text" rows="5" type="textarea" />
         <field default="0" description="PLG_JLLIKEPRO_ALLOW_IN_CAT_DESC" label="PLG_JLLIKEPRO_ALLOW_IN_CAT" name="allow_in_category" type="radio">
           <option value="0">PLG_JLLIKEPRO_NO</option>
           <option value="1">PLG_JLLIKEPRO_YES</option>
         </field>
       </fieldset>
       <fieldset label="PLG_JLLIKEPRO_SETTINGS_CONTENT" name="content">
-        <field default="0" description="PLG_JLLIKEPRO_EXCLUDE_CATEGORY_DESC" extension="com_content" label="PLG_JLLIKEPRO_EXCLUDE_CATEGORY_LABEL" multiple="multiple" name="categories" type="category"/>
+        <field default="0" description="PLG_JLLIKEPRO_EXCLUDE_CATEGORY_DESC" extension="com_content" label="PLG_JLLIKEPRO_EXCLUDE_CATEGORY_LABEL" multiple="multiple" name="categories" type="category" />
         <field default="1" description="PLG_JLLIKEPRO_LOAD_SHARES_DESC" label="PLG_JLLIKEPRO_LOAD_SHARES" name="shares_position" type="list">
           <option value="0">PLG_JLLIKEPRO_TOP</option>
           <option value="1">PLG_JLLIKEPRO_BOTTOM</option>
