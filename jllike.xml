@@ -2,8 +2,8 @@
 <extension version="3.5.0" type="plugin" group="content" method="upgrade">
     <name>JoomLine Like</name>
     <author>JoomLine</author>
-    <creationDate>13.09.2016</creationDate>
-    <copyright>(C) 2012-2016 by Artem Zhukov, Arkadiy Sedelnikov and Vadim Kunicin(http://www.joomline.ru)</copyright>
+    <creationDate>10.05.2017</creationDate>
+    <copyright>(C) 2012-2017 by Artem Zhukov, Arkadiy Sedelnikov and Vadim Kunicin(http://www.joomline.ru)</copyright>
     <license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
     <authorEmail>sale@joomline.ru</authorEmail>
     <authorUrl>http://joomline.ru</authorUrl>
