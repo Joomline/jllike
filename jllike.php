@@ -2,9 +2,9 @@
 /**
  * jllike
  *
- * @version 2.7.0
+ * @version 2.7.1
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2010-2016 by Vadim Kunicin (http://www.joomline.ru)
+ * @copyright (C) 2010-2017 by Joomline (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 
@@ -219,7 +219,7 @@ class plgContentjllike extends JPlugin
                         $article->text = str_replace("{jllike}", "", $article->text) . $shares;
                     }
                 }
-                break;            
+                break;
             default:
                 break;
         }

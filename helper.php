@@ -2,9 +2,9 @@
 /**
  * jllike
  *
- * @version 2.6.0
+ * @version 2.7.1
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2010-2016 by Vadim Kunicin (http://www.joomline.ru)
+ * @copyright (C) 2010-2017 by Joomline (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 defined('_JEXEC') or die;
@@ -15,6 +15,9 @@ if (version_compare(JVERSION, '3.5.0', 'ge'))
 {
     if(!class_exists('StringHelper1')){
         class StringHelper1 extends \Joomla\String\StringHelper{}
+    }
+    if(!class_exists('JRegistry')){
+        class JRegistry extends Joomla\Registry\Registry{}
     }
 }
 else
@@ -85,16 +88,15 @@ class PlgJLLikeHelper
             $image = !empty($image) ? JUri::root() . $image : '';
         }
 
-        $desc = strip_tags($desc);
+        $desc = $this->cleanText($desc);
         $desc = $this->limittext($desc, 200);
-        $desc = str_replace(array('"', "'"), '', $desc);
-        $desc = str_replace("\n", ' ', $desc);
+        $title = $this->cleanText($title);
 
         if($enable_opengraph)
         {
             $this->addOpenGraphTags($title, $desc, $image, $link);
         }
-		$donatelink = JText::_('PLG_JLLIKEPRO_DONATE_LINK');
+        $donatelink = JText::_('PLG_JLLIKEPRO_DONATE_LINK');
         $titlefc = JText::_('PLG_JLLIKEPRO_TITLE_FC');
         $titlevk = JText::_('PLG_JLLIKEPRO_TITLE_VK');
         $titletw = JText::_('PLG_JLLIKEPRO_TITLE_TW');
@@ -103,7 +105,7 @@ class PlgJLLikeHelper
         $titlemm = JText::_('PLG_JLLIKEPRO_TITLE_MM');
         $titleli = JText::_('PLG_JLLIKEPRO_TITLE_LI');
         $titlepi = JText::_('PLG_JLLIKEPRO_TITLE_PI');
-		$titlelj = JText::_('PLG_JLLIKEPRO_TITLE_LJ');
+        $titlelj = JText::_('PLG_JLLIKEPRO_TITLE_LJ');
 		$titlebl = JText::_('PLG_JLLIKEPRO_TITLE_BL');
 		$titlewb = JText::_('PLG_JLLIKEPRO_TITLE_WB');
         $titleAll = JText::_('PLG_JLLIKEPRO_TITLE_ALL');
@@ -141,7 +143,7 @@ class PlgJLLikeHelper
             $order = $this->params->get('pi_order', 8);
             $providers[$order] = array('title' => $titlepi, 'class' => 'pinteres');
         }
-		if ($this->params->get('addlj', 1)) {
+        if ($this->params->get('addlj', 1)) {
             $order = $this->params->get('lj_order', 9);
             $providers[$order] = array('title' => $titlelj, 'class' => 'lj');
         }
@@ -205,7 +207,7 @@ HTML;
 					</div>
 				</div>
 			</div>
-			<div class="likes-block$position_buttons">
+            <div class="likes-block$position_buttons">
 			$donatelink
 			</div>
 HTML;
@@ -248,7 +250,7 @@ SCRIPT;
 
 			JHtml::_('jquery.framework');		
 			 
-			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.js?8");
+			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.min.js?8");
 	
             if($this->params->get('enable_twit',0))
             {
@@ -256,7 +258,7 @@ SCRIPT;
             }
 
        
-        $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.css?4");
+        $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.min.css?4");
 
         $btn_border_radius = (int)$this->params->get('btn_border_radius',15);
         $btn_dimensions = (int)$this->params->get('btn_dimensions',30);
@@ -292,7 +294,6 @@ SCRIPT;
         $desc_source_one = $this->params->get('desc_source_one', 'desc');
         $desc_source_two = $this->params->get('desc_source_two', 'full');
         $desc_source_three = $this->params->get('desc_source_three', 'meta');
-        $clear_plugin_tags = $this->params->get('clear_plugin_tags', 1);
 
         switch($desc_source_one)
         {
@@ -352,17 +353,25 @@ SCRIPT;
             $desc = $source_three;
         }
 
-		$desc = strip_tags($desc);
-        $desc = preg_replace('/&nbsp;/', ' ', $desc);
-        $desc = preg_replace('/&amp;/', ' ', $desc);
-        $desc = preg_replace('/&quot;/', ' ', $desc);
+        return $desc;
+    }
+
+    private function cleanText($text)
+    {
+        $clear_plugin_tags = $this->params->get('clear_plugin_tags', 1);
+        $text = strip_tags($text);
+        $text = preg_replace('/&nbsp;/', ' ', $text);
+        $text = str_replace("\n", ' ', $text);
 
         if($clear_plugin_tags)
         {
-            $desc = preg_replace('/{.+?}/', '', $desc);
+            $text = preg_replace('/{.+?}/', '', $text);
         }
 
-        return $desc;
+        $text = htmlspecialchars($text, ENT_QUOTES);
+        $text = preg_replace('/&amp;amp;/', '&amp;', $text);
+
+        return $text;
     }
 
     private static function getPluginParams($folder = 'content', $name = 'jllike')
@@ -462,5 +471,5 @@ SCRIPT;
         if($url)
             $doc->setMetaData('og:url', $url);
     }
-
+    
 }
