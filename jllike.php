@@ -2,7 +2,7 @@
 /**
  * jllike
  *
- * @version 2.7.1
+ * @version 2.8.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
  * @copyright (C) 2010-2017 by Joomline (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -14,7 +14,6 @@ defined('_JEXEC') or die;
 jimport('joomla.plugin.plugin');
 
 require_once JPATH_ROOT.'/plugins/content/jllike/helper.php';
-
 if (version_compare(JVERSION, '3.5.0', 'ge'))
 {
     if(!class_exists('StringHelper1')){
@@ -183,7 +182,7 @@ class plgContentjllike extends JPlugin
                 }
                 else
                 {
-                    $image = PlgjllikeHelper::extractImageFromText($article->introtext, $article->fulltext);
+                     $image = PlgjllikeHelper::extractImageFromText($article->introtext, $article->fulltext);
                 }
 
                 $text = $helper->getShareText($article->metadesc, $article->introtext, $article->text);
@@ -211,7 +210,7 @@ class plgContentjllike extends JPlugin
                         }
                     }
                 }
-                else if ($context == 'com_content.category')
+                else if ($context == 'com_content.category' || 'com_content.featured')
                 {
                     if ($autoAdd == 1 || strpos($article->text, '{jllike}') == true)
                     {
