@@ -491,9 +491,9 @@ jQuery.noConflict();
             },
 
             getShareLink: function () {
-                return 'http://www.odnoklassniki.ru/dk?st.cmd=addShare&st._surl='
+                return 'https://connect.ok.ru/offer?url='
                     + this.linkToShare
-                    +'&st.comments=' + encodeURIComponent(this.summary);
+                    +'&description' + encodeURIComponent(this.summary);
             },
 
             getCountLink: function (id, linkToShare) {
