@@ -108,6 +108,8 @@ class PlgJLLikeHelper
         $titlelj = JText::_('PLG_JLLIKEPRO_TITLE_LJ');
 		$titlebl = JText::_('PLG_JLLIKEPRO_TITLE_BL');
 		$titlewb = JText::_('PLG_JLLIKEPRO_TITLE_WB');
+		$titletl = JText::_('PLG_JLLIKEPRO_TITLE_TL');
+		$titlewa = JText::_('PLG_JLLIKEPRO_TITLE_WA');
         $titleAll = JText::_('PLG_JLLIKEPRO_TITLE_ALL');
 
         $providers = array();
@@ -151,10 +153,18 @@ class PlgJLLikeHelper
             $order = $this->params->get('bl_order', 10);
             $providers[$order] = array('title' => $titlebl, 'class' => 'bl');
         }		
-				if ($this->params->get('addwb', 1)) {
+		if ($this->params->get('addwb', 1)) {
             $order = $this->params->get('wb_order', 11);
             $providers[$order] = array('title' => $titlewb, 'class' => 'wb');
-        }		
+        }	
+		if ($this->params->get('addtl', 1)) {
+            $order = $this->params->get('tl_order', 12);
+            $providers[$order] = array('title' => $titletl, 'class' => 'tl');
+        }
+		if ($this->params->get('addwa', 1)) {
+            $order = $this->params->get('wa_order', 13);
+            $providers[$order] = array('title' => $titlewa, 'class' => 'wa');
+        }
 
         ksort($providers);
         reset($providers);

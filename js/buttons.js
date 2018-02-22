@@ -43,6 +43,8 @@ jQuery.noConflict();
 			LivejournalButton: '.l-lj',
 			BloggerButton: '.l-bl',
 			WeiboButton: '.l-wb',
+			TelegramButton: '.l-tl',
+			WhatsappButton: '.l-wa',
             count: '.l-count',
             ico: '.l-ico',
             shareTitle: 'h2:eq(0)',
@@ -69,7 +71,7 @@ jQuery.noConflict();
             'left=0',
             'top=0',
             'width=500',
-            'height=250',
+            'height=400',
             'personalbar=0',
             'toolbar=0',
             'scrollbars=1',
@@ -792,6 +794,51 @@ jQuery.noConflict();
         });
 	/*** Weibo ***///
 	
+	
+	/*** Telegram ***///	
+	var TelegramButton = function ($context, conf, index) {
+        this.init($context, conf, index);
+        this.type = 'Telegram';
+    };
+   TelegramButton.prototype = new Button;
+    TelegramButton.prototype
+        = $.extend(TelegramButton.prototype,
+        {
+            /*@methods*/
+            countLikes: function () {},
+            getShareLink: function () {
+                return 'https://t.me/share/url?'
+                    + 'url=' + encodeURIComponent(this.linkToShare)
+                    + '&text=' + encodeURIComponent(this.title);
+            },
+
+            /*@properties*/
+            countServiceUrl: 'https://t.me/'
+        });
+	/*** Telegram ***///
+	
+	/*** Whatsapp ***///	
+	var WhatsappButton = function ($context, conf, index) {
+        this.init($context, conf, index);
+        this.type = 'Whatsapp';
+    };
+   WhatsappButton.prototype = new Button;
+    WhatsappButton.prototype
+        = $.extend(WhatsappButton.prototype,
+        {
+            /*@methods*/
+            countLikes: function () {},
+            getShareLink: function () {
+                return 'https://api.whatsapp.com/send?'
+                    + 'url=' + encodeURIComponent(this.linkToShare)
+                    + '&text=' + encodeURIComponent(this.linkToShare);
+            },
+
+            /*@properties*/
+            countServiceUrl: 'https://api.whatsapp.com'
+        });
+	/*** Whatsapp ***///
+	
 //+++++++++    
 
     var jllikeproAllCouner = function(element)
@@ -842,6 +889,10 @@ jQuery.noConflict();
                     b = new BloggerButton($element, conf, Button.lastIndex);
                 } else if ($element.is(conf.selectors.WeiboButton)) {
                     b = new WeiboButton($element, conf, Button.lastIndex);
+                } else if ($element.is(conf.selectors.TelegramButton)) {
+                    b = new TelegramButton($element, conf, Button.lastIndex);
+                } else if ($element.is(conf.selectors.WhatsappButton)) {
+                    b = new WhatsappButton($element, conf, Button.lastIndex);
                 }
 				
 				
