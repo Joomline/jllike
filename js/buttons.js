@@ -42,9 +42,10 @@ jQuery.noConflict();
             pinteresButton: '.l-pinteres',
 			LivejournalButton: '.l-lj',
 			BloggerButton: '.l-bl',
-			WeiboButton: '.l-wb',
-			TelegramButton: '.l-tl',
-			WhatsappButton: '.l-wa',
+            WeiboButton: '.l-wb',
+            TelegramButton: '.l-tl',
+            WhatsappButton: '.l-wa',
+            ViberButton: '.l-vi',
             count: '.l-count',
             ico: '.l-ico',
             shareTitle: 'h2:eq(0)',
@@ -316,6 +317,9 @@ jQuery.noConflict();
         {
             /*@methods*/
             countLikes: function () {
+                if(!jllickeproSettings.enableCounters){
+                    return;
+                }
                 var serviceURI = this.getCountLink(this.linkToShare);
                 var id = this.id;
 
@@ -385,6 +389,9 @@ jQuery.noConflict();
         {
             /*@methods*/
             countLikes: function () {
+                if(!jllickeproSettings.enableCounters){
+                    return;
+                }
                 w.socialButtonCountObjects[this.index] = this;
                 var serviceURI = this.getCountLink(this.linkToShare) + '&index=' + this.index;
 
@@ -451,7 +458,9 @@ jQuery.noConflict();
 
             countLikes: function ()
             {
-
+                if(!jllickeproSettings.enableCounters){
+                    return;
+                }
                 function odklShare(elementId, count)
                 {
                     if (count > 0)
@@ -493,7 +502,7 @@ jQuery.noConflict();
             getShareLink: function () {
                 return 'https://connect.ok.ru/offer?url='
                     + this.linkToShare
-                    +'&description' + encodeURIComponent(this.summary);
+                    +'&description=' + encodeURIComponent(this.summary);
             },
 
             getCountLink: function (id, linkToShare) {
@@ -519,6 +528,9 @@ jQuery.noConflict();
 
             countLikes: function ()
             {
+                if(!jllickeproSettings.enableCounters){
+                    return;
+                }
                 serviceURI = this.linkToShare;
                 var id = this.id;
 
@@ -577,44 +589,42 @@ jQuery.noConflict();
 
             countLikes: function ()
             {
-                jllikeproShareUrls.mail[this.linkToShare] = this.id;
-
-                w.setMailRuCount = function(data){
-                    for (var url in data) if (data.hasOwnProperty(url))
-                    {
-                        if(!jllikeproShareUrls.mail.hasOwnProperty(url))
-                        {
-                            return;
-                        }
-                        var id = jllikeproShareUrls.mail[url];
-                        var shares = data[url].shares;
-                        if(shares>0){
-                            var elem = $('#'+id);
-                            elem.addClass('like-not-empty');
-                            $('span.l-count', elem).text(shares);
-                            jllikeproAllCouner(elem);
-                        }
-                    }
+                if(!jllickeproSettings.enableCounters){
+                    return;
                 }
+                var id = this.id;
 
-                serviceURI = this.getCountLink(this.linkToShare);
+                var serviceURI = this.getCountLink(this.linkToShare);
+
                 return $.ajax({
                     url: serviceURI,
-                    dataType: 'jsonp'
+                    dataType: 'jsonp',
+                    success: function (data, status, jqXHR) {
+                        if (status == 'success' && typeof data.share_mm != 'undefined') {
+                            if (data.share_mm > 0) {
+                                var elem = $('#'+id);
+                                elem.addClass('like-not-empty');
+                                $('span.l-count', elem).text(data.share_mm);
+                                jllikeproAllCouner(elem);
+                            }
+                        }
+                    }
                 });
             },
-
+            getCountLink: function (linkToShare){
+                return this.countServiceUrl + encodeURIComponent(linkToShare.replace('http://', '').replace('https://', ''));
+            },
             getShareLink: function () {
-                return 'http://connect.mail.ru/share' +
+                return url = 'https://connect.mail.ru/share' +
                     '?url='+ encodeURIComponent(this.linkToShare) +
-                    '&imageurl' + encodeURIComponent(this.images[0]) +
-                    '&title' + encodeURIComponent(this.title) +
-                    '&description' + encodeURIComponent(this.summary)
+                    '&image_url=' + encodeURIComponent(this.images[0]) +
+                    '&title=' + encodeURIComponent(this.title) +
+                    '&description=' + encodeURIComponent(this.summary)
                     ;
             },
 
             /*@properties*/
-            countServiceUrl: 'https://connect.mail.ru/share_count?callback=1&func=setMailRuCount&url_list='
+            countServiceUrl: 'https://appsmail.ru/share/count/'
         });
 
     /***MAIL ***/////
@@ -632,6 +642,10 @@ jQuery.noConflict();
             /*@methods*/
             countLikes: function ()
             {
+                if(!jllickeproSettings.enableCounters){
+                    return;
+                }
+
                 jllikeproShareUrls.linkedin[this.linkToShare] = this.id;
 
                 w.setLinkedInCount = function(data){
@@ -684,6 +698,10 @@ jQuery.noConflict();
 
             countLikes: function ()
             {
+                if(!jllickeproSettings.enableCounters){
+                    return;
+                }
+
                 jllikeproShareUrls.pinteres[this.linkToShare] = this.id;
 
                 w.setPinteresCount = function(data)
@@ -792,10 +810,9 @@ jQuery.noConflict();
             /*@properties*/
             countServiceUrl: 'http://service.weibo.com/'
         });
-	/*** Weibo ***///
-	
-	
-	/*** Telegram ***///	
+    /*** Weibo ***///
+    
+    /*** Telegram ***///	
 	var TelegramButton = function ($context, conf, index) {
         this.init($context, conf, index);
         this.type = 'Telegram';
@@ -831,13 +848,34 @@ jQuery.noConflict();
             getShareLink: function () {
                 return 'https://api.whatsapp.com/send?'
                     + 'url=' + encodeURIComponent(this.linkToShare)
-                    + '&text=' + encodeURIComponent(this.linkToShare);
+                    + '&text=' + encodeURIComponent(this.title);
             },
 
             /*@properties*/
             countServiceUrl: 'https://api.whatsapp.com'
         });
-	/*** Whatsapp ***///
+    /*** Whatsapp ***///
+    
+    	/*** Viber ***///	
+	var ViberButton = function ($context, conf, index) {
+        this.init($context, conf, index);
+        this.type = 'Viber';
+    };
+    ViberButton.prototype = new Button;
+    ViberButton.prototype
+        = $.extend(ViberButton.prototype,
+        {
+            /*@methods*/
+            countLikes: function () {},
+            getShareLink: function () {
+                return 'viber://forward?'
+                    + 'text=' + encodeURIComponent(this.linkToShare);
+            },
+
+            /*@properties*/
+            countServiceUrl: 'https://viber.com'
+        });
+	/*** Viber ***///
 	
 //+++++++++    
 
@@ -893,6 +931,8 @@ jQuery.noConflict();
                     b = new TelegramButton($element, conf, Button.lastIndex);
                 } else if ($element.is(conf.selectors.WhatsappButton)) {
                     b = new WhatsappButton($element, conf, Button.lastIndex);
+                } else if ($element.is(conf.selectors.ViberButton)) {
+                    b = new ViberButton($element, conf, Button.lastIndex);
                 }
 				
 				
