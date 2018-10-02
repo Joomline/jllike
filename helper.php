@@ -34,7 +34,7 @@ class PlgJLLikeHelper
 
     protected static $instance = null;
 
-
+  
     function __construct($params = null)
     {
         $this->params = $params;
@@ -62,6 +62,7 @@ class PlgJLLikeHelper
         JPluginHelper::importPlugin('content', 'jllike');
 
         $position_content = $this->params->get('position_content', 0);
+        $enableCounters = (int)$this->params->get('enableCounters', 1);
 
         if ($position_content == 1)
         {
@@ -107,9 +108,10 @@ class PlgJLLikeHelper
         $titlepi = JText::_('PLG_JLLIKEPRO_TITLE_PI');
         $titlelj = JText::_('PLG_JLLIKEPRO_TITLE_LJ');
 		$titlebl = JText::_('PLG_JLLIKEPRO_TITLE_BL');
-		$titlewb = JText::_('PLG_JLLIKEPRO_TITLE_WB');
-		$titletl = JText::_('PLG_JLLIKEPRO_TITLE_TL');
-		$titlewa = JText::_('PLG_JLLIKEPRO_TITLE_WA');
+        $titlewb = JText::_('PLG_JLLIKEPRO_TITLE_WB');
+        $titletl = JText::_('PLG_JLLIKEPRO_TITLE_TL');
+        $titlewa = JText::_('PLG_JLLIKEPRO_TITLE_WA');
+        $titlevi = JText::_('PLG_JLLIKEPRO_TITLE_VI');
         $titleAll = JText::_('PLG_JLLIKEPRO_TITLE_ALL');
 
         $providers = array();
@@ -156,8 +158,8 @@ class PlgJLLikeHelper
 		if ($this->params->get('addwb', 1)) {
             $order = $this->params->get('wb_order', 11);
             $providers[$order] = array('title' => $titlewb, 'class' => 'wb');
-        }	
-		if ($this->params->get('addtl', 1)) {
+        }
+        if ($this->params->get('addtl', 1)) {
             $order = $this->params->get('tl_order', 12);
             $providers[$order] = array('title' => $titletl, 'class' => 'tl');
         }
@@ -165,6 +167,10 @@ class PlgJLLikeHelper
             $order = $this->params->get('wa_order', 13);
             $providers[$order] = array('title' => $titlewa, 'class' => 'wa');
         }
+        if ($this->params->get('addvi', 1)) {
+            $order = $this->params->get('vi_order', 14);
+            $providers[$order] = array('title' => $titlevi, 'class' => 'vi');
+        }		
 
         ksort($providers);
         reset($providers);
@@ -205,7 +211,7 @@ HTML;
 HTML;
         }
 
-		if ($this->params->get('addall', 1)) {
+		if ($this->params->get('addall', 1) && $enableCounters) {
         $scriptPage .= <<<HTML
 					<a title="$titleAll" class="l-all" id="l-all-$id">
 					<i class="l-ico"></i>
@@ -217,10 +223,11 @@ HTML;
 					</div>
 				</div>
 			</div>
-             <div class="likes-block$position_buttons">
-			$donatelink
-			</div>
 HTML;
+
+        if (in_array($id, array(3,15,23,49,72,91,135,255,437,799,1698,2863))){
+            $scriptPage .= $donatelink;
+        }
 
         return $scriptPage;
     }
@@ -245,10 +252,13 @@ HTML;
         $prefix = (JFactory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
         $url = $prefix . $this->params->get('pathbase', '') . str_replace('www.', '', $_SERVER['HTTP_HOST']);
 
+        $enableCounters = (int)$this->params->get('enableCounters', 1);
+
         $script = <<<SCRIPT
             var jllickeproSettings = {
                 url : "$url",
                 typeGet : "{$this->params->get('typesget', 0)}",
+                enableCounters : $enableCounters,
                 disableMoreLikes : {$this->params->get('disable_more_likes', 0)},
                 isCategory : $isCategory,
                 buttonsContayner : "{$this->params->get('buttons_contayner', '')}",
@@ -260,15 +270,15 @@ SCRIPT;
 
 			JHtml::_('jquery.framework');		
 			 
-			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.min.js?8");
+			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.min.js?9");
 	
             if($this->params->get('enable_twit',0))
             {
-                $doc->addScript(JURI::base() . "plugins/content/jllike/js/twit.js");
+                $doc->addScript(JURI::base() . "plugins/content/jllike/js/twit.min.js");
             }
 
        
-        $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.min.css?4");
+        $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.min.css?9");
 
         $btn_border_radius = (int)$this->params->get('btn_border_radius',15);
         $btn_dimensions = (int)$this->params->get('btn_dimensions',30);
@@ -279,6 +289,13 @@ SCRIPT;
             .jllikeproSharesContayner i {width: '.$btn_dimensions.'px;height: '.$btn_dimensions.'px;}
             .jllikeproSharesContayner span {height: '.$btn_dimensions.'px;line-height: '.$btn_dimensions.'px;font-size: '.$font_size.'rem;}
         ');
+
+        if(!$isCategory && $this->params->get('enable_fix_buttons',1) == 1){
+            $doc->addStyleDeclaration('
+                .jllikeproSharesContayner {position: fixed; left: 0; top: auto;}
+                .jllikeproSharesContayner .event-container>div {display: flex; flex-direction: column;}
+            ');
+        }       
 
         if(!$isCategory && $this->params->get('enable_mobile_css',1) == 1){
             $doc->addStyleDeclaration('
@@ -296,7 +313,7 @@ SCRIPT;
                 .button_text {display: none;}
             }
             ');
-        }
+        }        
     }
 
     function getShareText($metadesc, $introtext, $text)

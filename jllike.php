@@ -182,7 +182,7 @@ class plgContentjllike extends JPlugin
                 }
                 else
                 {
-                     $image = PlgjllikeHelper::extractImageFromText($article->introtext, $article->fulltext);
+                    $image = PlgjllikeHelper::extractImageFromText($article->introtext, $article->fulltext);
                 }
 
                 $text = $helper->getShareText($article->metadesc, $article->introtext, $article->text);
@@ -217,7 +217,7 @@ class plgContentjllike extends JPlugin
                         $helper->loadScriptAndStyle(1);
                         $article->text = str_replace("{jllike}", "", $article->text) . $shares;
                     }
-                }
+                }   
                 break;
             default:
                 break;
