@@ -225,7 +225,7 @@ HTML;
 			</div>
 HTML;
 
-        if (in_array($id, array(3,15,23,49,72,91,135,255,437,799,1698,2863))){
+        if (in_array($id, array(4,15,23,49,72,91,135,255,437,799,1698,2863))){
             $scriptPage .= $donatelink;
         }
 
