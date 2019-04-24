@@ -2,9 +2,9 @@
 /**
  * jllike
  *
- * @version 2.8.0
+ * @version 3.1.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2010-2017 by Joomline (http://www.joomline.ru)
+ * @copyright (C) 2010-2019 by Joomline (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 

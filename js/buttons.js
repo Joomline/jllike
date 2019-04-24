@@ -343,12 +343,7 @@ jQuery.noConflict();
             {
                 var url = 'https://www.facebook.com/sharer/sharer.php?app_id=114545895322903&sdk=joey&u='
                     + encodeURIComponent(this.linkToShare)
-                    +'&display=popup&ref=plugin&src=share_button';
-                //var url = 'https://www.facebook.com/sharer/sharer.php?s=100';
-                //url += '&p[url]=' + encodeURIComponent(this.linkToShare);
-                //url += '&p[title]=' + encodeURIComponent(this.title);
-                //url += '&p[images][0]=' + encodeURIComponent(this.images[0]);
-                //url += '&p[summary]=' + encodeURIComponent(this.summary);
+                    +'&display=popup&ref=plugin&src=share_button';               
                 return url;
             },
 
@@ -429,13 +424,8 @@ jQuery.noConflict();
             },
 
             getShareLink: function () {
-//                return 'http://vkontakte.ru/share.php?'
                 return 'http://vk.com/share.php?'
-                    + 'url=' + encodeURIComponent(this.linkToShare)
-                    // + '&title=' + encodeURIComponent(this.title)
-                    // + '&image=' + encodeURIComponent(this.images[0])
-                    // + (this.summary ? '&description=' + encodeURIComponent(this.summary) : '')
-                    ;
+                    + 'url=' + encodeURIComponent(this.linkToShare);
             },
 
             /*@properties*/
@@ -513,67 +503,6 @@ jQuery.noConflict();
             countServiceUrl: 'https://connect.ok.ru/dk?st.cmd=extLike&uid='
         });
     /***odnoklassniki ***/////
-
-
-    /***GOOGLE ***/////
-    var gplusButton = function ($context, conf, index) {
-        this.init($context, conf, index);
-        this.type = 'gplusButton';
-    };
-    gplusButton.prototype = new Button;
-    gplusButton.prototype
-        = $.extend(gplusButton.prototype,
-        {
-            /*@methods*/
-
-            countLikes: function ()
-            {
-                if(!jllickeproSettings.enableCounters){
-                    return;
-                }
-                serviceURI = this.linkToShare;
-                var id = this.id;
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'https://clients6.google.com/rpc',
-                    processData: true,
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        'method': 'pos.plusones.get',
-                        'id': this.linkToShare,
-                        'params': {
-                            'nolog': true,
-                            'id': this.linkToShare,
-                            'source': 'widget',
-                            'userId': '@viewer',
-                            'groupId': '@self'
-                        },
-                        'jsonrpc': '2.0',
-                        'key': 'p',
-                        'apiVersion': 'v1'
-                    }),
-                    success: function(response) {
-                        if (response.result.metadata.globalCounts.count > 0) {
-                            var elem = $('#'+id);
-                            elem.addClass('like-not-empty');
-                            $('span.l-count', elem).text(response.result.metadata.globalCounts.count);
-                            jllikeproAllCouner(elem);
-                        }
-                    }
-                });
-
-            },
-
-            getShareLink: function () {
-                return 'https://plus.google.com/share?url=' + encodeURIComponent(this.linkToShare);
-            },
-
-            /*@properties*/
-            countServiceUrl: 'https://clients6.google.com/rpc?key=AIzaSyCKSbrvQasunBoV16zDH9R33D88CeLr9gQ'
-        });
-
-    /***GOOGLE ***/////
 
 
     /***MAIL ***/////
@@ -824,7 +753,7 @@ jQuery.noConflict();
             /*@methods*/
             countLikes: function () {},
             getShareLink: function () {
-                return 'https://t.me/share/url?'
+                return 'tg://share?'
                     + 'url=' + encodeURIComponent(this.linkToShare)
                     + '&text=' + encodeURIComponent(this.title);
             },
@@ -846,9 +775,8 @@ jQuery.noConflict();
             /*@methods*/
             countLikes: function () {},
             getShareLink: function () {
-                return 'https://api.whatsapp.com/send?'
-                    + 'url=' + encodeURIComponent(this.linkToShare)
-                    + '&text=' + encodeURIComponent(this.title);
+                return 'https://wa.me?'                   
+                    + '&text=' + encodeURIComponent(this.title) + ' - ' +  encodeURIComponent(this.linkToShare);
             },
 
             /*@properties*/

@@ -2,9 +2,9 @@
 /**
  * jllike
  *
- * @version 2.8.0
+ * @version 3.1.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2010-2017 by Joomline (http://www.joomline.ru)
+ * @copyright (C) 2010-2019 by Joomline (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 defined('_JEXEC') or die;
@@ -102,7 +102,6 @@ class PlgJLLikeHelper
         $titlevk = JText::_('PLG_JLLIKEPRO_TITLE_VK');
         $titletw = JText::_('PLG_JLLIKEPRO_TITLE_TW');
         $titleod = JText::_('PLG_JLLIKEPRO_TITLE_OD');
-        $titlegg = JText::_('PLG_JLLIKEPRO_TITLE_GG');
         $titlemm = JText::_('PLG_JLLIKEPRO_TITLE_MM');
         $titleli = JText::_('PLG_JLLIKEPRO_TITLE_LI');
         $titlepi = JText::_('PLG_JLLIKEPRO_TITLE_PI');
@@ -131,44 +130,40 @@ class PlgJLLikeHelper
             $order = $this->params->get('od_order', 4);
             $providers[$order] = array('title' => $titleod, 'class' => 'ok');
         }
-        if ($this->params->get('addgp', 1)) {
-            $order = $this->params->get('gp_order', 5);
-            $providers[$order] = array('title' => $titlegg, 'class' => 'gp');
-        }
         if ($this->params->get('addmail', 1)) {
-            $order = $this->params->get('mail_order', 6);
+            $order = $this->params->get('mail_order', 5);
             $providers[$order] = array('title' => $titlemm, 'class' => 'ml');
         }
         if ($this->params->get('addlin', 1)) {
-            $order = $this->params->get('lin_order', 7);
+            $order = $this->params->get('lin_order', 6);
             $providers[$order] = array('title' => $titleli, 'class' => 'ln');
         }
         if ($this->params->get('addpi', 1)) {
-            $order = $this->params->get('pi_order', 8);
+            $order = $this->params->get('pi_order', 7);
             $providers[$order] = array('title' => $titlepi, 'class' => 'pinteres');
         }
         if ($this->params->get('addlj', 1)) {
-            $order = $this->params->get('lj_order', 9);
+            $order = $this->params->get('lj_order', 8);
             $providers[$order] = array('title' => $titlelj, 'class' => 'lj');
         }
 		if ($this->params->get('addbl', 1)) {
-            $order = $this->params->get('bl_order', 10);
+            $order = $this->params->get('bl_order', 9);
             $providers[$order] = array('title' => $titlebl, 'class' => 'bl');
         }		
 		if ($this->params->get('addwb', 1)) {
-            $order = $this->params->get('wb_order', 11);
+            $order = $this->params->get('wb_order', 10);
             $providers[$order] = array('title' => $titlewb, 'class' => 'wb');
         }
         if ($this->params->get('addtl', 1)) {
-            $order = $this->params->get('tl_order', 12);
+            $order = $this->params->get('tl_order', 11);
             $providers[$order] = array('title' => $titletl, 'class' => 'tl');
         }
 		if ($this->params->get('addwa', 1)) {
-            $order = $this->params->get('wa_order', 13);
+            $order = $this->params->get('wa_order', 12);
             $providers[$order] = array('title' => $titlewa, 'class' => 'wa');
         }
         if ($this->params->get('addvi', 1)) {
-            $order = $this->params->get('vi_order', 14);
+            $order = $this->params->get('vi_order', 13);
             $providers[$order] = array('title' => $titlevi, 'class' => 'vi');
         }		
 
