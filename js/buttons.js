@@ -36,7 +36,6 @@ jQuery.noConflict();
             twitterButton: '.l-tw',
             vkontakteButton: '.l-vk',
             odnoklassnikiButton: '.l-ok',
-            gplusButton: '.l-gp',
             mailButton: '.l-ml',
             linButton: '.l-ln',
             pinteresButton: '.l-pinteres',
@@ -343,7 +342,12 @@ jQuery.noConflict();
             {
                 var url = 'https://www.facebook.com/sharer/sharer.php?app_id=114545895322903&sdk=joey&u='
                     + encodeURIComponent(this.linkToShare)
-                    +'&display=popup&ref=plugin&src=share_button';               
+                    +'&display=popup&ref=plugin&src=share_button';
+                //var url = 'https://www.facebook.com/sharer/sharer.php?s=100';
+                //url += '&p[url]=' + encodeURIComponent(this.linkToShare);
+                //url += '&p[title]=' + encodeURIComponent(this.title);
+                //url += '&p[images][0]=' + encodeURIComponent(this.images[0]);
+                //url += '&p[summary]=' + encodeURIComponent(this.summary);
                 return url;
             },
 
@@ -424,8 +428,13 @@ jQuery.noConflict();
             },
 
             getShareLink: function () {
+//                return 'http://vkontakte.ru/share.php?'
                 return 'http://vk.com/share.php?'
-                    + 'url=' + encodeURIComponent(this.linkToShare);
+                    + 'url=' + encodeURIComponent(this.linkToShare)
+                    // + '&title=' + encodeURIComponent(this.title)
+                    // + '&image=' + encodeURIComponent(this.images[0])
+                    // + (this.summary ? '&description=' + encodeURIComponent(this.summary) : '')
+                    ;
             },
 
             /*@properties*/
@@ -841,8 +850,6 @@ jQuery.noConflict();
                     b = new VkontakteButton($element, conf, Button.lastIndex);
                 } else if ($element.is(conf.selectors.odnoklassnikiButton)) {
                     b = new odnoklassnikiButton($element, conf, Button.lastIndex);
-                } else if ($element.is(conf.selectors.gplusButton)) {
-                    b = new gplusButton($element, conf, Button.lastIndex);
                 } else if ($element.is(conf.selectors.mailButton)) {
                     b = new mailButton($element, conf, Button.lastIndex);
                 } else if ($element.is(conf.selectors.linButton)) {

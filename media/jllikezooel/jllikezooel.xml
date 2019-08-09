@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<element type="jllikezooel" group="Social">
+	<name>JLLike Zoo Element</name>
+	<author>JoomLine</author>
+	<creationDate>09.08.2019</creationDate>
+	<copyright>(C) 2013-2019 by Zhukov Artem, Kunitsyn Vadim and Arkadiy Sedelnikov (https://www.joomline.ru)</copyright>
+	<authorEmail>artem@joomline.ru</authorEmail>
+	<authorUrl>http://joomline.ru</authorUrl>
+	<version>4.0.0</version>
+	<description>Plugin allow integrate social buttons like into your ZOO components</description>
+    <params>
+        <param
+                name="img_source"
+                type="radio"
+                default="field"
+                label="Image Source"
+                description="Source of images from share"
+                >
+            <option value="field">Field</option>
+            <option value="text">Text</option>
+        </param>
+        <param
+                name="img_field"
+                type="text"
+                default=""
+                label="Image Field ID"
+                description="Image Field ID. If you chose Image Source -> Field"
+                />
+        <param
+                name="intro_field"
+                type="text"
+                default=""
+                label="Intro Text ID"
+                description="Intro Text Field ID. If you chose Image Source -> Text"
+                />
+        <param
+                name="text_field"
+                type="text"
+                default=""
+                label="Text ID"
+                description="Text Field ID. If you chose Image Source -> Text"
+                />
+        <param
+                name="parent_contayner"
+                type="text"
+                default="div.element-jllikeprozooel"
+                label="Parent Contayner"
+                description="Parent Contayner css class"
+                />
+
+    </params>
+	<params group="render">
+		<param name="default" type="radio" default="1" label="Enabled By Default" description="Enabled by default">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</param>
+	</params>
+</element>

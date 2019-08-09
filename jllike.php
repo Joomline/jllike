@@ -2,7 +2,7 @@
 /**
  * jllike
  *
- * @version 3.1.0
+ * @version 4.0.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
  * @copyright (C) 2010-2019 by Joomline (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -42,7 +42,16 @@ class plgContentjllike extends JPlugin
     public function onAfterRender()
     {
         $app = JFactory::getApplication();
-        $buffer = $app->getBody();
+
+        if (version_compare(JVERSION, '3.5.0', 'ge'))
+        {
+            $buffer = $app->getBody();
+        }
+        else
+        {
+            $buffer = JResponse::getBody();
+        }
+
         if($buffer !== null)
         {
             $image = $app->getUserState('jllike.image', '');
@@ -53,7 +62,14 @@ class plgContentjllike extends JPlugin
                 $buffer = StringHelper1::str_ireplace('</head>', $html, $buffer, 1);
             }
             $buffer = StringHelper1::str_ireplace('<meta name="og:', '<meta property="og:', $buffer);
-            $app->setBody($buffer);
+            if (version_compare(JVERSION, '3.5.0', 'ge'))
+            {
+                $app->setBody($buffer);
+            }
+            else
+            {
+                JResponse::setBody($buffer);
+            }
         }
     }
 
@@ -92,7 +108,7 @@ class plgContentjllike extends JPlugin
         $sharePos = (int)$this->params->get('shares_position', 1);
         $enableOpenGraph = $this->params->get('enable_opengraph',1);
         $option = JRequest::getCmd('option');
-        $helper = PlgjllikeHelper::getInstance($this->params);
+        $helper = PlgJLLikeHelper::getInstance($this->params);
 
         if (strpos($article->text, '{jllike}') === false && !$autoAdd)
         {
@@ -182,7 +198,7 @@ class plgContentjllike extends JPlugin
                 }
                 else
                 {
-                    $image = PlgjllikeHelper::extractImageFromText($article->introtext, $article->fulltext);
+                    $image = PlgJLLikeHelper::extractImageFromText($article->introtext, $article->fulltext);
                 }
 
                 $text = $helper->getShareText($article->metadesc, $article->introtext, $article->text);
@@ -217,7 +233,78 @@ class plgContentjllike extends JPlugin
                         $helper->loadScriptAndStyle(1);
                         $article->text = str_replace("{jllike}", "", $article->text) . $shares;
                     }
-                }   
+                }
+                break;
+            case 'com_virtuemart':
+                if ($context == 'com_virtuemart.productdetails') {
+                    $VirtueShow = $this->params->get('virtcontent', 1);
+                    if ($VirtueShow == 1)
+                    {
+                        $autoAddvm = $this->params->get('autoAddvm', 0);
+                        if ($autoAddvm == 1 || strpos($article->text, '{jllike}') !== false)
+                        {
+                            $helper->loadScriptAndStyle(0);
+                            $uri = StringHelper1::str_ireplace(JURI::root(), '', JURI::current());
+                            $link = $url.'/'.$uri;
+                            $image = $helper->getVMImage($article->virtuemart_product_id);
+                            $text = $helper->getShareText($article->metadesc, $article->product_s_desc, $article->product_desc);
+                            $shares = $helper->ShowIN($article->virtuemart_product_id, $link, $article->product_name, $image, $text, $enableOpenGraph);
+
+                            switch($sharePos){
+                                case 0:
+                                    $article->text = $shares . str_replace("{jllike}", "", $article->text);
+                                    break;
+                                default:
+                                    $article->text = str_replace("{jllike}", "", $article->text) . $shares;
+                                    break;
+                            }
+                        }
+                    }
+                }
+                break;
+            case 'com_easyblog':
+                if (($context == 'easyblog.blog') && ($this->params->get('easyblogshow', 0) == 1))
+                {
+					$allow_in_category = $this->params->get('allow_in_category', 0);
+					$isCategory = (JRequest::getCmd('view', '') == 'entry') ? false : true;
+
+					if(!$allow_in_category && $isCategory)
+					{
+						return true;
+					}
+
+                    if ($autoAdd == 1 || strpos($article->text, '{jllike}') == true)
+                    {
+                        $helper->loadScriptAndStyle(0);
+                        $uri = StringHelper1::str_ireplace(JURI::root(), '', JURI::current());
+                        $link = $url.'/'.$uri;
+
+                        $image = '';
+                        if($this->params->get('easyblog_images','fields') == 'fields'){
+                            $images = json_decode($article->image);
+                            if(isset($images->type) && $images->type == 'image')
+                            {
+                                $image = $images->url;
+                            }
+                        }
+                        else
+                        {
+                            $image = PlgJLLikeHelper::extractImageFromText($article->intro, $article->content);
+                        }
+
+                        $enableOG = $isCategory ? 0 : $this->params->get('easyblog_add_opengraph', 0);
+                        $text = $helper->getShareText($article->metadesc, $article->intro, $article->content);
+                        $shares = $helper->ShowIN($article->id, $link, $article->title, $image, $text, $enableOG);
+                        switch($sharePos){
+                            case 0:
+                                $article->text = $shares . str_replace("{jllike}", "", $article->text);
+                                break;
+                            default:
+                                $article->text = str_replace("{jllike}", "", $article->text) . $shares;
+                                break;
+                        }
+                    }
+                }
                 break;
             default:
                 break;

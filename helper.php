@@ -2,7 +2,7 @@
 /**
  * jllike
  *
- * @version 3.1.0
+ * @version 4.0.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
  * @copyright (C) 2010-2019 by Joomline (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -34,7 +34,15 @@ class PlgJLLikeHelper
 
     protected static $instance = null;
 
-  
+    /**
+     * Пример вывода лайков в любом месте макетов, шаблонов и т.п.
+     * require_once JPATH_ROOT .'plugins/content/jllikepro/helper.php';
+     * $helper = PlgJLLikeProHelper::getInstance();
+     * $helper->loadScriptAndStyle(0); //1-если в категории, 0-если в контенте
+     * echo $helper->ShowIN($id, $link, $title, $image, $desc, $enable_opengraph);
+     */
+
+
     function __construct($params = null)
     {
         $this->params = $params;
@@ -101,7 +109,7 @@ class PlgJLLikeHelper
         $titlefc = JText::_('PLG_JLLIKEPRO_TITLE_FC');
         $titlevk = JText::_('PLG_JLLIKEPRO_TITLE_VK');
         $titletw = JText::_('PLG_JLLIKEPRO_TITLE_TW');
-        $titleod = JText::_('PLG_JLLIKEPRO_TITLE_OD');
+        $titleod = JText::_('PLG_JLLIKEPRO_TITLE_OD');        
         $titlemm = JText::_('PLG_JLLIKEPRO_TITLE_MM');
         $titleli = JText::_('PLG_JLLIKEPRO_TITLE_LI');
         $titlepi = JText::_('PLG_JLLIKEPRO_TITLE_PI');
@@ -113,7 +121,7 @@ class PlgJLLikeHelper
         $titlevi = JText::_('PLG_JLLIKEPRO_TITLE_VI');
         $titleAll = JText::_('PLG_JLLIKEPRO_TITLE_ALL');
 
-        $providers = array();
+                $providers = array();
         if ($this->params->get('addfacebook', 1)) {
             $order = $this->params->get('facebook_order', 1);
             $providers[$order] = array('title' => $titlefc, 'class' => 'fb');
@@ -165,7 +173,7 @@ class PlgJLLikeHelper
         if ($this->params->get('addvi', 1)) {
             $order = $this->params->get('vi_order', 13);
             $providers[$order] = array('title' => $titlevi, 'class' => 'vi');
-        }		
+        }
 
         ksort($providers);
         reset($providers);
@@ -220,7 +228,7 @@ HTML;
 			</div>
 HTML;
 
-        if (in_array($id, array(4,15,23,49,72,91,135,255,437,799,1698,2863))){
+if (in_array($id, array(4,15,23,49,72,91,135,255,437,799,1698,2863))){
             $scriptPage .= $donatelink;
         }
 
@@ -265,7 +273,7 @@ SCRIPT;
 
 			JHtml::_('jquery.framework');		
 			 
-			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.min.js?9");
+			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.min.js?10");
 	
             if($this->params->get('enable_twit',0))
             {
@@ -273,7 +281,7 @@ SCRIPT;
             }
 
        
-        $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.min.css?9");
+        $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.min.css?10");
 
         $btn_border_radius = (int)$this->params->get('btn_border_radius',15);
         $btn_dimensions = (int)$this->params->get('btn_dimensions',30);
@@ -308,7 +316,7 @@ SCRIPT;
                 .button_text {display: none;}
             }
             ');
-        }        
+        }       
     }
 
     function getShareText($metadesc, $introtext, $text)
@@ -495,4 +503,24 @@ SCRIPT;
             $doc->setMetaData('og:url', $url);
     }
 
+    public function getVMImage($id)
+    {
+        $db = JFactory::getDbo();
+        $image = '';
+        $query = $db->getQuery(true);
+        $query->select('`file_url`')
+            ->from('#__virtuemart_medias as m')
+            ->from('#__virtuemart_product_medias as pm')
+            ->where('pm.virtuemart_product_id = '.(int)$id)
+            ->where('pm.virtuemart_media_id = m.virtuemart_media_id')
+            ->order('pm.ordering ASC');
+        $db->setQuery($query,0,1);
+        $res = $db->loadResult();
+
+        if($res)
+        {
+            $image = JURI::root().$res;
+        }
+        return $image;
+    }
 }

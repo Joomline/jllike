@@ -6,25 +6,29 @@
     <copyright>(C) 2012-2019 by Artem Zhukov, Arkadiy Sedelnikov and Vadim Kunicin(http://www.joomline.ru)</copyright>
     <license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
     <authorEmail>sale@joomline.ru</authorEmail>
-    <authorUrl>http://joomline.ru</authorUrl>
-    <version>3.1.0</version>
+    <authorUrl>https://joomline.ru</authorUrl>
+    <version>4.0.0</version>
     <description>PLG_JLLIKE_DESC_ALL</description>
-    <files>
+   <files>
         <folder>js</folder>
-		<folder>language</folder>
-        <folder>models</folder>
+        <folder>language</folder>
+        <folder>elements</folder>
         <filename plugin="jllike">jllike.php</filename>
         <filename>helper.php</filename>
 		<filename>index.html</filename>
     </files>
-
+    <media folder="media/jllikezooel" destination="zoo/elements/jllikezooel">
+        <filename>index.html</filename>
+        <filename>jllikezooel.php</filename>
+        <filename>jllikezooel.xml</filename>
+    </media>
     <languages folder="language">
         <language tag="en-GB">en-GB/en-GB.plg_content_jllike.ini</language>
 		<language tag="en-GB">en-GB/en-GB.plg_content_jllike.sys.ini</language>
         <language tag="ru-RU">ru-RU/ru-RU.plg_content_jllike.ini</language>
-		<language tag="ru-RU">ru-RU/ru-RU.plg_content_jllike.sys.ini</language>
-    </languages>
-<config>
+		<language tag="ru-RU">ru-RU/ru-RU.plg_content_jllike.sys.ini</language>    
+        </languages>
+    <config>
         <fields
                 name="params">
             <fieldset
@@ -499,6 +503,16 @@
                         description="PLG_JLLIKEPRO_BUTTON_TEXT_DESC"
                         />
 				<field
+                        name="enable_twit"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_ENABLE_TWIT"
+                        description="PLG_JLLIKEPRO_ENABLE_TWIT_DESC"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+				 <field
                         name="allow_in_category"
                         type="radio"
                         default="0"
@@ -554,10 +568,164 @@
                     <option value="intro">PLG_JLLIKELOCK_INTRO</option>
                     <option value="full">PLG_JLLIKELOCK_FULL</option>
                 </field>
-            </fieldset> 
+            </fieldset>
+            <fieldset
+                    label="PLG_JLLIKEPRO_SETTINGS_K2"
+                    name="k2"
+                    addfieldpath="/plugins/content/jllike/elements/"
+                    >
+                <field
+                        name="k2categories"
+                        type="k2categories"
+                        default=""
+                        multiple="multiple"
+                        label="PLG_JLLIKEPRO_EXCLUDE_CATEGORY_LABEL"
+                        description="PLG_JLLIKEPRO_EXCLUDE_CATEGORY_DESC"
+                        />
+                <field
+                        name="k2trigger"
+                        type="list"
+                        default="0"
+                        label="PLG_JLLIKEPRO_K2_TRIGGER"
+                        description="PLG_JLLIKEPRO_K2_TRIGGER_DESC"
+                        >
+                    <option value="onK2BeforeDisplay">onK2BeforeDisplay</option>
+                    <option value="onK2AfterDisplayTitle">onK2AfterDisplayTitle</option>
+                    <option value="onK2BeforeDisplayContent">onK2BeforeDisplayContent</option>
+                    <option value="onK2AfterDisplayContent">onK2AfterDisplayContent</option>
+                    <option value="onK2AfterDisplay">onK2AfterDisplay</option>
+                </field>
+                <field
+                        name="k2_images"
+                        type="list"
+                        default="fields"
+                        label="PLG_JLLIKEPRO_IMAGES"
+                        description="PLG_JLLIKEPRO_IMAGES_DESC"
+                        >
+                    <option value="fields">PLG_JLLIKEPRO_FROM_FIELDS</option>
+                    <option value="text">PLG_JLLIKEPRO_FROM_TEXT</option>
+                </field>
+                <field
+                        name="k2_add_opengraph"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_ADD_OPENGRAPH"
+                        description="PLG_JLLIKEPRO_ADD_OPENGRAPH_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field
+                        name="desc_source_k2"
+                        type="list"
+                        default="intro"
+                        label="PLG_JLLIKELOCK_DESC_SOURCE"
+                        description="PLG_JLLIKELOCK_DESC_SOURCE_DESC"
+                        >
+                    <option value="intro">PLG_JLLIKELOCK_INTRO</option>
+                    <option value="full">PLG_JLLIKELOCK_FULL</option>
+                </field>
+            </fieldset>
+            <fieldset
+                    label="PLG_JLLIKEPRO_SETTINGS_VIRTUEMART"
+                    name="virt"
+                    >
+                <field
+                        name="virtcontent"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_SHOW_LABEL"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+					<option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="autoAddvm"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_AUTOADD_LABEL"
+                        description="PLG_JLLIKEPRO_AUTOADD_DESC_VIRTUEMART"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+            </fieldset>
+            <fieldset
+                    label="PLG_JLLIKEPRO_SETTINGS_ADSMANAGER"
+                    name="ads"
+                    >
+                <field
+                        name="adscontent"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_SHOW_LABEL"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+					<option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+            </fieldset>
+            <fieldset
+                    label="PLG_JLLIKEPRO_SETTINGS_JSHOPMANAGER"
+                    name="jshop"
+                    >
+                <field
+                        name="jshopcontent"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_SHOW_LABEL"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+					<option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="jshopposition"
+                        type="list"
+                        default="2"
+                        label="PLG_JLLIKEPRO_SOCIAL_SHARE_POSITION"
+                        description="PLG_JLLIKEPRO_SOCIAL_SHARE_POSITION_DESC"
+                        >
+                    <option value="1">PLG_JLLIKEPRO_SOCIAL_SHARE_TOP</option>
+                    <option value="2">PLG_JLLIKEPRO_SOCIAL_SHARE_MIDDLE</option>
+                    <option value="3">PLG_JLLIKEPRO_SOCIAL_SHARE_BOTTOM</option>
+                </field>
+            </fieldset>
+            <fieldset
+                    label="PLG_JLLIKEPRO_EASYBLOG_SETTINGS"
+                    name="easy"
+                    >
+                <field
+                        name="easyblogshow"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_SHOW_LABEL"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="easyblog_images"
+                        type="list"
+                        default="fields"
+                        label="PLG_JLLIKEPRO_IMAGES"
+                        description="PLG_JLLIKEPRO_IMAGES_DESC"
+                        >
+                    <option value="fields">PLG_JLLIKEPRO_FROM_FIELDS</option>
+                    <option value="text">PLG_JLLIKEPRO_FROM_TEXT</option>
+                </field>
+                <field
+                        name="easyblog_add_opengraph"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_ADD_OPENGRAPH"
+                        description="PLG_JLLIKEPRO_ADD_OPENGRAPH_DESC"
+                        >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+            </fieldset>
 
 
         </fields>
     </config>
-    <updateservers><server type="extension" priority="1" name="JL Content Fields Filter">https://joomline.net/update.html?extension_id=8.xml</server></updateservers>
+    <updateservers><server type="extension" priority="1" name="JL Like">https://joomline.net/update.html?extension_id=8.xml</server></updateservers>
 </extension>
