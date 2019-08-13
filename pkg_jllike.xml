@@ -12,11 +12,11 @@
 <url>https://joomline.ru</url>
 <packager>JoomLine.ru</packager>
 <packagerurl>http://joomline.ru</packagerurl>
-<description>Plugin allow integrate social buttons like into your joomla site.</description>
+<description><p>Plugin allow integrate social buttons like into your joomla site.</p> <p>Donate plugin JL Like</p><div><iframe frameborder='0' allowtransparency='true' scrolling='no' src='https://joomline.ru/donateen.html' width='100%' height='800'></iframe></div></description>
 <files>
-        <file type="plugin" id="jllike" group="content" client="site">jllike.zip</file>
-        <file type="plugin" id="jllikeads" group="adsmanagercontent" client="site">jllikeads.zip</file>
-        <file type="plugin" id="jllikejshop" group="jshoppingproducts" client="site">jllikejshop.zip</file>
-		<file type="plugin" id="jllike" group="k2" client="site">jllikek2.zip</file>
+        <folder type="plugin" id="jllike" group="content" client="site">jllike</folder>
+        <folder type="plugin" id="jllikeads" group="adsmanagercontent" client="site">jllikeads</folder>
+        <folder type="plugin" id="jllikejshop" group="jshoppingproducts" client="site">jllikejshop</folder>
+		<folder type="plugin" id="jllike" group="k2" client="site">jllikek2</folder>
 </files>
 </extension>
