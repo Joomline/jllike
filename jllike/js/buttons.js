@@ -313,47 +313,46 @@ jQuery.noConflict();
     FacebookButton.prototype = new Button;
     FacebookButton.prototype
         = $.extend(FacebookButton.prototype,
-        {
-            /*@methods*/
-            countLikes: function () {
-                if(!jllickeproSettings.enableCounters){
-                    return;
-                }
-                var serviceURI = this.getCountLink(this.linkToShare);
-                var id = this.id;
+            {
+                /*@methods*/
+                countLikes: function () {
+                    if (!jllickeproSettings.enableCounters) {
+                        return;
+                    }
+                    var serviceURI = this.getCountLink(this.linkToShare);
+                    var id = this.id;
 
-                return $.ajax({
+                    return $.ajax({
                         url: serviceURI,
-                    dataType: 'jsonp',
-                    success: function (data, status, jqXHR) {
-                        if (status == 'success' && typeof data.engagement != 'undefined' && typeof data.engagement.share_count != 'undefined') {
-                            if (data.engagement.share_count > 0) {
-                                var elem = $('#'+id);
-                                elem.addClass('like-not-empty');
-                                $('span.l-count', elem).text(data.engagement.share_count); 
-                                jllikeproAllCouner(elem);
+                        dataType: 'jsonp',
+                        success: function (data, status, jqXHR) {
+                            if (status == 'success' && typeof data.engagement != 'undefined' && typeof data.engagement.share_count != 'undefined') {
+                                if (data.engagement.share_count > 0) {
+                                    var elem = $('#' + id);
+                                    elem.addClass('like-not-empty');
+                                    $('span.l-count', elem).text(data.engagement.share_count);
+                                    jllikeproAllCouner(elem);
+                                }
                             }
                         }
-                    }
-                });
-            },
+                    });
+                },
 
-            getShareLink: function ()
-            {
-                var url = 'https://www.facebook.com/sharer/sharer.php?app_id=114545895322903&sdk=joey&u='
-                    + encodeURIComponent(this.linkToShare)
-                    +'&display=popup&ref=plugin&src=share_button';
-                //var url = 'https://www.facebook.com/sharer/sharer.php?s=100';
-                //url += '&p[url]=' + encodeURIComponent(this.linkToShare);
-                //url += '&p[title]=' + encodeURIComponent(this.title);
-                //url += '&p[images][0]=' + encodeURIComponent(this.images[0]);
-                //url += '&p[summary]=' + encodeURIComponent(this.summary);
-                return url;
-            },
+                getShareLink: function () {
+                    var url = 'https://www.facebook.com/sharer/sharer.php?app_id=114545895322903&sdk=joey&u='
+                        + encodeURIComponent(this.linkToShare)
+                        + '&display=popup&ref=plugin&src=share_button';
+                    //var url = 'https://www.facebook.com/sharer/sharer.php?s=100';
+                    //url += '&p[url]=' + encodeURIComponent(this.linkToShare);
+                    //url += '&p[title]=' + encodeURIComponent(this.title);
+                    //url += '&p[images][0]=' + encodeURIComponent(this.images[0]);
+                    //url += '&p[summary]=' + encodeURIComponent(this.summary);
+                    return url;
+                },
 
-            /*@properties*/
-            countServiceUrl: 'https://graph.facebook.com/v4.0/?access_token=EAABmFboc37cBAHBayvRHoYu9AJgomYU0djNgLYZAZCf6cAPlsD36WnFZAz1R90ZAuxzR1LT5ZCg92J7NkEtcUBZAqnY6qYL7LUsZCAHD01ZC06MHBOFXLqbDcvln9rkdDKmZBSZANoqqDZC8eQE7oxx9cZBLzXaNShOlZAMUTa8W4FIBCOUBNNGxYDAsZA2IN2UpmA3Bl8SEwDMJshoQZDZD&fields=engagement&id='
-        });
+                /*@properties*/
+                countServiceUrl: 'https://graph.facebook.com/v4.0/?access_token=112243502800823|oj4WG8tofQaE5avNxB86XB4GkLE&fields=engagement&id='
+            });
 
     var TwitterButton = function ($context, conf, index) {
         this.init($context, conf, index);
