@@ -326,11 +326,11 @@ jQuery.noConflict();
                         url: serviceURI,
                     dataType: 'jsonp',
                     success: function (data, status, jqXHR) {
-                        if (status == 'success' && typeof data.share != 'undefined' && typeof data.share.share_count != 'undefined') {
-                            if (data.share.share_count > 0) {
+                        if (status == 'success' && typeof data.engagement != 'undefined' && typeof data.engagement.share_count != 'undefined') {
+                            if (data.engagement.share_count > 0) {
                                 var elem = $('#'+id);
                                 elem.addClass('like-not-empty');
-                                $('span.l-count', elem).text(data.share.share_count);
+                                $('span.l-count', elem).text(data.engagement.share_count); 
                                 jllikeproAllCouner(elem);
                             }
                         }
@@ -352,7 +352,7 @@ jQuery.noConflict();
             },
 
             /*@properties*/
-            countServiceUrl: 'https://graph.facebook.com/'
+            countServiceUrl: 'https://graph.facebook.com/v4.0/?access_token=EAABmFboc37cBAHBayvRHoYu9AJgomYU0djNgLYZAZCf6cAPlsD36WnFZAz1R90ZAuxzR1LT5ZCg92J7NkEtcUBZAqnY6qYL7LUsZCAHD01ZC06MHBOFXLqbDcvln9rkdDKmZBSZANoqqDZC8eQE7oxx9cZBLzXaNShOlZAMUTa8W4FIBCOUBNNGxYDAsZA2IN2UpmA3Bl8SEwDMJshoQZDZD&fields=engagement&id='
         });
 
     var TwitterButton = function ($context, conf, index) {
