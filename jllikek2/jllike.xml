@@ -2,11 +2,11 @@
 <extension version="3.5.0" type="plugin" group="k2" method="upgrade">
 	<name>JL Like K2 Plugin</name>
 	<author>JoomLine</author>
-	<creationDate>09.08.2019</creationDate>
+	<creationDate>15.08.2019</creationDate>
 	<copyright>(C) 2012-2019 by Artem Zhukov, Arkadiy Sedelnikov and Vadim Kunicin(http://www.joomline.ru)</copyright>
 	<authorEmail>sale@joomline.ru</authorEmail>
 	<authorUrl>https://joomline.ru</authorUrl>
-	<version>4.0.0</version>
+	<version>4.0.1</version>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<description>An Joomline Like K2 plugin to extend item form in K2.</description>
 	<files>
