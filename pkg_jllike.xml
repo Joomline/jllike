@@ -3,12 +3,12 @@
 	<name>JL Like</name>
 	<packagename>jllike</packagename>
 	<author>JoomLine</author>
-	<creationDate>15.08.2019</creationDate>
+	<creationDate>21.08.2019</creationDate>
 	<copyright>(C) 2012-2019 by Artem Zhukov, Arkadiy Sedelnikov and Vadim Kunicin(https://joomline.ru)</copyright>
 	<license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
 	<authorEmail>sale@joomline.ru</authorEmail>
 	<authorUrl>https://joomline.ru</authorUrl>
-	<version>4.0.1</version>
+	<version>4.0.2</version>
 	<url>https://joomline.ru</url>
 	<packager>JoomLine.ru</packager>
 	<packagerurl>https://joomline.ru</packagerurl>

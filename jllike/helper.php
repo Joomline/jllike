@@ -273,7 +273,7 @@ SCRIPT;
 
 			JHtml::_('jquery.framework');		
 			 
-			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.min.js?10");
+			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.min.js?11");
 	
             if($this->params->get('enable_twit',0))
             {
@@ -281,7 +281,7 @@ SCRIPT;
             }
 
        
-        $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.min.css?10");
+        $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.min.css?11");
 
         $btn_border_radius = (int)$this->params->get('btn_border_radius',15);
         $btn_dimensions = (int)$this->params->get('btn_dimensions',30);
