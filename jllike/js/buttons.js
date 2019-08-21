@@ -783,8 +783,8 @@ jQuery.noConflict();
             /*@methods*/
             countLikes: function () {},
             getShareLink: function () {
-                return 'https://wa.me?'                   
-                    + '&text=' + encodeURIComponent(this.title) + ' - ' +  encodeURIComponent(this.linkToShare);
+                return 'whatsapp://send?'                   
+                    + 'text=' + encodeURIComponent(this.title) + ' - ' +  encodeURIComponent(this.linkToShare);
             },
 
             /*@properties*/
