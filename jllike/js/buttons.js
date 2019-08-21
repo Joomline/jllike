@@ -783,7 +783,7 @@ jQuery.noConflict();
             /*@methods*/
             countLikes: function () {},
             getShareLink: function () {
-                return 'whatsapp://send?'                   
+                return 'https://api.whatsapp.com/send?'                   
                     + 'text=' + encodeURIComponent(this.title) + ' - ' +  encodeURIComponent(this.linkToShare);
             },
 
