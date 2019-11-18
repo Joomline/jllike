@@ -1,4 +1,5 @@
 <?php
+
 /**
  * jllike
  *
@@ -11,20 +12,20 @@ defined('_JEXEC') or die;
 
 jimport('joomla.plugin.plugin');
 
-if (version_compare(JVERSION, '3.5.0', 'ge'))
-{
-    if(!class_exists('StringHelper1')){
-        class StringHelper1 extends \Joomla\String\StringHelper{}
+if (version_compare(JVERSION, '3.5.0', 'ge')) {
+    if (!class_exists('StringHelper1')) {
+        class StringHelper1 extends \Joomla\String\StringHelper
+        { }
     }
-    if(!class_exists('JRegistry')){
-        class JRegistry extends Joomla\Registry\Registry{}
+    if (!class_exists('JRegistry')) {
+        class JRegistry extends Joomla\Registry\Registry
+        { }
     }
-}
-else
-{
-    if(!class_exists('StringHelper1')){
+} else {
+    if (!class_exists('StringHelper1')) {
         jimport('joomla.string.string');
-        class StringHelper1 extends JString{}
+        class StringHelper1 extends JString
+        { }
     }
 }
 
@@ -65,34 +66,24 @@ class PlgJLLikeHelper
      * @param $id не нужный параметр, на будущее
      * @return string
      */
-    function ShowIn($id, $link='', $title='', $image='', $desc='', $enable_opengraph=1)
+    function ShowIn($id, $link = '', $title = '', $image = '', $desc = '', $enable_opengraph = 1)
     {
         JPluginHelper::importPlugin('content', 'jllike');
 
         $position_content = $this->params->get('position_content', 0);
-        $enableCounters = (int)$this->params->get('enableCounters', 1);
+        $enableCounters = (int) $this->params->get('enableCounters', 1);
 
-        if ($position_content == 1)
-        {
+        if ($position_content == 1) {
             $position_buttons = '_right';
-        }
-        else if
-        ($position_content == 0)
-        {
+        } else if ($position_content == 0) {
             $position_buttons = '_left';
-        }
-        else if
-        ($position_content == 2)
-        {
+        } else if ($position_content == 2) {
             $position_buttons = '_center';
-        }
-        else
-        {
+        } else {
             $position_buttons = '';
         }
 
-        if(empty($image))
-        {
+        if (empty($image)) {
             $image = trim($this->params->get('default_image', ''));
             $image = !empty($image) ? JUri::root() . $image : '';
         }
@@ -101,27 +92,26 @@ class PlgJLLikeHelper
         $desc = $this->limittext($desc, 200);
         $title = $this->cleanText($title);
 
-        if($enable_opengraph)
-        {
+        if ($enable_opengraph) {
             $this->addOpenGraphTags($title, $desc, $image, $link);
         }
-        $donatelink = JText::_('PLG_JLLIKEPRO_DONATE_LINK');
+        
         $titlefc = JText::_('PLG_JLLIKEPRO_TITLE_FC');
         $titlevk = JText::_('PLG_JLLIKEPRO_TITLE_VK');
         $titletw = JText::_('PLG_JLLIKEPRO_TITLE_TW');
-        $titleod = JText::_('PLG_JLLIKEPRO_TITLE_OD');        
+        $titleod = JText::_('PLG_JLLIKEPRO_TITLE_OD');
         $titlemm = JText::_('PLG_JLLIKEPRO_TITLE_MM');
         $titleli = JText::_('PLG_JLLIKEPRO_TITLE_LI');
         $titlepi = JText::_('PLG_JLLIKEPRO_TITLE_PI');
         $titlelj = JText::_('PLG_JLLIKEPRO_TITLE_LJ');
-		$titlebl = JText::_('PLG_JLLIKEPRO_TITLE_BL');
+        $titlebl = JText::_('PLG_JLLIKEPRO_TITLE_BL');
         $titlewb = JText::_('PLG_JLLIKEPRO_TITLE_WB');
         $titletl = JText::_('PLG_JLLIKEPRO_TITLE_TL');
         $titlewa = JText::_('PLG_JLLIKEPRO_TITLE_WA');
         $titlevi = JText::_('PLG_JLLIKEPRO_TITLE_VI');
         $titleAll = JText::_('PLG_JLLIKEPRO_TITLE_ALL');
 
-                $providers = array();
+        $providers = array();
         if ($this->params->get('addfacebook', 1)) {
             $order = $this->params->get('facebook_order', 1);
             $providers[$order] = array('title' => $titlefc, 'class' => 'fb');
@@ -154,11 +144,11 @@ class PlgJLLikeHelper
             $order = $this->params->get('lj_order', 8);
             $providers[$order] = array('title' => $titlelj, 'class' => 'lj');
         }
-		if ($this->params->get('addbl', 1)) {
+        if ($this->params->get('addbl', 1)) {
             $order = $this->params->get('bl_order', 9);
             $providers[$order] = array('title' => $titlebl, 'class' => 'bl');
-        }		
-		if ($this->params->get('addwb', 1)) {
+        }
+        if ($this->params->get('addwb', 1)) {
             $order = $this->params->get('wb_order', 10);
             $providers[$order] = array('title' => $titlewb, 'class' => 'wb');
         }
@@ -166,7 +156,7 @@ class PlgJLLikeHelper
             $order = $this->params->get('tl_order', 11);
             $providers[$order] = array('title' => $titletl, 'class' => 'tl');
         }
-		if ($this->params->get('addwa', 1)) {
+        if ($this->params->get('addwa', 1)) {
             $order = $this->params->get('wa_order', 12);
             $providers[$order] = array('title' => $titlewa, 'class' => 'wa');
         }
@@ -188,14 +178,14 @@ class PlgJLLikeHelper
 				<input type="hidden" class="share-id" value="{$id}"/>
 HTML;
 
-        if($this->params->get('disable_more_likes', 0) && !empty($_COOKIE['jllikepro_article_'.$id])){
+        if ($this->params->get('disable_more_likes', 0) && !empty($_COOKIE['jllikepro_article_' . $id])) {
             $scriptPage .= '<div class="disable_more_likes"></div>';
         }
 
         $buttonText = StringHelper1::trim($this->params->get('button_text', ''));
 
-        if(!empty($buttonText)){
-            $scriptPage .= '<div class="button_text likes-block'.$position_buttons.'">'.$buttonText.'</div>';
+        if (!empty($buttonText)) {
+            $scriptPage .= '<div class="button_text likes-block' . $position_buttons . '">' . $buttonText . '</div>';
         }
 
         $scriptPage .= <<<HTML
@@ -204,8 +194,7 @@ HTML;
 				<div class="likes-block$position_buttons">
 HTML;
 
-        foreach($providers as $v)
-        {
+        foreach ($providers as $v) {
             $scriptPage .= <<<HTML
 					<a title="{$v['title']}" class="like l-{$v['class']}" id="l-{$v['class']}-$id">
 					<i class="l-ico"></i>
@@ -214,23 +203,19 @@ HTML;
 HTML;
         }
 
-		if ($this->params->get('addall', 1) && $enableCounters) {
-        $scriptPage .= <<<HTML
+        if ($this->params->get('addall', 1) && $enableCounters) {
+            $scriptPage .= <<<HTML
 					<a title="$titleAll" class="l-all" id="l-all-$id">
 					<i class="l-ico"></i>
 					<span class="l-count l-all-count" id="l-all-count-$id">0</span>
 					</a>
 HTML;
-		}
+        }
         $scriptPage .= <<<HTML
 					</div>
 				</div>
 			</div>
 HTML;
-
-if (in_array($id, array(4,15,23,49,72,91,135,255,437,799,1698,2863))){
-            $scriptPage .= $donatelink;
-        }
 
         return $scriptPage;
     }
@@ -241,21 +226,21 @@ if (in_array($id, array(4,15,23,49,72,91,135,255,437,799,1698,2863))){
      * Загрузка скриптов и стилей
      * @param $articleText
      */
-    function loadScriptAndStyle($isCategory=1)
+    function loadScriptAndStyle($isCategory = 1)
     {
-        if(defined('JLLIKEPRO_SCRIPT_LOADED'))
+        if (defined('JLLIKEPRO_SCRIPT_LOADED'))
             return;
 
         define('JLLIKEPRO_SCRIPT_LOADED', 1);
 
         $doc = JFactory::getDocument();
 
-        $isCategory = (int)$isCategory;
+        $isCategory = (int) $isCategory;
 
         $prefix = (JFactory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
         $url = $prefix . $this->params->get('pathbase', '') . str_replace('www.', '', $_SERVER['HTTP_HOST']);
 
-        $enableCounters = (int)$this->params->get('enableCounters', 1);
+        $enableCounters = (int) $this->params->get('enableCounters', 1);
 
         $script = <<<SCRIPT
             var jllickeproSettings = {
@@ -271,36 +256,35 @@ SCRIPT;
 
         $doc->addScriptDeclaration($script);
 
-			JHtml::_('jquery.framework');		
-			 
-			$doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.min.js?11");
-	
-            if($this->params->get('enable_twit',0))
-            {
-                $doc->addScript(JURI::base() . "plugins/content/jllike/js/twit.min.js");
-            }
+        JHtml::_('jquery.framework');
 
-       
+        $doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.min.js?11");
+
+        if ($this->params->get('enable_twit', 0)) {
+            $doc->addScript(JURI::base() . "plugins/content/jllike/js/twit.min.js");
+        }
+
+
         $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.min.css?11");
 
-        $btn_border_radius = (int)$this->params->get('btn_border_radius',15);
-        $btn_dimensions = (int)$this->params->get('btn_dimensions',30);
-        $btn_margin = (int)$this->params->get('btn_margin',6);
-        $font_size = (float)$this->params->get('font_size',1);
+        $btn_border_radius = (int) $this->params->get('btn_border_radius', 15);
+        $btn_dimensions = (int) $this->params->get('btn_dimensions', 30);
+        $btn_margin = (int) $this->params->get('btn_margin', 6);
+        $font_size = (float) $this->params->get('font_size', 1);
         $doc->addStyleDeclaration('
-            .jllikeproSharesContayner a {border-radius: '.$btn_border_radius.'px; margin-left: '.$btn_margin.'px;}
-            .jllikeproSharesContayner i {width: '.$btn_dimensions.'px;height: '.$btn_dimensions.'px;}
-            .jllikeproSharesContayner span {height: '.$btn_dimensions.'px;line-height: '.$btn_dimensions.'px;font-size: '.$font_size.'rem;}
+            .jllikeproSharesContayner a {border-radius: ' . $btn_border_radius . 'px; margin-left: ' . $btn_margin . 'px;}
+            .jllikeproSharesContayner i {width: ' . $btn_dimensions . 'px;height: ' . $btn_dimensions . 'px;}
+            .jllikeproSharesContayner span {height: ' . $btn_dimensions . 'px;line-height: ' . $btn_dimensions . 'px;font-size: ' . $font_size . 'rem;}
         ');
 
-        if(!$isCategory && $this->params->get('enable_fix_buttons',1) == 1){
+        if (!$isCategory && $this->params->get('enable_fix_buttons', 1) == 1) {
             $doc->addStyleDeclaration('
                 .jllikeproSharesContayner {position: fixed; left: 0; top: auto;}
                 .jllikeproSharesContayner .event-container>div {display: flex; flex-direction: column;}
             ');
-        }       
+        }
 
-        if(!$isCategory && $this->params->get('enable_mobile_css',1) == 1){
+        if (!$isCategory && $this->params->get('enable_mobile_css', 1) == 1) {
             $doc->addStyleDeclaration('
             @media screen and (max-width:800px) {
                 .jllikeproSharesContayner {position: fixed;right: 0;bottom: 0; z-index: 999999; background-color: #fff!important;width: 100%;}
@@ -316,7 +300,7 @@ SCRIPT;
                 .button_text {display: none;}
             }
             ');
-        }       
+        }
     }
 
     function getShareText($metadesc, $introtext, $text)
@@ -325,8 +309,7 @@ SCRIPT;
         $desc_source_two = $this->params->get('desc_source_two', 'full');
         $desc_source_three = $this->params->get('desc_source_three', 'meta');
 
-        switch($desc_source_one)
-        {
+        switch ($desc_source_one) {
             case 'full':
                 $source_one = $text;
                 break;
@@ -338,8 +321,7 @@ SCRIPT;
                 break;
         }
 
-        switch($desc_source_two)
-        {
+        switch ($desc_source_two) {
             case 'desc':
                 $source_two = $introtext;
                 break;
@@ -351,8 +333,7 @@ SCRIPT;
                 break;
         }
 
-        switch($desc_source_three)
-        {
+        switch ($desc_source_three) {
             case 'desc':
                 $source_three = $introtext;
                 break;
@@ -370,16 +351,11 @@ SCRIPT;
 
         $desc = '';
 
-        if(!empty($source_one))
-        {
+        if (!empty($source_one)) {
             $desc = $source_one;
-        }
-        else if(!empty($source_two))
-        {
+        } else if (!empty($source_two)) {
             $desc = $source_two;
-        }
-        else if(!empty($source_three))
-        {
+        } else if (!empty($source_three)) {
             $desc = $source_three;
         }
 
@@ -393,9 +369,8 @@ SCRIPT;
         $text = preg_replace('/&nbsp;/', ' ', $text);
         $text = str_replace("\n", ' ', $text);
 
-        if($clear_plugin_tags)
-        {
-	        $text = preg_replace('/\[.+?\]/', '', $text);
+        if ($clear_plugin_tags) {
+            $text = preg_replace('/\[.+?\]/', '', $text);
             $text = preg_replace('/{.+?}/', '', $text);
         }
 
@@ -415,45 +390,37 @@ SCRIPT;
         return $params;
     }
 
-    public static function extractImageFromText( $introtext, $fulltext = '' )
+    public static function extractImageFromText($introtext, $fulltext = '')
     {
         jimport('joomla.filesystem.file');
 
         $regex = '#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im';
 
-        preg_match ($regex, $introtext, $matches);
+        preg_match($regex, $introtext, $matches);
 
-        if(!count($matches))
-        {
-            preg_match ($regex, $fulltext, $matches);
+        if (!count($matches)) {
+            preg_match($regex, $fulltext, $matches);
         }
 
         $images = (count($matches)) ? $matches : array();
 
         $image = '';
 
-        if (count($images))
-        {
+        if (count($images)) {
             $image = $images[2];
         }
 
-        if(!empty($image))
-        {
-        if (!preg_match("#^http|^https|^ftp#i", $image))
-        {
-            $image = JFile::exists( JPATH_SITE . '/' . $image ) ? $image : '';
+        if (!empty($image)) {
+            if (!preg_match("#^http|^https|^ftp#i", $image)) {
+                $image = JFile::exists(JPATH_SITE . '/' . $image) ? $image : '';
 
-            if(strpos($image, '/') === 0)
-            {
-                $image = substr($image, 1);
+                if (strpos($image, '/') === 0) {
+                    $image = substr($image, 1);
+                }
+
+                $image = JURI::root() . $image;
             }
-
-            $image = JURI::root().$image;
-
-            }
-        }
-        else
-        {
+        } else {
             $image = '';
         }
 
@@ -465,17 +432,14 @@ SCRIPT;
         $text = '';
         $textLength = StringHelper1::strlen($wordtext);
 
-        if($textLength <= $maxchar)
-        {
+        if ($textLength <= $maxchar) {
             return $wordtext;
         }
 
         $words = explode(' ', $wordtext);
 
-        foreach ($words as $word)
-        {
-            if(StringHelper1::strlen($text . ' ' . $word) > $maxchar - 1)
-            {
+        foreach ($words as $word) {
+            if (StringHelper1::strlen($text . ' ' . $word) > $maxchar - 1) {
                 break;
             }
             $text .= ' ' . $word;
@@ -484,22 +448,22 @@ SCRIPT;
         return $text;
     }
 
-    private function addOpenGraphTags($title='', $text='', $image='', $url='')
+    private function addOpenGraphTags($title = '', $text = '', $image = '', $url = '')
     {
         $doc = JFactory::getDocument();
 
         $doc->setMetaData('og:type', 'article');
 
-        if($image){
+        if ($image) {
             $doc->setMetaData('og:image', $image);
             JFactory::getApplication()->setUserState('jllike.image', $image);
         }
 
-        if($title)
+        if ($title)
             $doc->setMetaData('og:title', $title);
-        if($text)
+        if ($text)
             $doc->setMetaData('og:description', $text);
-        if($url)
+        if ($url)
             $doc->setMetaData('og:url', $url);
     }
 
@@ -511,15 +475,14 @@ SCRIPT;
         $query->select('`file_url`')
             ->from('#__virtuemart_medias as m')
             ->from('#__virtuemart_product_medias as pm')
-            ->where('pm.virtuemart_product_id = '.(int)$id)
+            ->where('pm.virtuemart_product_id = ' . (int) $id)
             ->where('pm.virtuemart_media_id = m.virtuemart_media_id')
             ->order('pm.ordering ASC');
-        $db->setQuery($query,0,1);
+        $db->setQuery($query, 0, 1);
         $res = $db->loadResult();
 
-        if($res)
-        {
-            $image = JURI::root().$res;
+        if ($res) {
+            $image = JURI::root() . $res;
         }
         return $image;
     }
