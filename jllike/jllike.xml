@@ -2,12 +2,12 @@
 <extension version="3.5.0" type="plugin" group="content" method="upgrade">
     <name>JL Like</name>
     <author>JoomLine</author>
-    <creationDate>18.11.2019</creationDate>
-    <copyright>(C) 2012-2019 by Artem Zhukov, Arkadiy Sedelnikov and Vadim Kunicin(https://joomline.ru)</copyright>
+    <creationDate>11.02.2020</creationDate>
+    <copyright>(C) 2012-2020 by Artem Zhukov, Arkadiy Sedelnikov and Vadim Kunicin(https://joomline.ru)</copyright>
     <license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
     <authorEmail>sale@joomline.ru</authorEmail>
     <authorUrl>https://joomline.ru</authorUrl>
-    <version>4.0.3</version>
+    <version>4.0.4</version>
     <description>PLG_JLLIKE_DESC_ALL</description>
    <files>
         <folder>js</folder>
