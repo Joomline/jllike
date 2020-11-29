@@ -339,9 +339,9 @@ jQuery.noConflict();
                 },
 
                 getShareLink: function () {
-                    var url = 'https://www.facebook.com/sharer/sharer.php?app_id=114545895322903&sdk=joey&u='
+                    var url = 'https://www.facebook.com/sharer/sharer.php?u='
                         + encodeURIComponent(this.linkToShare)
-                        + '&display=popup&ref=plugin&src=share_button';
+                        + '&display=popup';
                     //var url = 'https://www.facebook.com/sharer/sharer.php?s=100';
                     //url += '&p[url]=' + encodeURIComponent(this.linkToShare);
                     //url += '&p[title]=' + encodeURIComponent(this.title);
