@@ -10,6 +10,8 @@
  **/
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 jimport('joomla.plugin.plugin');
 
 if (version_compare(JVERSION, '3.5.0', 'ge')) {
@@ -37,8 +39,8 @@ class PlgJLLikeHelper
 
     /**
      * Пример вывода лайков в любом месте макетов, шаблонов и т.п.
-     * require_once JPATH_ROOT .'plugins/content/jllikepro/helper.php';
-     * $helper = PlgJLLikeProHelper::getInstance();
+     * require_once JPATH_ROOT .'plugins/content/jllike/helper.php';
+     * $helper = PlgJLLikeHelper::getInstance();
      * $helper->loadScriptAndStyle(0); //1-если в категории, 0-если в контенте
      * echo $helper->ShowIN($id, $link, $title, $image, $desc, $enable_opengraph);
      */
@@ -256,16 +258,15 @@ SCRIPT;
 
         $doc->addScriptDeclaration($script);
 
-        JHtml::_('jquery.framework');
-
-        $doc->addScript(JURI::base() . "plugins/content/jllike/js/buttons.min.js?12");
+        JHtml::_('jquery.framework');     
+		
+		HTMLHelper::_('script', 'plugins/content/jllike/js/buttons.min.js', array('version' => 'auto'));
 
         if ($this->params->get('enable_twit', 0)) {
-            $doc->addScript(JURI::base() . "plugins/content/jllike/js/twit.min.js");
+			HTMLHelper::_('script', 'plugins/content/jllike/js/twit.min.js', array('version' => 'auto'));
         }
 
-
-        $doc->addStyleSheet(JURI::base() . "plugins/content/jllike/js/buttons.min.css?12");
+		HTMLHelper::_('stylesheet', 'plugins/content/jllike/js/buttons.min.css', array('version' => 'auto'));      
 
         $btn_border_radius = (int) $this->params->get('btn_border_radius', 15);
         $btn_dimensions = (int) $this->params->get('btn_dimensions', 30);
