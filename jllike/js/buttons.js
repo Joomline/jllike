@@ -761,7 +761,7 @@ jQuery.noConflict();
             /*@methods*/
             countLikes: function () {},
             getShareLink: function () {
-                return 'tg://share?'
+                return 'https://t.me/share/url?url='
                     + 'url=' + encodeURIComponent(this.linkToShare)
                     + '&text=' + encodeURIComponent(this.title);
             },
