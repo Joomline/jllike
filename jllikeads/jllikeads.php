@@ -24,7 +24,7 @@ class plgAdsmanagercontentJlLikeAds extends JPlugin
         $plugin = & JPluginHelper::getPlugin('content', 'jllike');
         $plgParams = new JRegistry;
         $plgParams->loadString($plugin->params);
-        $view = JRequest::getCmd('view');
+        $view = JFactory::getApplication()->input->get('view');
         $ADSShow = $plgParams->get('adscontent', 0);
 
         if (!$ADSShow || $view != 'details')

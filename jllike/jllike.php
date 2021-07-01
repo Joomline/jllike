@@ -76,10 +76,12 @@ class plgContentjllike extends JPlugin
 
     public function onContentPrepare($context, &$article, &$params, $page = 0)
     {
-        if(JFactory::getApplication()->isAdmin())
+        if(JFactory::getApplication()->isClient('administrator'))
         {
             return true;
         }
+
+        $input = JFactory::getApplication()->input;
 
         $allowContext = array(
             'com_content.article',
@@ -107,7 +109,7 @@ class plgContentjllike extends JPlugin
         $autoAdd = $this->params->get('autoAdd',0);
         $sharePos = (int)$this->params->get('shares_position', 1);
         $enableOpenGraph = $this->params->get('enable_opengraph',1);
-        $option = JRequest::getCmd('option');
+        $option = $input->get('option');
         $helper = PlgJLLikeHelper::getInstance($this->params);
 
         if (strpos($article->text, '{jllike}') === false && !$autoAdd)
@@ -120,7 +122,7 @@ class plgContentjllike extends JPlugin
             $article->catid = '';
         }
 
-        $print = JRequest::getInt('print', 0);
+        $print = (int) $input->get('print', 0);
 
 		$root = JURI::getInstance()->toString(array('host'));
         $url = $this->protokol . $this->params->get('pathbase', '') . str_replace('www.', '', $root);
@@ -170,7 +172,9 @@ class plgContentjllike extends JPlugin
                 }
 
 
-                include_once JPATH_ROOT.'/components/com_content/helpers/route.php';
+                if (version_compare(JVERSION, '3.12.0', '<')) {
+                    include_once JPATH_ROOT.'/components/com_content/helpers/route.php';
+                }
                 $link = $url . JRoute::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catid));
 
                 $image = '';
@@ -207,7 +211,7 @@ class plgContentjllike extends JPlugin
 
                 if ($context == 'com_content.article')
                 {
-                    $view = JRequest::getCmd('view');
+                    $view = $input->get('view');
                     if ($view == 'article')
                     {
                         if ($autoAdd == 1 || strpos($article->text, '{jllike}') == true)
@@ -266,7 +270,7 @@ class plgContentjllike extends JPlugin
                 if (($context == 'easyblog.blog') && ($this->params->get('easyblogshow', 0) == 1))
                 {
 					$allow_in_category = $this->params->get('allow_in_category', 0);
-					$isCategory = (JRequest::getCmd('view', '') == 'entry') ? false : true;
+					$isCategory = ($input->get('view', '') == 'entry') ? false : true;
 
 					if(!$allow_in_category && $isCategory)
 					{
