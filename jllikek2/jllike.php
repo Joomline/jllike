@@ -86,7 +86,7 @@ class plgK2Jllike extends K2Plugin
         $layout = $input->getString('layout','');
         $task = $input->getString('task','');
 
-        if(!$app->isAdmin() && ($view == 'itemlist' || ($view == 'item' && ($layout == 'item' || !$layout))) && $task != 'edit' && $task != 'add')
+        if(!$app->isClient('administrator') && ($view == 'itemlist' || ($view == 'item' && ($layout == 'item' || !$layout))) && $task != 'edit' && $task != 'add')
 		{
             return true;
         }
