@@ -11,6 +11,14 @@
 // no direct access
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
+
 /**
  * Example K2 Plugin to render YouTube URLs entered in backend K2 forms to video players in the frontend.
  */
@@ -36,8 +44,8 @@ class plgK2Jllike extends K2Plugin
 		}
         parent::__construct($subject, $params);
 		$parent_contayner = $this->params->get('parent_contayner', '');
-        $plugin = JPluginHelper::getPlugin('content', 'jllike');
-        $this->params = new JRegistry($plugin->params);
+        $plugin = PluginHelper::getPlugin('content', 'jllike');
+        $this->params = new Registry($plugin->params);
 		if(!empty($parent_contayner))
         {
             $this->params->set('parent_contayner', $parent_contayner);
@@ -79,7 +87,7 @@ class plgK2Jllike extends K2Plugin
 
     private function enableShow()
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 		$input = $app->input;
         $view = $input->getString('view','');
         $layout = $input->getString('layout','');
@@ -109,7 +117,7 @@ class plgK2Jllike extends K2Plugin
 
         $k2categories = $this->params->get('k2categories', array());
         $k2categories = (is_array($k2categories)) ? $k2categories : array();
-        $input = JFactory::getApplication()->input;
+        $input = Factory::getApplication()->input;
         $print = $input->getInt('print', 0);
 
         if(in_array($article->catid, $k2categories) || $print)
@@ -123,12 +131,12 @@ class plgK2Jllike extends K2Plugin
         $isCategory = ($input->getString('view', '') == 'itemlist') ? true : false;
 
         $helper = PlgJLLikeHelper::getInstance($this->params);
-        $conf = JFactory::getConfig();
+        $conf = Factory::getConfig();
         $enableSef = $conf->get('sef', 0);
 
         if($enableSef)
         {
-            $link = $url.JRoute::_(K2HelperRoute::getItemRoute($article->id.':'.$article->alias, $article->catid.':'.urlencode($article->category->alias)));
+            $link = $url.Route::_(K2HelperRoute::getItemRoute($article->id.':'.$article->alias, $article->catid.':'.urlencode($article->category->alias)));
         }
         else
         {
@@ -144,7 +152,7 @@ class plgK2Jllike extends K2Plugin
                 {
                     $image = StringHelper::substr($image, 1);
                 }
-                $image = JURI::root().$image;
+                $image = Uri::root().$image;
             }
         }
         else
@@ -170,16 +178,16 @@ class plgK2Jllike extends K2Plugin
 
     private function getUrl()
     {
-		$root = JURI::getInstance()->toString(array('host'));
-		$prefix = (JFactory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
+		$root = Uri::getInstance()->toString(['host']);
+		$prefix = (Factory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
         $url = $prefix . $this->params->get('pathbase', '') . str_replace('www.', '', $root);
 
         if($this->params->get('punycode_convert',0))
         {
             $file = JPATH_ROOT.'/libraries/idna_convert/idna_convert.class.php';
-            if(!JFile::exists($file))
+            if(!File::exists($file))
             {
-                return JText::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
+                return Text::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
             }
 
             include_once $file;

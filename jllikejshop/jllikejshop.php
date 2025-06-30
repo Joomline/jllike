@@ -10,6 +10,15 @@
 
 // no direct access
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
+
 require_once JPATH_ROOT . '/plugins/content/jllike/helper.php';
 
 class plgJshoppingProductsJlLikeJShop extends JPlugin
@@ -19,10 +28,10 @@ class plgJshoppingProductsJlLikeJShop extends JPlugin
     public function onBeforeDisplayProductView(&$content)
     {
         JPlugin::loadLanguage('plg_content_jllike');
-        $plugin = & JPluginHelper::getPlugin('content', 'jllike');
-        $plgParams = new JRegistry;
+        $plugin = PluginHelper::getPlugin('content', 'jllike');
+        $plgParams = new Registry;
         $plgParams->loadString($plugin->params);
-        $input = JFactory::getApplication()->input;
+        $input = Factory::getApplication()->input;
         $view = $input->getCmd('controller', '');
         $JShopShow = $plgParams->get('jshopcontent');
 
@@ -36,13 +45,13 @@ class plgJshoppingProductsJlLikeJShop extends JPlugin
         }
         $helper = PlgJLLikeHelper::getInstance($plgParams);
         $helper->loadScriptAndStyle(0);
-		$prefix = (JFactory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
-		$root = JURI::getInstance()->toString(array('host'));
+		$prefix = (Factory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
+		$root = Uri::getInstance()->toString(['host']);
         $url = $prefix . $plgParams->get('pathbase', '') . str_replace('www.', '', $root);
         if ($plgParams->get('punycode_convert', 0)) {
             $file = JPATH_ROOT . '/libraries/idna_convert/idna_convert.class.php';
-            if (!JFile::exists($file)) {
-                return JText::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
+            if (!File::exists($file)) {
+                return Text::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
             }
 
             include_once $file;
@@ -54,7 +63,7 @@ class plgJshoppingProductsJlLikeJShop extends JPlugin
                 }
             }
         }
-        $uri = StringHelper1::str_ireplace(JURI::root(), '', JURI::current());
+        $uri = StringHelper1::str_ireplace(Uri::root(), '', Uri::current());
         $link = $url . '/' . $uri;
 
         $image = '';
@@ -68,7 +77,7 @@ class plgJshoppingProductsJlLikeJShop extends JPlugin
             $image = $jshopConfig->image_product_live_path . '/' . $image;
         }
 
-        $lang = JFactory::getLanguage()->getTag();
+        $lang = Factory::getLanguage()->getTag();
         $name = 'name_'.$lang;
         $sdesc = 'short_description_'.$lang;
         $desc = 'description_'.$lang;

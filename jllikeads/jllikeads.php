@@ -10,6 +10,15 @@
 
 // no direct access
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
+
 require_once JPATH_ROOT . '/plugins/content/jllike/helper.php';
 
 class plgAdsmanagercontentJlLikeAds extends JPlugin
@@ -17,10 +26,10 @@ class plgAdsmanagercontentJlLikeAds extends JPlugin
     public function ADSonContentAfterDisplay($content)
     {
         JPlugin::loadLanguage('plg_content_jllike');
-        $plugin = & JPluginHelper::getPlugin('content', 'jllike');
-        $plgParams = new JRegistry;
+        $plugin = PluginHelper::getPlugin('content', 'jllike');
+        $plgParams = new Registry;
         $plgParams->loadString($plugin->params);
-        $view = JFactory::getApplication()->input->get('view');
+        $view = Factory::getApplication()->input->get('view');
         $ADSShow = $plgParams->get('adscontent', 0);
 
         if (!$ADSShow || $view != 'details')
@@ -35,15 +44,15 @@ class plgAdsmanagercontentJlLikeAds extends JPlugin
         }
         $helper = PlgJLLikeHelper::getInstance($plgParams);
         $helper->loadScriptAndStyle(0);
-		$prefix = (JFactory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
-		$root = JURI::getInstance()->toString(array('host'));
+		$prefix = (Factory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
+		$root = Uri::getInstance()->toString(['host']);
 		$url = $prefix . $plgParams->get('pathbase', '') . str_replace('www.', '', $root);
 		if($plgParams->get('punycode_convert',0))
 		{
 			$file = JPATH_ROOT.'/libraries/idna_convert/idna_convert.class.php';
-			if(!JFile::exists($file))
+			if(!File::exists($file))
 			{
-				return JText::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
+				return Text::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
 			}
 
 			include_once $file;
@@ -57,11 +66,11 @@ class plgAdsmanagercontentJlLikeAds extends JPlugin
 				}
 			}
 		}
-		$uri = StringHelper::str_ireplace(JURI::root(), '', JURI::current());
+		$uri = StringHelper1::str_ireplace(Uri::root(), '', Uri::current());
         $link = $url.'/'.$uri;
 
         if(!defined('JURI_IMAGES_FOLDER')){
-            define('JURI_IMAGES_FOLDER',JURI::root()."images/com_adsmanager/contents");
+            define('JURI_IMAGES_FOLDER',Uri::root()."images/com_adsmanager/contents");
         }
 
         $image = (!empty($content->images[0]->thumbnail)) ? JURI_IMAGES_FOLDER . '/' . $content->images[0]->thumbnail : '';

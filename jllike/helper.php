@@ -14,6 +14,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
 
 if (!class_exists('StringHelper1')) {
     class StringHelper1 extends \Joomla\String\StringHelper {}
@@ -223,11 +227,11 @@ HTML;
 
         define('JLLIKEPRO_SCRIPT_LOADED', 1);
 
-        $doc = JFactory::getDocument();
+        $doc = Factory::getDocument();
 
         $isCategory = (int) $isCategory;
 
-        $prefix = (JFactory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
+        $prefix = (Factory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
         $url = $prefix . $this->params->get('pathbase', '') . str_replace('www.', '', $_SERVER['HTTP_HOST']);
 
         $enableCounters = (int) $this->params->get('enableCounters', 1);
@@ -371,11 +375,11 @@ SCRIPT;
 
     private static function getPluginParams($folder = 'content', $name = 'jllike')
     {
-        $plugin = JPluginHelper::getPlugin($folder, $name);
+        $plugin = PluginHelper::getPlugin($folder, $name);
         if (!$plugin) {
-            throw new RuntimeException(JText::_('JLLIKEPRO_PLUGIN_NOT_FOUND'));
+            throw new RuntimeException(Text::_('JLLIKEPRO_PLUGIN_NOT_FOUND'));
         }
-        $params = new JRegistry($plugin->params);
+        $params = new Registry($plugin->params);
         return $params;
     }
 
@@ -401,13 +405,15 @@ SCRIPT;
 
         if (!empty($image)) {
             if (!preg_match("#^http|^https|^ftp#i", $image)) {
-                $image = JFile::exists(JPATH_SITE . '/' . $image) ? $image : '';
+                if (!File::exists(JPATH_SITE . '/' . $image)) {
+                    $image = '';
+                }
 
                 if (strpos($image, '/') === 0) {
                     $image = substr($image, 1);
                 }
 
-                $image = JURI::root() . $image;
+                $image = Uri::root() . $image;
             }
         } else {
             $image = '';
@@ -439,13 +445,13 @@ SCRIPT;
 
     private function addOpenGraphTags($title = '', $text = '', $image = '', $url = '')
     {
-        $doc = JFactory::getDocument();
+        $doc = Factory::getDocument();
 
         $doc->setMetaData('og:type', 'article');
 
         if ($image) {
             $doc->setMetaData('og:image', $image);
-            JFactory::getApplication()->setUserState('jllike.image', $image);
+            Factory::getApplication()->setUserState('jllike.image', $image);
         }
 
         if ($title)
@@ -458,7 +464,7 @@ SCRIPT;
 
     public function getVMImage($id)
     {
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
         $image = '';
         $query = $db->getQuery(true);
         $query->select('`file_url`')
@@ -471,7 +477,7 @@ SCRIPT;
         $res = $db->loadResult();
 
         if ($res) {
-            $image = JURI::root() . $res;
+            $image = Uri::root() . $res;
         }
         return $image;
     }
