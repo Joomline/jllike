@@ -90,9 +90,9 @@ class PlgContentJllike extends \Joomla\CMS\Plugin\CMSPlugin
         if($this->params->get('punycode_convert',0))
         {
             $file = JPATH_ROOT.'/libraries/idna_convert/idna_convert.class.php';
-            if(!JFile::exists($file))
+            if(!File::exists($file))
             {
-                return JText::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
+                return Text::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
             }
             include_once $file;
             if($url)

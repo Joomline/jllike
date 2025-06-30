@@ -90,20 +90,20 @@ class PlgJLLikeHelper
             $this->addOpenGraphTags($title, $desc, $image, $link);
         }
         
-        $titlefc = JText::_('PLG_JLLIKEPRO_TITLE_FC');
-        $titlevk = JText::_('PLG_JLLIKEPRO_TITLE_VK');
-        $titletw = JText::_('PLG_JLLIKEPRO_TITLE_TW');
-        $titleod = JText::_('PLG_JLLIKEPRO_TITLE_OD');
-        $titlemm = JText::_('PLG_JLLIKEPRO_TITLE_MM');
-        $titleli = JText::_('PLG_JLLIKEPRO_TITLE_LI');
-        $titlepi = JText::_('PLG_JLLIKEPRO_TITLE_PI');
-        $titlelj = JText::_('PLG_JLLIKEPRO_TITLE_LJ');
-        $titlebl = JText::_('PLG_JLLIKEPRO_TITLE_BL');
-        $titlewb = JText::_('PLG_JLLIKEPRO_TITLE_WB');
-        $titletl = JText::_('PLG_JLLIKEPRO_TITLE_TL');
-        $titlewa = JText::_('PLG_JLLIKEPRO_TITLE_WA');
-        $titlevi = JText::_('PLG_JLLIKEPRO_TITLE_VI');
-        $titleAll = JText::_('PLG_JLLIKEPRO_TITLE_ALL');
+        $titlefc = Text::_('PLG_JLLIKEPRO_TITLE_FC');
+        $titlevk = Text::_('PLG_JLLIKEPRO_TITLE_VK');
+        $titletw = Text::_('PLG_JLLIKEPRO_TITLE_TW');
+        $titleod = Text::_('PLG_JLLIKEPRO_TITLE_OD');
+        $titlemm = Text::_('PLG_JLLIKEPRO_TITLE_MM');
+        $titleli = Text::_('PLG_JLLIKEPRO_TITLE_LI');
+        $titlepi = Text::_('PLG_JLLIKEPRO_TITLE_PI');
+        $titlelj = Text::_('PLG_JLLIKEPRO_TITLE_LJ');
+        $titlebl = Text::_('PLG_JLLIKEPRO_TITLE_BL');
+        $titlewb = Text::_('PLG_JLLIKEPRO_TITLE_WB');
+        $titletl = Text::_('PLG_JLLIKEPRO_TITLE_TL');
+        $titlewa = Text::_('PLG_JLLIKEPRO_TITLE_WA');
+        $titlevi = Text::_('PLG_JLLIKEPRO_TITLE_VI');
+        $titleAll = Text::_('PLG_JLLIKEPRO_TITLE_ALL');
 
         $providers = array();
         if ($this->params->get('addfacebook', 1)) {
