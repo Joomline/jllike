@@ -11,8 +11,9 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
-
-jimport('joomla.plugin.plugin');
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 if (version_compare(JVERSION, '3.5.0', 'ge')) {
     if (!class_exists('StringHelper1')) {
