@@ -2,17 +2,14 @@
 /**
  * jllike
  *
- * @version 4.0.0
+ * @version 5.0.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2010-2016 by Vadim Kunicin (https://www.joomline.ru)
+ * @copyright (C) 2010-2025 by Joomline (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 
 // no direct access
 defined('_JEXEC') or die;
-error_reporting(E_ERROR);
-jimport('joomla.plugin.plugin');
-jimport('joomla.html.parameter');
 require_once JPATH_ROOT . '/plugins/content/jllike/helper.php';
 
 class plgJshoppingProductsJlLikeJShop extends JPlugin
@@ -57,15 +54,13 @@ class plgJshoppingProductsJlLikeJShop extends JPlugin
                 }
             }
         }
-        $uri = JString::str_ireplace(JURI::root(), '', JURI::current());
+        $uri = StringHelper1::str_ireplace(JURI::root(), '', JURI::current());
         $link = $url . '/' . $uri;
 
-        $image = $content->product->product_name_image;
-
-		if(empty($image))
-		{
-			$image = $content->product->image;
-		}
+        $image = '';
+        if (!empty($content->product->image)) {
+            $image = $content->product->image;
+        }
 
         if (!empty($image))
         {

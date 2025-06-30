@@ -48,7 +48,7 @@ class JFormFieldk2Categories extends JFormField
 
         foreach ($list as $item)
         {
-            $item->treename = JString::str_ireplace('&#160;', '- ', $item->treename);
+            $item->treename = StringHelper1::str_ireplace('&#160;', '- ', $item->treename);
             $mitems[] = JHTML::_('select.option', $item->id, '   '.$item->treename);
         }
 

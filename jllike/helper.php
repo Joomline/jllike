@@ -3,9 +3,9 @@
 /**
  * jllike
  *
- * @version 4.0.0
+ * @version 5.0.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2010-2019 by Joomline (http://www.joomline.ru)
+ * @copyright (C) 2010-2025 by Joomline (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 defined('_JEXEC') or die;
@@ -15,21 +15,8 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 
-if (version_compare(JVERSION, '3.5.0', 'ge')) {
-    if (!class_exists('StringHelper1')) {
-        class StringHelper1 extends \Joomla\String\StringHelper
-        { }
-    }
-    if (!class_exists('JRegistry')) {
-        class JRegistry extends Joomla\Registry\Registry
-        { }
-    }
-} else {
-    if (!class_exists('StringHelper1')) {
-        jimport('joomla.string.string');
-        class StringHelper1 extends JString
-        { }
-    }
+if (!class_exists('StringHelper1')) {
+    class StringHelper1 extends \Joomla\String\StringHelper {}
 }
 
 class PlgJLLikeHelper

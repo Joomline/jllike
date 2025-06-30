@@ -2,9 +2,9 @@
 /**
  * jllike
  *
- * @version 4.0.0
+ * @version 5.0.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2010-2019 by Vadim Kunicin (http://www.joomline.ru)
+ * @copyright (C) 2010-2025 by Joomline (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 
@@ -17,7 +17,6 @@ defined('_JEXEC') or die;
 
 // Load the K2 Plugin API
 JLoader::register('K2Plugin', JPATH_ADMINISTRATOR . '/components/com_k2/lib/k2plugin.php');
-use Joomla\String\StringHelper;
 
 // Initiate class to hold plugin events
 class plgK2Jllike extends K2Plugin
