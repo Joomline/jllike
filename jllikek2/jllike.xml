@@ -25,4 +25,5 @@
 			</fieldset>
 		</fields>
 	</config>
+	<minimum-joomla-version>4.0.0</minimum-joomla-version>
 </extension>

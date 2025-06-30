@@ -9,7 +9,7 @@
     <authorUrl>https://joomline.ru</authorUrl>
     <version>5.0.0</version>
     <description>PLG_JLLIKE_DESC_ALL</description>
-    <minimum-joomla-version>5.0.0</minimum-joomla-version>
+    <minimum-joomla-version>4.0.0</minimum-joomla-version>
    <files>
         <folder>js</folder>
         <folder>language</folder>
