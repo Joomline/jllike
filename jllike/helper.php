@@ -233,29 +233,26 @@ HTML;
 
         $enableCounters = (int) $this->params->get('enableCounters', 1);
 
-        $script = <<<SCRIPT
-            var jllickeproSettings = {
-                url : "$url",
-                typeGet : "{$this->params->get('typesget', 0)}",
-                enableCounters : $enableCounters,
-                disableMoreLikes : {$this->params->get('disable_more_likes', 0)},
-                isCategory : $isCategory,
-                buttonsContayner : "{$this->params->get('buttons_contayner', '')}",
-                parentContayner : "{$this->params->get('parent_contayner', 'div.jllikeproSharesContayner')}",
-            };
-SCRIPT;
+        $script = '
+            window.jllickeproSettings = window.jllickeproSettings || {};
+            jllickeproSettings.url = "' . $url . '";
+            jllickeproSettings.typeGet = "' . $this->params->get('typesget', 0) . '";
+            jllickeproSettings.enableCounters = ' . ($enableCounters ? 'true' : 'false') . ';
+            jllickeproSettings.disableMoreLikes = ' . $this->params->get('disable_more_likes', 0) . ';
+            jllickeproSettings.isCategory = ' . $isCategory . ';
+            jllickeproSettings.buttonsContayner = "' . $this->params->get('buttons_contayner', '') . '";
+            jllickeproSettings.parentContayner = "' . $this->params->get('parent_contayner', 'div.jllikeproSharesContayner') . '";
+        ';
 
         $doc->addScriptDeclaration($script);
 
-        JHtml::_('jquery.framework');     
-		
-		HTMLHelper::_('script', 'plugins/content/jllike/js/buttons.min.js', array('version' => 'auto'));
+        HTMLHelper::_('script', 'plugins/content/jllike/js/buttons.js', array('version' => 'auto'));
 
         if ($this->params->get('enable_twit', 0)) {
-			HTMLHelper::_('script', 'plugins/content/jllike/js/twit.min.js', array('version' => 'auto'));
+            HTMLHelper::_('script', 'plugins/content/jllike/js/twit.min.js', array('version' => 'auto'));
         }
 
-		HTMLHelper::_('stylesheet', 'plugins/content/jllike/js/buttons.min.css', array('version' => 'auto'));      
+        HTMLHelper::_('stylesheet', 'plugins/content/jllike/js/buttons.min.css', array('version' => 'auto'));      
 
         $btn_border_radius = (int) $this->params->get('btn_border_radius', 15);
         $btn_dimensions = (int) $this->params->get('btn_dimensions', 30);
