@@ -502,16 +502,6 @@
                         description="PLG_JLLIKEPRO_BUTTON_TEXT_DESC"
                         />
 				<field
-                        name="enable_twit"
-                        type="radio"
-                        default="0"
-                        label="PLG_JLLIKEPRO_ENABLE_TWIT"
-                        description="PLG_JLLIKEPRO_ENABLE_TWIT_DESC"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
-                </field>
-				 <field
                         name="allow_in_category"
                         type="radio"
                         default="0"
