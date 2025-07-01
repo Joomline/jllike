@@ -8,9 +8,27 @@
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 
-// no direct access
 defined('_JEXEC') or die;
 
+if (!class_exists('StringHelper1')) {
+    if (class_exists('Joomla\\String\\StringHelper')) {
+        class StringHelper1 extends \Joomla\String\StringHelper {}
+    } else {
+        class StringHelper1 {
+            public static function str_ireplace($search, $replace, $subject, $count = null) {
+                return str_ireplace($search, $replace, $subject, $count);
+            }
+            public static function strlen($string) {
+                return mb_strlen($string);
+            }
+            public static function trim($string) {
+                return trim($string);
+            }
+        }
+    }
+}
+
+use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Router\Route;
@@ -21,7 +39,7 @@ use Joomla\Registry\Registry;
 
 require_once JPATH_ROOT . '/plugins/content/jllike/helper.php';
 
-class plgJshoppingProductsJlLikeJShop extends JPlugin
+class PlgJshoppingproductsJlLikeJShop extends CMSPlugin
 {
 
 

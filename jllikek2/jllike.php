@@ -8,8 +8,25 @@
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 
-// no direct access
 defined('_JEXEC') or die;
+
+if (!class_exists('StringHelper1')) {
+    if (class_exists('Joomla\\String\\StringHelper')) {
+        class StringHelper1 extends \Joomla\String\StringHelper {}
+    } else {
+        class StringHelper1 {
+            public static function str_ireplace($search, $replace, $subject, $count = null) {
+                return str_ireplace($search, $replace, $subject, $count);
+            }
+            public static function strlen($string) {
+                return mb_strlen($string);
+            }
+            public static function trim($string) {
+                return trim($string);
+            }
+        }
+    }
+}
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
@@ -24,10 +41,9 @@ use Joomla\Registry\Registry;
  */
 
 // Load the K2 Plugin API
-JLoader::register('K2Plugin', JPATH_ADMINISTRATOR . '/components/com_k2/lib/k2plugin.php');
+\JLoader::register('K2Plugin', JPATH_ADMINISTRATOR . '/components/com_k2/lib/k2plugin.php');
 
-// Initiate class to hold plugin events
-class plgK2Jllike extends K2Plugin
+class PlgK2Jllike extends \K2Plugin
 {
 
     // Some params

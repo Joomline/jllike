@@ -7,8 +7,16 @@
  * @copyright (C) 2010-2019 by Vadim Kunicin (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
-defined('_JEXEC') or die ;
+
+defined('_JEXEC') or die;
+
 use Joomla\Registry\Registry as JRegistry;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\LanguageHelper;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Uri\Uri;
+
 require_once JPATH_ROOT.'/plugins/content/jllike/helper.php';
 
 class ElementJlLikeZooEl extends Element implements iSubmittable {

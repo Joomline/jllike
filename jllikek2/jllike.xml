@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.5.0" type="plugin" group="k2" method="upgrade">
+<extension version="5.0.0" type="plugin" group="k2" method="upgrade">
 	<name>JL Like K2 Plugin</name>
 	<author>JoomLine</author>
 	<creationDate>30.06.2025</creationDate>
@@ -9,6 +9,8 @@
 	<version>5.0.0</version>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<description>An Joomline Like K2 plugin to extend item form in K2.</description>
+	<minimum-joomla-version>5.0.0</minimum-joomla-version>
+	<php min="8.1" />
 	<files>
 		<filename plugin="jllike">jllike.php</filename>
 	</files>
@@ -25,5 +27,4 @@
 			</fieldset>
 		</fields>
 	</config>
-	<minimum-joomla-version>4.0.0</minimum-joomla-version>
 </extension>

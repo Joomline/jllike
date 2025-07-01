@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<extension type="package" version="5.0" method="upgrade">
+<extension type="package" version="5.0.0" method="upgrade">
 	<name>JL Like</name>
 	<packagename>jllike</packagename>
 	<author>JoomLine</author>
@@ -13,7 +13,8 @@
 	<packager>JoomLine.ru</packager>
 	<packagerurl>https://joomline.ru</packagerurl>
 	<description>PLG_JLLIKE_DESC_ALL</description>
-	<minimum-joomla-version>4.0.0</minimum-joomla-version>
+	<minimum-joomla-version>5.0.0</minimum-joomla-version>
+	<php min="8.1" />
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.pkg_jllike.sys.ini</language>
 		<language tag="ru-RU">ru-RU/ru-RU.pkg_jllike.sys.ini</language>

@@ -2,21 +2,45 @@
 /**
  * jllike
  *
- * @version 4.0.0
+ * @version 5.0.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2010-2019 by Joomline (http://www.joomline.ru)
+ * @copyright (C) 2010-2025 by Joomline (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 
 defined('_JEXEC') or die;
 
 if (!class_exists('StringHelper1')) {
-    class StringHelper1 extends \Joomla\String\StringHelper {}
+    // Для Joomla 4/5: используйте стандартные функции, если StringHelper отсутствует
+    if (class_exists('Joomla\\String\\StringHelper')) {
+        class StringHelper1 extends \Joomla\String\StringHelper {}
+    } else {
+        class StringHelper1 {
+            public static function str_ireplace($search, $replace, $subject, $count = null) {
+                return str_ireplace($search, $replace, $subject, $count);
+            }
+            public static function strlen($string) {
+                return mb_strlen($string);
+            }
+            public static function trim($string) {
+                return trim($string);
+            }
+        }
+    }
 }
+
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\Plugin\Content\Jllike\Helper\PlgJLLikeHelper;
 
 require_once JPATH_ROOT . '/plugins/content/jllike/helper.php';
 
-class PlgContentJllike extends \Joomla\CMS\Plugin\CMSPlugin
+class PlgContentJllike extends CMSPlugin
 {
     private $protokol;
 
@@ -24,12 +48,12 @@ class PlgContentJllike extends \Joomla\CMS\Plugin\CMSPlugin
     {
         parent::__construct($subject, $config);
         $this->loadLanguage();
-        $this->protokol = (JFactory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
+        $this->protokol = (Factory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
     }
 
     public function onAfterRender()
     {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         $buffer = $app->getBody();
         if($buffer !== null)
         {
@@ -47,12 +71,12 @@ class PlgContentJllike extends \Joomla\CMS\Plugin\CMSPlugin
 
     public function onContentPrepare($context, &$article, &$params, $page = 0)
     {
-        if(JFactory::getApplication()->isClient('administrator'))
+        if(Factory::getApplication()->isClient('administrator'))
         {
             return true;
         }
 
-        $input = JFactory::getApplication()->input;
+        $input = Factory::getApplication()->input;
         $allowContext = array(
             'com_content.article',
             'easyblog.blog',
@@ -85,7 +109,7 @@ class PlgContentJllike extends \Joomla\CMS\Plugin\CMSPlugin
             $article->catid = '';
         }
         $print = (int) $input->get('print', 0);
-        $root = JUri::getInstance()->toString(array('host'));
+        $root = Uri::getInstance()->toString(array('host'));
         $url = $this->protokol . $this->params->get('pathbase', '') . str_replace('www.', '', $root);
         if($this->params->get('punycode_convert',0))
         {
@@ -122,7 +146,7 @@ class PlgContentJllike extends \Joomla\CMS\Plugin\CMSPlugin
                     $article->text = str_replace("{jllike}", "", $article->text);
                     return true;
                 }
-                $link = $url . JRoute::_(\ContentHelperRoute::getArticleRoute($article->slug, $article->catid));
+                $link = $url . Route::_(\ContentHelperRoute::getArticleRoute($article->slug, $article->catid));
                 $image = '';
                 if($this->params->get('content_images', 'fields') == 'fields')
                 {
@@ -139,7 +163,7 @@ class PlgContentJllike extends \Joomla\CMS\Plugin\CMSPlugin
                         }
                         if(!empty($image))
                         {
-                            $image = JUri::root().$image;
+                            $image = Uri::root().$image;
                         }
                     }
                 }
@@ -188,7 +212,7 @@ class PlgContentJllike extends \Joomla\CMS\Plugin\CMSPlugin
                         if ($autoAddvm == 1 || strpos($article->text, '{jllike}') !== false)
                         {
                             $helper->loadScriptAndStyle(0);
-                            $uri = StringHelper1::str_ireplace(JUri::root(), '', JUri::current());
+                            $uri = StringHelper1::str_ireplace(Uri::root(), '', Uri::current());
                             $link = $url.'/'.$uri;
                             $image = $helper->getVMImage($article->virtuemart_product_id);
                             $text = $helper->getShareText($article->metadesc, $article->product_s_desc, $article->product_desc);
@@ -217,7 +241,7 @@ class PlgContentJllike extends \Joomla\CMS\Plugin\CMSPlugin
                     if ($autoAdd == 1 || strpos($article->text, '{jllike}') == true)
                     {
                         $helper->loadScriptAndStyle(0);
-                        $uri = StringHelper1::str_ireplace(JUri::root(), '', JUri::current());
+                        $uri = StringHelper1::str_ireplace(Uri::root(), '', Uri::current());
                         $link = $url.'/'.$uri;
                         $image = '';
                         if($this->params->get('easyblog_images','fields') == 'fields'){

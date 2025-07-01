@@ -10,7 +10,7 @@
     <version>5.0.0</version>
     <description>PLG_JLLIKE_DESC_ALL</description>
     <minimum-joomla-version>4.0.0</minimum-joomla-version>
-   <files>
+    <files>
         <folder>js</folder>
         <folder>language</folder>
         <folder>elements</folder>
@@ -23,10 +23,10 @@
     </media>
     <languages folder="language">
         <language tag="en-GB">en-GB/en-GB.plg_content_jllike.ini</language>
-		<language tag="en-GB">en-GB/en-GB.plg_content_jllike.sys.ini</language>
+        <language tag="en-GB">en-GB/en-GB.plg_content_jllike.sys.ini</language>
         <language tag="ru-RU">ru-RU/ru-RU.plg_content_jllike.ini</language>
-		<language tag="ru-RU">ru-RU/ru-RU.plg_content_jllike.sys.ini</language>    
-        </languages>
+        <language tag="ru-RU">ru-RU/ru-RU.plg_content_jllike.sys.ini</language>
+    </languages>
     <config>
         <fields
                 name="params">

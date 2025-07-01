@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.5.0" type="plugin" group="adsmanagercontent" method="upgrade">
+<extension version="5.0.0" type="plugin" group="adsmanagercontent" method="upgrade">
 	<name>JL Like for ADSManager</name>
 	<author>JoomLine</author>
 	<creationDate>30.06.2025</creationDate>
@@ -10,6 +10,7 @@
 	<version>5.0.0</version>
 	<url>http://joomline.ru</url>
 	<description>Plugin allow integrate social buttons like into your ADS manager components</description>
+	<minimum-joomla-version>4.0.0</minimum-joomla-version>
 	<files>
 		<filename plugin="jllikeads">jllikeads.php</filename>
 		<filename>index.html</filename>
@@ -33,5 +34,4 @@
 			</fieldset>
 		</fields>
 	</config>
-	<minimum-joomla-version>4.0.0</minimum-joomla-version>
 </extension>

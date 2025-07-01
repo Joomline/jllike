@@ -8,6 +8,7 @@
  * @copyright (C) 2010-2025 by Joomline (http://www.joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
@@ -18,10 +19,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
-
-if (!class_exists('StringHelper1')) {
-    class StringHelper1 extends \Joomla\String\StringHelper {}
-}
 
 class PlgJLLikeHelper
 {
