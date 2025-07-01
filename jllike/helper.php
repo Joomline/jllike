@@ -246,9 +246,10 @@ HTML;
 
         $doc->addScriptDeclaration($script);
 
-        HTMLHelper::_('script', 'plugins/content/jllike/js/buttons.js', array('version' => 'auto'));
-
-        HTMLHelper::_('stylesheet', 'plugins/content/jllike/js/buttons.css', array('version' => 'auto'));
+        
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+        $wa->registerAndUseScript('plg_jllike.buttons', 'plugins/content/jllike/js/buttons.js', [], ['defer' => true]);
+        $wa->registerAndUseStyle('plg_jllike.buttons', 'plugins/content/jllike/js/buttons.css');
 
         $btn_border_radius = (int) $this->params->get('btn_border_radius', 15);
         $btn_dimensions = (int) $this->params->get('btn_dimensions', 30);
