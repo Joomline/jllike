@@ -449,14 +449,25 @@ SCRIPT;
         if ($image) {
             $doc->setMetaData('og:image', $image);
             Factory::getApplication()->setUserState('jllike.image', $image);
+            // Twitter large card
+            $doc->setMetaData('twitter:card', 'summary_large_image');
+            $doc->setMetaData('twitter:image', $image);
+        } else {
+            // Если нет картинки, пусть будет обычная карточка
+            $doc->setMetaData('twitter:card', 'summary');
         }
 
-        if ($title)
+        if ($title) {
             $doc->setMetaData('og:title', $title);
-        if ($text)
+            $doc->setMetaData('twitter:title', $title);
+        }
+        if ($text) {
             $doc->setMetaData('og:description', $text);
-        if ($url)
+            $doc->setMetaData('twitter:description', $text);
+        }
+        if ($url) {
             $doc->setMetaData('og:url', $url);
+        }
     }
 
     public function getVMImage($id)

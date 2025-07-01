@@ -13,8 +13,7 @@
 	<packager>JoomLine.ru</packager>
 	<packagerurl>https://joomline.ru</packagerurl>
 	<description>PLG_JLLIKE_DESC_ALL</description>
-	<minimum-joomla-version>5.0.0</minimum-joomla-version>
-	<php min="8.1" />
+	<minimum-joomla-version>4.0.0</minimum-joomla-version>
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.pkg_jllike.sys.ini</language>
 		<language tag="ru-RU">ru-RU/ru-RU.pkg_jllike.sys.ini</language>

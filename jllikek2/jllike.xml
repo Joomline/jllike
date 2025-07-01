@@ -9,8 +9,7 @@
 	<version>5.0.0</version>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<description>An Joomline Like K2 plugin to extend item form in K2.</description>
-	<minimum-joomla-version>5.0.0</minimum-joomla-version>
-	<php min="8.1" />
+	<minimum-joomla-version>4.0.0</minimum-joomla-version>
 	<files>
 		<filename plugin="jllike">jllike.php</filename>
 	</files>
