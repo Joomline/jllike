@@ -212,7 +212,10 @@ VkontakteButton.prototype.countLikes = function () {
     }
     var self = this;
     setTimeout(function () {
-        var count = Math.floor(Math.random() * 100);
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
         self.setCountValue(count);
     }, 500);
 };
@@ -244,7 +247,10 @@ FacebookButton.prototype.countLikes = function () {
     }
     var self = this;
     setTimeout(function () {
-        var count = Math.floor(Math.random() * 100);
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
         self.setCountValue(count);
     }, 500);
 };
@@ -275,7 +281,10 @@ OdnoklassnikiButton.prototype.countLikes = function () {
     }
     var self = this;
     setTimeout(function () {
-        var count = Math.floor(Math.random() * 100);
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
         self.setCountValue(count);
     }, 500);
 };
@@ -297,7 +306,10 @@ LinkedInButton.prototype.countLikes = function () {
     }
     var self = this;
     setTimeout(function () {
-        var count = Math.floor(Math.random() * 100);
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
         self.setCountValue(count);
     }, 500);
 };
@@ -321,7 +333,10 @@ PinterestButton.prototype.countLikes = function () {
     }
     var self = this;
     setTimeout(function () {
-        var count = Math.floor(Math.random() * 100);
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
         self.setCountValue(count);
     }, 500);
 };
@@ -346,7 +361,10 @@ LivejournalButton.prototype.countLikes = function () {
     }
     var self = this;
     setTimeout(function () {
-        var count = Math.floor(Math.random() * 100);
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
         self.setCountValue(count);
     }, 500);
 };
@@ -369,7 +387,10 @@ BloggerButton.prototype.countLikes = function () {
     }
     var self = this;
     setTimeout(function () {
-        var count = Math.floor(Math.random() * 100);
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
         self.setCountValue(count);
     }, 500);
 };
@@ -392,7 +413,10 @@ WeiboButton.prototype.countLikes = function () {
     }
     var self = this;
     setTimeout(function () {
-        var count = Math.floor(Math.random() * 100);
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
         self.setCountValue(count);
     }, 500);
 };
@@ -414,7 +438,10 @@ TelegramButton.prototype.countLikes = function () {
     }
     var self = this;
     setTimeout(function () {
-        var count = Math.floor(Math.random() * 100);
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
         self.setCountValue(count);
     }, 500);
 };
@@ -436,7 +463,10 @@ WhatsappButton.prototype.countLikes = function () {
     }
     var self = this;
     setTimeout(function () {
-        var count = Math.floor(Math.random() * 100);
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
         self.setCountValue(count);
     }, 500);
 };
@@ -458,7 +488,10 @@ ViberButton.prototype.countLikes = function () {
     }
     var self = this;
     setTimeout(function () {
-        var count = Math.floor(Math.random() * 100);
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
         self.setCountValue(count);
     }, 500);
 };
@@ -506,7 +539,10 @@ TwitterButton.prototype.countLikes = function () {
     }
     var self = this;
     setTimeout(function () {
-        var count = Math.floor(Math.random() * 100);
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
         self.setCountValue(count);
     }, 500);
 };
@@ -528,7 +564,10 @@ MailButton.prototype.countLikes = function () {
     }
     var self = this;
     setTimeout(function () {
-        var count = Math.floor(Math.random() * 100);
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
         self.setCountValue(count);
     }, 500);
 };

@@ -305,6 +305,15 @@
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
                 </field>
+                <field
+                        name="random_likes"
+                        type="radio" default="1"
+                        label="PLG_JLLIKEPRO_RANDOM_LIKES"
+                        description="PLG_JLLIKEPRO_RANDOM_LIKES_DESC"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
 
                 <field
                         name="desc_source_one"

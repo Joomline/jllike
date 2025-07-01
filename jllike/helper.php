@@ -285,6 +285,15 @@ HTML;
             }
             ');
         }
+
+        // Передаем настройки в JS
+        $params = [
+            'enableCounters' => (bool)$this->params->get('enableCounters', 1),
+            'random_likes' => (bool)$this->params->get('random_likes', 1),
+            // ... возможно, другие параметры ...
+        ];
+        $js = 'window.jllickeproSettings = Object.assign(window.jllickeproSettings || {}, ' . json_encode($params) . ');';
+        Factory::getApplication()->getDocument()->addScriptDeclaration($js);
     }
 
     function getShareText($metadesc, $introtext, $text)
