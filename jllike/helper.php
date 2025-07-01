@@ -248,7 +248,7 @@ HTML;
 
         HTMLHelper::_('script', 'plugins/content/jllike/js/buttons.js', array('version' => 'auto'));
 
-        HTMLHelper::_('stylesheet', 'plugins/content/jllike/js/buttons.min.css', array('version' => 'auto'));      
+        HTMLHelper::_('stylesheet', 'plugins/content/jllike/js/buttons.css', array('version' => 'auto'));
 
         $btn_border_radius = (int) $this->params->get('btn_border_radius', 15);
         $btn_dimensions = (int) $this->params->get('btn_dimensions', 30);
