@@ -27,7 +27,7 @@ class PlgJshoppingproductsJlLikeJShop extends CMSPlugin
 
     public function onBeforeDisplayProductView(&$content)
     {
-        JPlugin::loadLanguage('plg_content_jllike');
+        Factory::getLanguage()->load('plg_content_jllike');
         $plugin = PluginHelper::getPlugin('content', 'jllike');
         $plgParams = new Registry;
         $plgParams->loadString($plugin->params);
