@@ -26,6 +26,23 @@ class ElementJlLikeZooEl extends Element implements iSubmittable {
 		return (bool) $this->get('value', $this->config->get('default', 1));
 	}
 
+    // Новый приватный метод для получения базового Uri
+    private function getBaseUri($plgParams)
+    {
+        $uri = new Uri(Uri::root());
+        $uri->setScheme((\JFactory::getConfig()->get('force_ssl') == 2) ? 'https' : 'http');
+        $host = $uri->getHost();
+        $pathbase = $plgParams->get('pathbase', '');
+        if ($pathbase && strpos($host, 'www.') === false && $pathbase === 'www.') {
+            $host = 'www.' . $host;
+        } elseif ($pathbase === '' && strpos($host, 'www.') === 0) {
+            $host = substr($host, 4);
+        }
+        $uri->setHost($host);
+        $uri->setPath('');
+        $uri->setQuery([]);
+        return $uri;
+    }
 
 	public function render($params = array())
     {
@@ -84,8 +101,11 @@ class ElementJlLikeZooEl extends Element implements iSubmittable {
 
                 if(!empty($image)){
                     $params = $this->app->data->create($params);
-                    $file  	= $this->app->zoo->resizeImage(JPATH_ROOT.'/'.$image, $params->get('width', 0), $params->get('height', 0));
-                    $image   = JURI::root() . $this->app->path->relative($file);
+                    $file   = $this->app->zoo->resizeImage(JPATH_ROOT.'/'.$image, $params->get('width', 0), $params->get('height', 0));
+                    // Используем Uri для формирования полного пути
+                    $baseUri = $this->getBaseUri($plgParams);
+                    $baseUri->setPath(ltrim($this->app->path->relative($file), '/'));
+                    $image = $baseUri->toString();
                 }
             }
         }

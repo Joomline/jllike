@@ -23,7 +23,23 @@ require_once JPATH_ROOT . '/plugins/content/jllike/helper.php';
 
 class PlgJshoppingproductsJlLikeJShop extends CMSPlugin
 {
-
+    // Новый приватный метод для получения базового Uri
+    private function getBaseUri($plgParams)
+    {
+        $uri = new Uri(Uri::root());
+        $uri->setScheme((Factory::getConfig()->get('force_ssl') == 2) ? 'https' : 'http');
+        $host = $uri->getHost();
+        $pathbase = $plgParams->get('pathbase', '');
+        if ($pathbase && strpos($host, 'www.') === false && $pathbase === 'www.') {
+            $host = 'www.' . $host;
+        } elseif ($pathbase === '' && strpos($host, 'www.') === 0) {
+            $host = substr($host, 4);
+        }
+        $uri->setHost($host);
+        $uri->setPath('');
+        $uri->setQuery([]);
+        return $uri;
+    }
 
     public function onBeforeDisplayProductView(&$content)
     {
@@ -45,9 +61,9 @@ class PlgJshoppingproductsJlLikeJShop extends CMSPlugin
         }
         $helper = PlgJLLikeHelper::getInstance($plgParams);
         $helper->loadScriptAndStyle(0);
-		$prefix = (Factory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
-		$root = Uri::getInstance()->toString(['host']);
-        $url = $prefix . $plgParams->get('pathbase', '') . str_replace('www.', '', $root);
+        // Новый способ формирования базового URL
+        $baseUri = $this->getBaseUri($plgParams);
+        $url = $baseUri->toString();
         if ($plgParams->get('punycode_convert', 0)) {
             $file = JPATH_ROOT . '/libraries/idna_convert/idna_convert.class.php';
             if (!File::exists($file)) {
@@ -62,9 +78,12 @@ class PlgJshoppingproductsJlLikeJShop extends CMSPlugin
                     $url = $idn->encode($url);
                 }
             }
+            // После конвертации обновляем host в Uri
+            $baseUri->setHost(parse_url($url, PHP_URL_HOST));
         }
         $uri = str_ireplace(Uri::root(), '', Uri::current());
-        $link = $url . '/' . $uri;
+        $baseUri->setPath(ltrim($uri, '/'));
+        $link = $baseUri->toString();
 
         $image = '';
         if (!empty($content->product->image)) {

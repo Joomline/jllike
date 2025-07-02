@@ -132,13 +132,18 @@ class PlgK2Jllike extends \K2Plugin
         $conf = Factory::getConfig();
         $enableSef = $conf->get('sef', 0);
 
+        $baseUri = $this->getBaseUri();
         if($enableSef)
         {
-            $link = $url.Route::_(K2HelperRoute::getItemRoute($article->id.':'.$article->alias, $article->catid.':'.urlencode($article->category->alias)));
+            $route = Route::_(K2HelperRoute::getItemRoute($article->id.':'.$article->alias, $article->catid.':'.urlencode($article->category->alias)));
+            $baseUri->setPath(ltrim($route, '/'));
+            $link = $baseUri->toString();
         }
         else
         {
-            $link = $url.'/'.K2HelperRoute::getItemRoute($article->id.':'.$article->alias, $article->catid.':'.urlencode($article->category->alias));
+            $route = K2HelperRoute::getItemRoute($article->id.':'.$article->alias, $article->catid.':'.urlencode($article->category->alias));
+            $baseUri->setPath(ltrim($route, '/'));
+            $link = $baseUri->toString();
         }
 
         if($this->params->get('k2_images', 'fields') == 'fields' && !empty($article->imageLarge))
@@ -176,10 +181,8 @@ class PlgK2Jllike extends \K2Plugin
 
     private function getUrl()
     {
-		$root = Uri::getInstance()->toString(['host']);
-		$prefix = (Factory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
-        $url = $prefix . $this->params->get('pathbase', '') . str_replace('www.', '', $root);
-
+        $baseUri = $this->getBaseUri();
+        $url = $baseUri->toString();
         if($this->params->get('punycode_convert',0))
         {
             $file = JPATH_ROOT.'/libraries/idna_convert/idna_convert.class.php';
@@ -198,7 +201,25 @@ class PlgK2Jllike extends \K2Plugin
                     $url = $idn->encode($url);
                 }
             }
+            $baseUri->setHost(parse_url($url, PHP_URL_HOST));
         }
-        return $url;
+        return $baseUri->toString();
+    }
+
+    private function getBaseUri()
+    {
+        $uri = new Uri(Uri::root());
+        $uri->setScheme((Factory::getConfig()->get('force_ssl') == 2) ? 'https' : 'http');
+        $host = $uri->getHost();
+        $pathbase = $this->params->get('pathbase', '');
+        if ($pathbase && strpos($host, 'www.') === false && $pathbase === 'www.') {
+            $host = 'www.' . $host;
+        } elseif ($pathbase === '' && strpos($host, 'www.') === 0) {
+            $host = substr($host, 4);
+        }
+        $uri->setHost($host);
+        $uri->setPath('');
+        $uri->setQuery([]);
+        return $uri;
     }
 }

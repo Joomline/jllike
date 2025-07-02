@@ -228,8 +228,8 @@ HTML;
 
         $isCategory = (int) $isCategory;
 
-        $prefix = (Factory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
-        $url = $prefix . $this->params->get('pathbase', '') . str_replace('www.', '', $_SERVER['HTTP_HOST']);
+        $baseUri = $this->getBaseUri();
+        $url = $baseUri->toString();
 
         $enableCounters = (int) $this->params->get('enableCounters', 1);
 
@@ -488,8 +488,27 @@ HTML;
         $res = $db->loadResult();
 
         if ($res) {
-            $image = Uri::root() . $res;
+            $baseUri = $this->getBaseUri();
+            $baseUri->setPath(ltrim($res, '/'));
+            $image = $baseUri->toString();
         }
         return $image;
+    }
+
+    private function getBaseUri()
+    {
+        $uri = new Uri(Uri::root());
+        $uri->setScheme((Factory::getConfig()->get('force_ssl') == 2) ? 'https' : 'http');
+        $host = $uri->getHost();
+        $pathbase = $this->params->get('pathbase', '');
+        if ($pathbase && strpos($host, 'www.') === false && $pathbase === 'www.') {
+            $host = 'www.' . $host;
+        } elseif ($pathbase === '' && strpos($host, 'www.') === 0) {
+            $host = substr($host, 4);
+        }
+        $uri->setHost($host);
+        $uri->setPath('');
+        $uri->setQuery([]);
+        return $uri;
     }
 }

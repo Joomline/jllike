@@ -91,8 +91,8 @@ class PlgContentJllike extends CMSPlugin
             $article->catid = '';
         }
         $print = (int) $input->get('print', 0);
-        $root = Uri::getInstance()->toString(array('host'));
-        $url = $this->protokol . $this->params->get('pathbase', '') . str_replace('www.', '', $root);
+        $baseUri = $this->getBaseUri();
+        $url = $baseUri->toString();
         if($this->params->get('punycode_convert',0))
         {
             $file = JPATH_ROOT.'/libraries/idna_convert/idna_convert.class.php';
@@ -109,6 +109,7 @@ class PlgContentJllike extends CMSPlugin
                     $url = $idn->encode($url);
                 }
             }
+            $baseUri->setHost(parse_url($url, PHP_URL_HOST));
         }
         switch ($option) {
             case 'com_content':
@@ -128,7 +129,9 @@ class PlgContentJllike extends CMSPlugin
                     $article->text = str_replace("{jllike}", "", $article->text);
                     return true;
                 }
-                $link = $url . Route::_(\ContentHelperRoute::getArticleRoute($article->slug, $article->catid));
+                $route = Route::_(\ContentHelperRoute::getArticleRoute($article->slug, $article->catid));
+                $baseUri->setPath(ltrim($route, '/'));
+                $link = $baseUri->toString();
                 $image = '';
                 if($this->params->get('content_images', 'fields') == 'fields')
                 {
@@ -195,7 +198,8 @@ class PlgContentJllike extends CMSPlugin
                         {
                             $helper->loadScriptAndStyle(0);
                             $uri = str_ireplace(Uri::root(), '', Uri::current());
-                            $link = $url.'/'.$uri;
+                            $baseUri->setPath(ltrim($uri, '/'));
+                            $link = $baseUri->toString();
                             $image = $helper->getVMImage($article->virtuemart_product_id);
                             $text = $helper->getShareText($article->metadesc, $article->product_s_desc, $article->product_desc);
                             $shares = $helper->ShowIN($article->virtuemart_product_id, $link, $article->product_name, $image, $text, $enableOpenGraph);
@@ -224,7 +228,8 @@ class PlgContentJllike extends CMSPlugin
                     {
                         $helper->loadScriptAndStyle(0);
                         $uri = str_ireplace(Uri::root(), '', Uri::current());
-                        $link = $url.'/'.$uri;
+                        $baseUri->setPath(ltrim($uri, '/'));
+                        $link = $baseUri->toString();
                         $image = '';
                         if($this->params->get('easyblog_images','fields') == 'fields'){
                             $images = json_decode($article->image);
@@ -254,5 +259,22 @@ class PlgContentJllike extends CMSPlugin
             default:
                 break;
         }
+    }
+
+    private function getBaseUri()
+    {
+        $uri = new Uri(Uri::root());
+        $uri->setScheme((Factory::getConfig()->get('force_ssl') == 2) ? 'https' : 'http');
+        $host = $uri->getHost();
+        $pathbase = $this->params->get('pathbase', '');
+        if ($pathbase && strpos($host, 'www.') === false && $pathbase === 'www.') {
+            $host = 'www.' . $host;
+        } elseif ($pathbase === '' && strpos($host, 'www.') === 0) {
+            $host = substr($host, 4);
+        }
+        $uri->setHost($host);
+        $uri->setPath('');
+        $uri->setQuery([]);
+        return $uri;
     }
 }

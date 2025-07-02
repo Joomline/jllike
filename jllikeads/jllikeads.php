@@ -44,30 +44,31 @@ class PlgAdsmanagercontentJlLikeAds extends CMSPlugin
         }
         $helper = PlgJLLikeHelper::getInstance($plgParams);
         $helper->loadScriptAndStyle(0);
-		$prefix = (Factory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
-		$root = Uri::getInstance()->toString(['host']);
-		$url = $prefix . $plgParams->get('pathbase', '') . str_replace('www.', '', $root);
-		if($plgParams->get('punycode_convert',0))
-		{
-			$file = JPATH_ROOT.'/libraries/idna_convert/idna_convert.class.php';
-			if(!File::exists($file))
-			{
-				return Text::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
-			}
+        $baseUri = $this->getBaseUri($plgParams);
+        $url = $baseUri->toString();
+        if($plgParams->get('punycode_convert',0))
+        {
+            $file = JPATH_ROOT.'/libraries/idna_convert/idna_convert.class.php';
+            if(!File::exists($file))
+            {
+                return Text::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
+            }
 
-			include_once $file;
+            include_once $file;
 
-			if($url)
-			{
-				if (class_exists('idna_convert'))
-				{
-					$idn = new idna_convert;
-					$url = $idn->encode($url);
-				}
-			}
-		}
-		$uri = str_ireplace(Uri::root(), '', Uri::current());
-        $link = $url.'/'.$uri;
+            if($url)
+            {
+                if (class_exists('idna_convert'))
+                {
+                    $idn = new idna_convert;
+                    $url = $idn->encode($url);
+                }
+            }
+            $baseUri->setHost(parse_url($url, PHP_URL_HOST));
+        }
+        $uri = str_ireplace(Uri::root(), '', Uri::current());
+        $baseUri->setPath(ltrim($uri, '/'));
+        $link = $baseUri->toString();
 
         if(!defined('JURI_IMAGES_FOLDER')){
             define('JURI_IMAGES_FOLDER',Uri::root()."images/com_adsmanager/contents");
@@ -80,4 +81,21 @@ class PlgAdsmanagercontentJlLikeAds extends CMSPlugin
 
         return $shares;
     } //end function
+
+    private function getBaseUri($plgParams)
+    {
+        $uri = new Uri(Uri::root());
+        $uri->setScheme((Factory::getConfig()->get('force_ssl') == 2) ? 'https' : 'http');
+        $host = $uri->getHost();
+        $pathbase = $plgParams->get('pathbase', '');
+        if ($pathbase && strpos($host, 'www.') === false && $pathbase === 'www.') {
+            $host = 'www.' . $host;
+        } elseif ($pathbase === '' && strpos($host, 'www.') === 0) {
+            $host = substr($host, 4);
+        }
+        $uri->setHost($host);
+        $uri->setPath('');
+        $uri->setQuery([]);
+        return $uri;
+    }
 }//end class
