@@ -173,7 +173,7 @@ HTML;
             $scriptPage .= '<div class="disable_more_likes"></div>';
         }
 
-        $buttonText = StringHelper1::trim($this->params->get('button_text', ''));
+        $buttonText = trim($this->params->get('button_text', ''));
 
         if (!empty($buttonText)) {
             $scriptPage .= '<div class="button_text likes-block' . $position_buttons . '">' . $buttonText . '</div>';
@@ -425,7 +425,7 @@ HTML;
     private function limittext($wordtext, $maxchar)
     {
         $text = '';
-        $textLength = StringHelper1::strlen($wordtext);
+        $textLength = mb_strlen($wordtext);
 
         if ($textLength <= $maxchar) {
             return $wordtext;
@@ -434,7 +434,7 @@ HTML;
         $words = explode(' ', $wordtext);
 
         foreach ($words as $word) {
-            if (StringHelper1::strlen($text . ' ' . $word) > $maxchar - 1) {
+            if (mb_strlen($text . ' ' . $word) > $maxchar - 1) {
                 break;
             }
             $text .= ' ' . $word;

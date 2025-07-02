@@ -19,24 +19,6 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
 
-if (!class_exists('StringHelper1')) {
-    if (class_exists('Joomla\\String\\StringHelper')) {
-        class StringHelper1 extends \Joomla\String\StringHelper {}
-    } else {
-        class StringHelper1 {
-            public static function str_ireplace($search, $replace, $subject, $count = null) {
-                return str_ireplace($search, $replace, $subject, $count);
-            }
-            public static function strlen($string) {
-                return mb_strlen($string);
-            }
-            public static function trim($string) {
-                return trim($string);
-            }
-        }
-    }
-}
-
 require_once JPATH_ROOT . '/plugins/content/jllike/helper.php';
 
 class PlgJshoppingproductsJlLikeJShop extends CMSPlugin
@@ -81,7 +63,7 @@ class PlgJshoppingproductsJlLikeJShop extends CMSPlugin
                 }
             }
         }
-        $uri = StringHelper1::str_ireplace(Uri::root(), '', Uri::current());
+        $uri = str_ireplace(Uri::root(), '', Uri::current());
         $link = $url . '/' . $uri;
 
         $image = '';

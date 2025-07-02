@@ -19,25 +19,6 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\Plugin\Content\Jllike\Helper\PlgJLLikeHelper;
 
-if (!class_exists('StringHelper1')) {
-    // Для Joomla 4/5: используйте стандартные функции, если StringHelper отсутствует
-    if (class_exists('Joomla\\String\\StringHelper')) {
-        class StringHelper1 extends \Joomla\String\StringHelper {}
-    } else {
-        class StringHelper1 {
-            public static function str_ireplace($search, $replace, $subject, $count = null) {
-                return str_ireplace($search, $replace, $subject, $count);
-            }
-            public static function strlen($string) {
-                return mb_strlen($string);
-            }
-            public static function trim($string) {
-                return trim($string);
-            }
-        }
-    }
-}
-
 require_once JPATH_ROOT . '/plugins/content/jllike/helper.php';
 
 class PlgContentJllike extends CMSPlugin
@@ -62,9 +43,10 @@ class PlgContentJllike extends CMSPlugin
             {
                 $app->setUserState('jllike.image', '');
                 $html = "  <link rel=\"image_src\" href=\"". $image ."\" />\n</head>";
-                $buffer = StringHelper1::str_ireplace('</head>', $html, $buffer, 1);
+                $count = 1;
+                $buffer = str_ireplace('</head>', $html, $buffer, $count);
             }
-            $buffer = StringHelper1::str_ireplace('<meta name=\"og:', '<meta property=\"og:', $buffer);
+            $buffer = str_ireplace('<meta name="og:', '<meta property="og:', $buffer);
             $app->setBody($buffer);
         }
     }
@@ -212,7 +194,7 @@ class PlgContentJllike extends CMSPlugin
                         if ($autoAddvm == 1 || strpos($article->text, '{jllike}') !== false)
                         {
                             $helper->loadScriptAndStyle(0);
-                            $uri = StringHelper1::str_ireplace(Uri::root(), '', Uri::current());
+                            $uri = str_ireplace(Uri::root(), '', Uri::current());
                             $link = $url.'/'.$uri;
                             $image = $helper->getVMImage($article->virtuemart_product_id);
                             $text = $helper->getShareText($article->metadesc, $article->product_s_desc, $article->product_desc);
@@ -241,7 +223,7 @@ class PlgContentJllike extends CMSPlugin
                     if ($autoAdd == 1 || strpos($article->text, '{jllike}') == true)
                     {
                         $helper->loadScriptAndStyle(0);
-                        $uri = StringHelper1::str_ireplace(Uri::root(), '', Uri::current());
+                        $uri = str_ireplace(Uri::root(), '', Uri::current());
                         $link = $url.'/'.$uri;
                         $image = '';
                         if($this->params->get('easyblog_images','fields') == 'fields'){
