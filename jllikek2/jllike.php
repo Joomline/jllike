@@ -10,6 +10,14 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
+
 if (!class_exists('StringHelper1')) {
     if (class_exists('Joomla\\String\\StringHelper')) {
         class StringHelper1 extends \Joomla\String\StringHelper {}
@@ -27,14 +35,6 @@ if (!class_exists('StringHelper1')) {
         }
     }
 }
-
-use Joomla\CMS\Factory;
-use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\Registry\Registry;
 
 /**
  * Example K2 Plugin to render YouTube URLs entered in backend K2 forms to video players in the frontend.

@@ -19,9 +19,9 @@
 		<language tag="ru-RU">ru-RU/ru-RU.pkg_jllike.sys.ini</language>
 	</languages>
 	<files>
-        <folder type="plugin" id="jllike" group="content" client="site">jllike</folder>
-        <folder type="plugin" id="jllikeads" group="adsmanagercontent" client="site">jllikeads</folder>
-        <folder type="plugin" id="jllikejshop" group="jshoppingproducts" client="site">jllikejshop</folder>
-		<folder type="plugin" id="jllike" group="k2" client="site">jllikek2</folder>
+        <folder type="plugin" id="jllike" group="content">jllike</folder>
+        <folder type="plugin" id="jllikeads" group="adsmanagercontent">jllikeads</folder>
+        <folder type="plugin" id="jllikejshop" group="jshoppingproducts">jllikejshop</folder>
+		<folder type="plugin" id="jllike" group="k2">jllikek2</folder>
 	</files>
 </extension>

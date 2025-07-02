@@ -10,6 +10,15 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\Plugin\Content\Jllike\Helper\PlgJLLikeHelper;
+
 if (!class_exists('StringHelper1')) {
     // Для Joomla 4/5: используйте стандартные функции, если StringHelper отсутствует
     if (class_exists('Joomla\\String\\StringHelper')) {
@@ -28,15 +37,6 @@ if (!class_exists('StringHelper1')) {
         }
     }
 }
-
-use Joomla\CMS\Plugin\CMSPlugin;
-use Joomla\CMS\Factory;
-use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Application\CMSApplication;
-use Joomla\Plugin\Content\Jllike\Helper\PlgJLLikeHelper;
 
 require_once JPATH_ROOT . '/plugins/content/jllike/helper.php';
 
