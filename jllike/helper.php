@@ -465,8 +465,9 @@ HTML;
             $doc->setMetaData('twitter:title', $title);
         }
         if ($text) {
-            $doc->setMetaData('og:description', $text);
-            $doc->setMetaData('twitter:description', $text);
+            $desc = preg_replace('/\s+/u', ' ', $text);
+            $doc->setMetaData('og:description', $desc);
+            $doc->setMetaData('twitter:description', $desc);
         }
         if ($url) {
             $doc->setMetaData('og:url', $url);
