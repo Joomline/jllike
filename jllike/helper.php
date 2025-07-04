@@ -59,7 +59,7 @@ class PlgJLLikeHelper
      */
     function ShowIn($id, $link = '', $title = '', $image = '', $desc = '', $enable_opengraph = 1)
     {
-        JPluginHelper::importPlugin('content', 'jllike');
+        PluginHelper::importPlugin('content', 'jllike');
 
         $position_content = $this->params->get('position_content', 0);
         $enableCounters = (int) $this->params->get('enableCounters', 1);

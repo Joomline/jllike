@@ -30,7 +30,7 @@ class ElementJlLikeZooEl extends Element implements iSubmittable {
     private function getBaseUri($plgParams)
     {
         $uri = new Uri(Uri::root());
-        $uri->setScheme((\JFactory::getConfig()->get('force_ssl') == 2) ? 'https' : 'http');
+        $uri->setScheme((Factory::getConfig()->get('force_ssl') == 2) ? 'https' : 'http');
         $host = $uri->getHost();
         $pathbase = $plgParams->get('pathbase', '');
         if ($pathbase && strpos($host, 'www.') === false && $pathbase === 'www.') {
@@ -51,10 +51,10 @@ class ElementJlLikeZooEl extends Element implements iSubmittable {
             return '';
         }
 
-        $ssl = (JFactory::getConfig()->get('force_ssl') == 2) ? 1 : -1;
-        $item_route = JRoute::_($this->app->route->item($this->_item, false), true, $ssl);
-        JFactory::getLanguage()->load('plg_content_jllike'. JPATH_ROOT.'/plugins/content/jllike');
-        $plugin = JPluginHelper::getPlugin('content', 'jllike');
+        $ssl = (Factory::getConfig()->get('force_ssl') == 2) ? 1 : -1;
+        $item_route = Route::_($this->app->route->item($this->_item, false), true, $ssl);
+        Factory::getLanguage()->load('plg_content_jllike'. JPATH_ROOT.'/plugins/content/jllike');
+        $plugin = PluginHelper::getPlugin('content', 'jllike');
         $plgParams = new JRegistry($plugin->params);
 
         $parent_contayner = $this->config->get('parent_contayner', '');
