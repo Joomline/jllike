@@ -129,7 +129,12 @@ class PlgContentJllike extends CMSPlugin
                     $article->text = str_replace("{jllike}", "", $article->text);
                     return true;
                 }
-                $route = Route::_(\ContentHelperRoute::getArticleRoute($article->slug, $article->catid));
+                // Универсальный вызов маршрутизатора для разных версий Joomla
+                if (class_exists('Joomla\\Component\\Content\\Site\\Helper\\RouteHelper')) {
+                    $route = Route::_(\Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($article->slug, $article->catid));
+                } else {
+                    $route = Route::_(\ContentHelperRoute::getArticleRoute($article->slug, $article->catid));
+                }
                 $baseUri->setPath(ltrim($route, '/'));
                 $link = $baseUri->toString();
                 $image = '';
