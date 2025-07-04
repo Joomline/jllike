@@ -67,8 +67,8 @@ class PlgAdsmanagercontentJlLikeAds extends CMSPlugin
             $baseUri->setHost(parse_url($url, PHP_URL_HOST));
         }
         $uri = str_ireplace(Uri::root(), '', Uri::current());
-        $baseUri->setPath(ltrim($uri, '/'));
-        $link = $baseUri->toString();
+        $route = $uri;
+        $link = rtrim(Uri::root(), '/') . '/' . ltrim($route, '/');
 
         if(!defined('JURI_IMAGES_FOLDER')){
             define('JURI_IMAGES_FOLDER',Uri::root()."images/com_adsmanager/contents");

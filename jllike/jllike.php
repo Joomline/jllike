@@ -135,8 +135,7 @@ class PlgContentJllike extends CMSPlugin
                 } else {
                     $route = Route::_(\ContentHelperRoute::getArticleRoute($article->slug, $article->catid));
                 }
-                $baseUri->setPath(ltrim($route, '/'));
-                $link = $baseUri->toString();
+                $link = rtrim(Uri::root(), '/') . '/' . ltrim($route, '/');
                 $image = '';
                 if($this->params->get('content_images', 'fields') == 'fields')
                 {
@@ -203,8 +202,7 @@ class PlgContentJllike extends CMSPlugin
                         {
                             $helper->loadScriptAndStyle(0);
                             $uri = str_ireplace(Uri::root(), '', Uri::current());
-                            $baseUri->setPath(ltrim($uri, '/'));
-                            $link = $baseUri->toString();
+                            $link = rtrim(Uri::root(), '/') . '/' . ltrim($uri, '/');
                             $image = $helper->getVMImage($article->virtuemart_product_id);
                             $text = $helper->getShareText($article->metadesc, $article->product_s_desc, $article->product_desc);
                             $shares = $helper->ShowIN($article->virtuemart_product_id, $link, $article->product_name, $image, $text, $enableOpenGraph);

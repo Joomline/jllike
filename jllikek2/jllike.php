@@ -127,24 +127,8 @@ class PlgK2Jllike extends \K2Plugin
 
         $url = $this->getUrl();
         $isCategory = ($input->getString('view', '') == 'itemlist') ? true : false;
-
-        $helper = PlgJLLikeHelper::getInstance($this->params);
-        $conf = Factory::getConfig();
-        $enableSef = $conf->get('sef', 0);
-
-        $baseUri = $this->getBaseUri();
-        if($enableSef)
-        {
-            $route = Route::_(K2HelperRoute::getItemRoute($article->id.':'.$article->alias, $article->catid.':'.urlencode($article->category->alias)));
-            $baseUri->setPath(ltrim($route, '/'));
-            $link = $baseUri->toString();
-        }
-        else
-        {
-            $route = K2HelperRoute::getItemRoute($article->id.':'.$article->alias, $article->catid.':'.urlencode($article->category->alias));
-            $baseUri->setPath(ltrim($route, '/'));
-            $link = $baseUri->toString();
-        }
+        $route = $this->getRoute($article);
+        $link = rtrim(Uri::root(), '/') . '/' . ltrim($route, '/');
 
         if($this->params->get('k2_images', 'fields') == 'fields' && !empty($article->imageLarge))
         {
