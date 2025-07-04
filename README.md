@@ -61,3 +61,6 @@ JL Like — это набор плагинов для вывода соврем�
 ## Лицензия
 
 GPL
+
+
+![GitHub all releases](https://img.shields.io/github/downloads/joomline/jllike/total?style=for-the-badge&color=blue)  ![GitHub release (latest by SemVer)](https://img.shields.io/github/downloads/Joomline/jllike/latest/total?style=for-the-badge&color=blue)
