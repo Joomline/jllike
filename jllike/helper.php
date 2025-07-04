@@ -5,7 +5,7 @@
  *
  * @version 5.0.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2010-2025 by Joomline (http://www.joomline.ru)
+ * @copyright (C) 2012-2025 by Joomline (https://joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 
