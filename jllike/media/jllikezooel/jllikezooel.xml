@@ -2,11 +2,11 @@
 <element type="jllikezooel" group="Social">
 	<name>JLLike Zoo Element</name>
 	<author>JoomLine</author>
-	<creationDate>11.02.2020</creationDate>
+	<creationDate>25.07.2025</creationDate>
 	<copyright>(C) 2012-2025 by Joomline (https://joomline.ru)</copyright>
 	<authorEmail>artem@joomline.ru</authorEmail>
 	<authorUrl>http://joomline.ru</authorUrl>
-	<version>4.0.4</version>
+	<version>5.1.0</version>
 	<description>Plugin allow integrate social buttons like into your ZOO components</description>
     <params>
         <param

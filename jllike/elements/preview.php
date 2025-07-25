@@ -2,7 +2,7 @@
 /**
  * Preview field for JL Like social buttons
  *
- * @version 5.0.1
+ * @version 5.1.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
  * @copyright (C) 2012-2025 by Joomline (https://joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html

@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
   "name": "plg_content_jllike",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "description": "JL Like Social Buttons Web Assets",
   "license": "GPL-2.0+",
   "assets": [
