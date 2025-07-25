@@ -72,3 +72,212 @@ body>p:first-child { display: none }
 .event-container .like .l-count {color: #FFF;}
 .jllikeproSharesContayner a:hover { opacity: 0.85; }
 .jllikeproSharesContayner a {margin-bottom: 6px; text-decoration: none !important;}
+
+/* =============================================================================
+   PREVIEW WIDGET STYLES (Admin Panel)
+   ============================================================================= */
+
+.preview-widget-container {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 15px 0;
+    background: #f9f9f9;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.preview-header h4 {
+    margin: 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.preview-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.preview-controls button {
+    padding: 5px 12px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.preview-controls button:hover {
+    background: #f0f0f0;
+    border-color: #999;
+}
+
+.preview-controls button.active {
+    background: #007cba;
+    color: #fff;
+    border-color: #005a87;
+}
+
+.preview-content {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 15px 0;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.preview-content.mobile-view {
+    max-width: 375px;
+    margin: 15px auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 8px;
+}
+
+.preview-content.mobile-view::before {
+    content: "📱 Mobile View";
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #666;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+/* Preview sample adjustments */
+.preview-sample {
+    position: relative;
+    display: inline-block;
+}
+
+/* Show all buttons with numbers for better preview */
+.preview-sample .l-count {
+    display: inline-block !important;
+    opacity: 1 !important;
+}
+
+/* Update animation */
+.preview-content.updating {
+    opacity: 0.7;
+    transform: scale(0.98);
+}
+
+.preview-content.updating::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #007cba;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.preview-footer {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+.preview-footer small {
+    color: #666;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.preview-footer .icon-info {
+    color: #007cba;
+}
+
+/* Mobile preview container adjustments */
+.mobile-preview .preview-sample {
+    width: 100%;
+}
+
+/* Preview button text */
+#preview-button-text {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+}
+
+#preview-button-text:empty {
+    display: none !important;
+}
+
+/* Responsive design for admin panel */
+@media (max-width: 768px) {
+    .preview-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .preview-controls {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    
+    .preview-content.mobile-view {
+        max-width: 100%;
+    }
+}
+
+/* Enhanced visibility in Joomla admin */
+.com_plugins .preview-widget-container {
+    background: #fff;
+    border: 2px solid #e3e3e3;
+    margin: 20px 0;
+}
+
+.com_plugins .preview-header h4 {
+    color: #0073aa;
+}
+
+/* Compatibility fixes */
+.preview-widget-container * {
+    box-sizing: border-box;
+}
+
+.preview-widget-container .btn {
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: nowrap;
+    text-decoration: none;
+}

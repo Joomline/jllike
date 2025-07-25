@@ -437,7 +437,14 @@
             <fieldset
                 label="PLG_JLLIKEPRO_SETTINGS_BUTTONS_STYLE"
                 name="style"
+                addfieldpath="/plugins/content/jllike/elements/"
             >
+                <field
+                    name="preview_widget"
+                    type="preview"
+                    label="PLG_JLLIKEPRO_PREVIEW_WIDGET"
+                    description="PLG_JLLIKEPRO_PREVIEW_WIDGET_DESC"
+                />
 			    <field
                         name="position_content"
                         type="radio"
