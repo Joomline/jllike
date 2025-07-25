@@ -76,21 +76,62 @@ class JFormFieldPreview extends FormField
             .jllikeproSharesContayner span {height: ' . $btn_dimensions . 'px;line-height: ' . $btn_dimensions . 'px;font-size: ' . $font_size . 'rem;}
         ');
         
-        // Добавляем мобильные стили (без фиксации позиции для превью)
+        // Добавляем мобильные стили для превью (точно как на фронтенде)
         if ($params->get('enable_mobile_css', 1) == 1) {
             $doc->addStyleDeclaration('
-            @media screen and (max-width:800px) {
-                .preview-content.mobile-preview .jllikeproSharesContayner {position: static!important;right: auto!important;bottom: auto!important; z-index: auto!important; background-color: #fff!important;width: 100%!important;}
-                .preview-content.mobile-preview .jllikeproSharesContayner .event-container > div {border-radius: 0; padding: 0; display: block;}
-                .preview-content.mobile-preview .like .l-count {display:none}
-                .preview-content.mobile-preview .jllikeproSharesContayner a {border-radius: 0!important;margin: 0!important;}
-                .preview-content.mobile-preview .l-all-count {margin-left: 10px; margin-right: 10px;}
-                .preview-content.mobile-preview .jllikeproSharesContayner i {width: 44px!important; border-radius: 0!important;}
-                .preview-content.mobile-preview .l-ico {background-position: 50%!important}
-                .preview-content.mobile-preview .likes-block_left {text-align:left;}
-                .preview-content.mobile-preview .likes-block_right {text-align:right;}
-                .preview-content.mobile-preview .likes-block_center {text-align:center;}
-                .preview-content.mobile-preview .button_text {display: none;}
+            /* Мобильные стили превью - точная копия фронтенда */
+            .preview-content.mobile-preview .jllikeproSharesContayner {
+                position: static!important;
+                right: auto!important;
+                bottom: auto!important; 
+                z-index: auto!important; 
+                background-color: #fff!important;
+                width: 100%!important;
+                border: 1px solid #e0e0e0;
+                border-radius: 0;
+            }
+            .preview-content.mobile-preview .jllikeproSharesContayner .event-container > div {
+                border-radius: 0; 
+                padding: 0; 
+                display: block;
+            }
+            .preview-content.mobile-preview .like .l-count {
+                display: none!important;
+            }
+            .preview-content.mobile-preview .jllikeproSharesContayner a {
+                border-radius: 0!important;
+                margin: 0!important;
+                display: inline-block;
+                width: auto;
+            }
+            .preview-content.mobile-preview .l-all-count {
+                margin-left: 10px; 
+                margin-right: 10px;
+                display: inline-block!important;
+            }
+            .preview-content.mobile-preview .jllikeproSharesContayner i {
+                width: 44px!important; 
+                height: 44px!important;
+                border-radius: 0!important;
+            }
+            .preview-content.mobile-preview .jllikeproSharesContayner span {
+                height: 44px!important;
+                line-height: 44px!important;
+            }
+            .preview-content.mobile-preview .l-ico {
+                background-position: 50%!important;
+            }
+            .preview-content.mobile-preview .likes-block_left {
+                text-align: left;
+            }
+            .preview-content.mobile-preview .likes-block_right {
+                text-align: right;
+            }
+            .preview-content.mobile-preview .likes-block_center {
+                text-align: center;
+            }
+            .preview-content.mobile-preview .button_text {
+                display: none;
             }
             ');
         }

@@ -146,10 +146,7 @@
     color: #007cba;
 }
 
-/* Mobile preview container adjustments */
-.mobile-preview .preview-sample {
-    width: 100%;
-}
+/* Мобильные стили управляются через PHP в preview.php */
 
 /* Preview button text */
 #preview-button-text {
