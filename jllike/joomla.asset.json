@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "plg_content_jllike",
+  "version": "5.0.1",
+  "description": "JL Like Social Buttons Web Assets",
+  "license": "GPL-2.0+",
+  "assets": [
+    {
+      "name": "plg_jllike.buttons",
+      "type": "style",
+      "uri": "plugins/content/jllike/js/buttons.css",
+      "description": "Social buttons styles (frontend and admin)"
+    },
+    {
+      "name": "plg_jllike.buttons.script",
+      "type": "script", 
+      "uri": "plugins/content/jllike/js/buttons.js",
+      "attributes": {
+        "defer": true
+      },
+      "description": "Social buttons functionality"
+    },
+    {
+      "name": "plg_jllike.admin_preview",
+      "type": "style",
+      "uri": "plugins/content/jllike/elements/css/admin-preview.css",
+      "description": "Admin preview widget styles (admin only)"
+    },
+    {
+      "name": "plg_jllike.preview",
+      "type": "script",
+      "uri": "plugins/content/jllike/elements/js/preview.js",
+      "attributes": {
+        "defer": true
+      },
+      "dependencies": [],
+      "description": "Admin preview widget functionality"
+    }
+  ]
+} 

@@ -16,6 +16,7 @@
         <folder>elements</folder>
         <filename plugin="jllike">jllike.php</filename>
         <filename>helper.php</filename>
+        <filename>joomla.asset.json</filename>
     </files>
     <media folder="media/jllikezooel" destination="zoo/elements/jllikezooel">
         <filename>jllikezooel.php</filename>

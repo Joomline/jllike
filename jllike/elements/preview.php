@@ -12,11 +12,11 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
+use Joomla\CMS\WebAsset\WebAssetManager;
 
 class JFormFieldPreview extends FormField
 {
@@ -24,16 +24,23 @@ class JFormFieldPreview extends FormField
 
     protected function getInput()
     {
-        $doc = Factory::getDocument();
+        // Используем WebAssetManager для Joomla 4/5
+        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         
-        // Загружаем базовые стили социальных кнопок (используются и на фронте)
-        $doc->addStyleSheet(Uri::root() . 'plugins/content/jllike/js/buttons.css');
+        // Регистрируем и используем базовые стили социальных кнопок (те же что на фронте)
+        $wa->registerAndUseStyle('plg_jllike.buttons', 'plugins/content/jllike/js/buttons.css');
         
-        // Загружаем стили превью виджета (только для админки)
-        $doc->addStyleSheet(Uri::root() . 'plugins/content/jllike/elements/css/admin-preview.css');
+        // Регистрируем и используем стили превью виджета (только для админки)
+        $wa->registerAndUseStyle('plg_jllike.admin_preview', 'plugins/content/jllike/elements/css/admin-preview.css');
         
-        // Загружаем JS для превью
-        $doc->addScript(Uri::root() . 'plugins/content/jllike/elements/js/preview.js');
+        // Регистрируем и используем JS для превью с зависимостями
+        $wa->registerAndUseScript(
+            'plg_jllike.preview', 
+            'plugins/content/jllike/elements/js/preview.js', 
+            [],
+            ['defer' => true],
+            []
+        );
         
         // Применяем те же динамические стили, что и на фронтенде
         $this->applyFrontendStyles();

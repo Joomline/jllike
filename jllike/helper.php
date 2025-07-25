@@ -248,7 +248,7 @@ HTML;
 
         
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-        $wa->registerAndUseScript('plg_jllike.buttons', 'plugins/content/jllike/js/buttons.js', [], ['defer' => true]);
+        $wa->registerAndUseScript('plg_jllike.buttons.script', 'plugins/content/jllike/js/buttons.js', [], ['defer' => true]);
         $wa->registerAndUseStyle('plg_jllike.buttons', 'plugins/content/jllike/js/buttons.css');
 
         $btn_border_radius = (int) $this->params->get('btn_border_radius', 15);
