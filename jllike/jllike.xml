@@ -41,6 +41,7 @@
                         default="1"
                         label="PLG_JLLIKEPRO_ENABLE_FC"
                         description=""
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -60,6 +61,7 @@
                         default="1"
                         label="PLG_JLLIKEPRO_ENABLE_VK"
                         description=""
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -79,6 +81,7 @@
                         default="1"
                         label="PLG_JLLIKEPRO_ENABLE_TW"
                         description=""
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -98,6 +101,7 @@
                         default="1"
                         label="PLG_JLLIKEPRO_ENABLE_OD"
                         description=""
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -117,6 +121,7 @@
                         default="1"
                         label="PLG_JLLIKEPRO_ENABLE_MM"
                         description=""
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -136,6 +141,7 @@
                         default="1"
                         label="PLG_JLLIKEPRO_ENABLE_LI"
                         description=""
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -154,6 +160,7 @@
                        default="1"
                        label="PLG_JLLIKEPRO_ENABLE_PI"
                        description=""
+                       class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -172,6 +179,7 @@
                        default="1"
                        label="PLG_JLLIKEPRO_ENABLE_LJ"
                        description=""
+                       class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -190,6 +198,7 @@
                        default="1"
                        label="PLG_JLLIKEPRO_ENABLE_BL"
                        description=""
+                       class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -208,6 +217,7 @@
                        default="1"
                        label="PLG_JLLIKEPRO_ENABLE_WB"
                        description=""
+                       class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -226,6 +236,7 @@
                        default="1"
                        label="PLG_JLLIKEPRO_ENABLE_TL"
                        description=""
+                       class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -244,6 +255,7 @@
                        default="1"
                        label="PLG_JLLIKEPRO_ENABLE_WA"
                        description=""
+                       class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -262,6 +274,7 @@
                        default="1"
                        label="PLG_JLLIKEPRO_ENABLE_VI"
                        description=""
+                       class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -280,6 +293,7 @@
                        default="1"
                        label="PLG_JLLIKEPRO_ENABLE_ALL"
                        description="PLG_JLLIKEPRO_ENABLE_ALL_DESC"
+                       class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -293,6 +307,7 @@
                         type="radio" default="1"
                         label="PLG_JLLIKEPRO_AUTOADD_LABEL"
                         description="PLG_JLLIKEPRO_AUTOADD_DESC"
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -302,6 +317,7 @@
                         type="radio" default="1"
                         label="LG_JLLIKEPRO_ENABLECOUNTERS"
                         description="LG_JLLIKEPRO_ENABLECOUNTERS_DESC"
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -311,6 +327,7 @@
                         type="radio" default="1"
                         label="PLG_JLLIKEPRO_RANDOM_LIKES"
                         description="PLG_JLLIKEPRO_RANDOM_LIKES_DESC"
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -355,6 +372,7 @@
                         default="1"
                         label="PLG_JLLIKEPRO_CLEAR_PLUGIN_TAGS"
                         description="PLG_JLLIKEPRO_CLEAR_PLUGIN_TAGS_DESC"
+                        class="btn-group"
                 >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -373,6 +391,7 @@
                         default="1"
                         label="PLG_JLLIKEPRO_ENABLE_OPENGRAPH"
                         description="PLG_JLLIKEPRO_ENABLE_OPENGRAPH_DESC"
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -418,6 +437,7 @@
                         default="0"
                         label="PLG_JLLIKEPRO_PUNYCODDE_CONVERT"
                         description="PLG_JLLIKEPRO_PUNYCODDE_CONVERT_DESC"
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -428,6 +448,7 @@
                         default="0"
                         label="PLG_JLLIKEPRO_DISABLE_MORE_LIKES"
                         description="PLG_JLLIKEPRO_DISABLE_MORE_LIKES_DESC"
+                        class="btn-group"
                         >
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
@@ -452,6 +473,7 @@
                         default="0"
                         label="PLG_JLLIKEPRO_POSITION_LABEL"
                         description="PLG_JLLIKEPRO_POSITION_DESC"
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_LEFT</option>
                     <option value="1">PLG_JLLIKEPRO_RIGHT</option>
@@ -463,6 +485,7 @@
                         default="0"
                         label="PLG_JLLIKEPRO_ENABLE_FIX_BUTTONS"
                         description="PLG_JLLIKEPRO_ENABLE_FIX_BUTTONS_DESC"
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -473,6 +496,7 @@
                         default="1"
                         label="PLG_JLLIKEPRO_ENABLE_MOBILE_CSS"
                         description="PLG_JLLIKEPRO_ENABLE_MOBILE_CSS_DESC"
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -536,6 +560,7 @@
                         default="0"
                         label="PLG_JLLIKEPRO_ALLOW_IN_CAT"
                         description="PLG_JLLIKEPRO_ALLOW_IN_CAT_DESC"
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -629,6 +654,7 @@
                         default="0"
                         label="PLG_JLLIKEPRO_ADD_OPENGRAPH"
                         description="PLG_JLLIKEPRO_ADD_OPENGRAPH_DESC"
+                        class="btn-group"
                         >
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
@@ -653,6 +679,7 @@
                         type="radio"
                         default="0"
                         label="PLG_JLLIKEPRO_SHOW_LABEL"
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
 					<option value="1">PLG_JLLIKEPRO_YES</option>
@@ -663,6 +690,7 @@
                         default="0"
                         label="PLG_JLLIKEPRO_AUTOADD_LABEL"
                         description="PLG_JLLIKEPRO_AUTOADD_DESC_VIRTUEMART"
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -677,6 +705,7 @@
                         type="radio"
                         default="0"
                         label="PLG_JLLIKEPRO_SHOW_LABEL"
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
 					<option value="1">PLG_JLLIKEPRO_YES</option>
@@ -691,6 +720,7 @@
                         type="radio"
                         default="0"
                         label="PLG_JLLIKEPRO_SHOW_LABEL"
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
 					<option value="1">PLG_JLLIKEPRO_YES</option>
@@ -716,6 +746,7 @@
                         type="radio"
                         default="0"
                         label="PLG_JLLIKEPRO_SHOW_LABEL"
+                        class="btn-group"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -736,6 +767,7 @@
                         default="0"
                         label="PLG_JLLIKEPRO_ADD_OPENGRAPH"
                         description="PLG_JLLIKEPRO_ADD_OPENGRAPH_DESC"
+                        class="btn-group"
                         >
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
