@@ -76,7 +76,7 @@ class PlgJLLikeHelper
 
         if (empty($image)) {
             $image = trim($this->params->get('default_image', ''));
-            $image = !empty($image) ? JUri::root() . $image : '';
+            $image = !empty($image) ? Uri::root() . $image : '';
         }
 
         $desc = $this->cleanText($desc);
