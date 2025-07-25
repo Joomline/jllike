@@ -26,8 +26,11 @@ class JFormFieldPreview extends FormField
     {
         $doc = Factory::getDocument();
         
-        // Загружаем единый CSS файл (содержит стили для фронтенда и превью)
+        // Загружаем базовые стили социальных кнопок (используются и на фронте)
         $doc->addStyleSheet(Uri::root() . 'plugins/content/jllike/js/buttons.css');
+        
+        // Загружаем стили превью виджета (только для админки)
+        $doc->addStyleSheet(Uri::root() . 'plugins/content/jllike/elements/css/admin-preview.css');
         
         // Загружаем JS для превью
         $doc->addScript(Uri::root() . 'plugins/content/jllike/elements/js/preview.js');
