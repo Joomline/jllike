@@ -38,6 +38,7 @@
             this.findElements();
             if (this.container) {
                 this.setupEventListeners();
+                this.initializeMobileButton();
                 this.updatePreview();
                 console.log('JL Like Preview Widget initialized');
             }
@@ -51,6 +52,19 @@
             this.previewButtons = document.getElementById('preview-buttons');
             this.buttonTextElement = document.getElementById('preview-button-text');
             this.mobileToggle = document.getElementById('toggle-mobile-preview');
+        },
+        
+        // Инициализация кнопки мобильного вида
+        initializeMobileButton: function() {
+            if (!this.mobileToggle) return;
+            
+            var translations = window.JLLikePreviewTranslations || {mobile: 'Mobile', desktop: 'Desktop'};
+            
+            // Устанавливаем начальное состояние (десктопный режим)
+            this.isMobileView = false;
+            this.previewContent.classList.remove('mobile-view', 'mobile-preview');
+            this.mobileToggle.classList.remove('active');
+            this.mobileToggle.innerHTML = '<span class="icon-mobile" aria-hidden="true"></span> ' + translations.mobile;
         },
         
         // Настройка обработчиков событий
@@ -143,16 +157,18 @@
         toggleMobileView: function() {
             this.isMobileView = !this.isMobileView;
             
+            var translations = window.JLLikePreviewTranslations || {mobile: 'Mobile', desktop: 'Desktop'};
+            
             if (this.isMobileView) {
                 this.previewContent.classList.add('mobile-view');
                 this.previewContent.classList.add('mobile-preview');
                 this.mobileToggle.classList.add('active');
-                this.mobileToggle.innerHTML = '<span class="icon-desktop" aria-hidden="true"></span> Desktop';
+                this.mobileToggle.innerHTML = '<span class="icon-desktop" aria-hidden="true"></span> ' + translations.desktop;
             } else {
                 this.previewContent.classList.remove('mobile-view');
                 this.previewContent.classList.remove('mobile-preview');
                 this.mobileToggle.classList.remove('active');
-                this.mobileToggle.innerHTML = '<span class="icon-mobile" aria-hidden="true"></span> Mobile';
+                this.mobileToggle.innerHTML = '<span class="icon-mobile" aria-hidden="true"></span> ' + translations.mobile;
             }
             
             this.updatePreview();

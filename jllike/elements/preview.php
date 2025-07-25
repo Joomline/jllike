@@ -42,6 +42,14 @@ class JFormFieldPreview extends FormField
             []
         );
         
+        // Передаем языковые константы в JavaScript
+        $doc = Factory::getDocument();
+        $translations = json_encode([
+            'mobile' => Text::_('PLG_JLLIKEPRO_PREVIEW_MOBILE'),
+            'desktop' => Text::_('PLG_JLLIKEPRO_PREVIEW_DESKTOP')
+        ]);
+        $doc->addScriptDeclaration('window.JLLikePreviewTranslations = ' . $translations . ';');
+        
         // Применяем те же динамические стили, что и на фронтенде
         $this->applyFrontendStyles();
         
