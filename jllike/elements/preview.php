@@ -95,7 +95,7 @@ class JFormFieldPreview extends FormField
             <div class="preview-header">
                 <h4>' . Text::_('PLG_JLLIKEPRO_PREVIEW_WIDGET') . '</h4>
                 <div class="preview-controls">
-                    <button type="button" class="btn btn-sm btn-secondary" id="toggle-mobile-preview">
+                    <button type="button" class="btn btn-sm" id="toggle-mobile-preview">
                         <span class="icon-mobile" aria-hidden="true"></span>
                         ' . Text::_('PLG_JLLIKEPRO_PREVIEW_MOBILE') . '
                     </button>
