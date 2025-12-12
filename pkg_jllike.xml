@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<extension type="package" version="5.1.0" method="upgrade">
+<extension type="package" version="5.2.0" method="upgrade">
 	<name>JL Like</name>
 	<packagename>jllike</packagename>
 	<author>JoomLine</author>
-	<creationDate>25.07.2025</creationDate>
+	<creationDate>12.12.2025</creationDate>
 	<copyright>(C) 2012-2025 by Joomline (https://joomline.ru)</copyright>
 	<license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
 	<authorEmail>sale@joomline.ru</authorEmail>
 	<authorUrl>https://joomline.ru</authorUrl>
-	<version>5.1.0</version>
+	<version>5.2.0</version>
 	<url>https://joomline.ru</url>
 	<packager>JoomLine.ru</packager>
 	<packagerurl>https://joomline.ru</packagerurl>

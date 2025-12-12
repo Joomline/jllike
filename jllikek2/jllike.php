@@ -2,7 +2,7 @@
 /**
  * jllike
  *
- * @version 5.1.0
+ * @version 5.2.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
  * @copyright (C) 2012-2025 by Joomline (https://joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -17,20 +17,22 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
+use Joomla\String\StringHelper;
+use Joomla\CMS\Loader\ClassLoader;
 
 /**
  * Example K2 Plugin to render YouTube URLs entered in backend K2 forms to video players in the frontend.
  */
 
 // Load the K2 Plugin API
-\JLoader::register('K2Plugin', JPATH_ADMINISTRATOR . '/components/com_k2/lib/k2plugin.php');
+ClassLoader::register('K2Plugin', JPATH_ADMINISTRATOR . '/components/com_k2/lib/k2plugin.php');
 
 class PlgK2Jllike extends \K2Plugin
 {
 
     // Some params
-    var $pluginName = 'line';
-    var $pluginNameHumanReadable = 'Line-Chart';
+    public $pluginName = 'line';
+    public $pluginNameHumanReadable = 'Line-Chart';
     private $enableShow;
 
     function __construct(&$subject, $params)
@@ -124,6 +126,7 @@ class PlgK2Jllike extends \K2Plugin
         }
 
         include_once JPATH_ROOT.'/plugins/content/jllike/helper.php';
+        $helper = PlgJLLikeHelper::getInstance($this->params, 'k2', 'jllike');
 
         $url = $this->getUrl();
         $isCategory = ($input->getString('view', '') == 'itemlist') ? true : false;

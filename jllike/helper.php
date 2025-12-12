@@ -3,7 +3,7 @@
 /**
  * jllike
  *
- * @version 5.1.0
+ * @version 5.2.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
  * @copyright (C) 2012-2025 by Joomline (https://joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -22,7 +22,7 @@ use Joomla\Registry\Registry;
 
 class PlgJLLikeHelper
 {
-    var $params = null;
+    protected $params = null;
 
     protected static $instance = null;
 
@@ -169,7 +169,7 @@ class PlgJLLikeHelper
 				<input type="hidden" class="share-id" value="{$id}"/>
 HTML;
 
-        if ($this->params->get('disable_more_likes', 0) && !empty($_COOKIE['jllikepro_article_' . $id])) {
+        if ($this->params->get('disable_more_likes', 0) && Factory::getApplication()->input->cookie->get('jllikepro_article_' . $id)) {
             $scriptPage .= '<div class="disable_more_likes"></div>';
         }
 
@@ -377,7 +377,7 @@ HTML;
     {
         $plugin = PluginHelper::getPlugin($folder, $name);
         if (!$plugin) {
-            throw new RuntimeException(Text::_('JLLIKEPRO_PLUGIN_NOT_FOUND'));
+            throw new \RuntimeException(Text::_('JLLIKEPRO_PLUGIN_NOT_FOUND'));
         }
         $params = new Registry($plugin->params);
         return $params;
@@ -385,8 +385,6 @@ HTML;
 
     public static function extractImageFromText($introtext, $fulltext = '')
     {
-        jimport('joomla.filesystem.file');
-
         $regex = '#<\s*img [^\>]*src\s*=\s*(["\'])(.*?)\1#im';
 
         preg_match($regex, $introtext, $matches);
@@ -484,8 +482,9 @@ HTML;
             ->from('#__virtuemart_product_medias as pm')
             ->where('pm.virtuemart_product_id = ' . (int) $id)
             ->where('pm.virtuemart_media_id = m.virtuemart_media_id')
-            ->order('pm.ordering ASC');
-        $db->setQuery($query, 0, 1);
+            ->order('pm.ordering ASC')
+            ->setLimit(1, 0);
+        $db->setQuery($query);
         $res = $db->loadResult();
 
         if ($res) {

@@ -2,7 +2,7 @@
 /**
  * jllike
  *
- * @version 5.1.0
+ * @version 5.2.0
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
  * @copyright (C) 2012-2025 by Joomline (https://joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
@@ -129,12 +129,8 @@ class PlgContentJllike extends CMSPlugin
                     $article->text = str_replace("{jllike}", "", $article->text);
                     return true;
                 }
-                // Универсальный вызов маршрутизатора для разных версий Joomla
-                if (class_exists('Joomla\\Component\\Content\\Site\\Helper\\RouteHelper')) {
-                    $route = Route::_(\Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($article->slug, $article->catid));
-                } else {
-                    $route = Route::_(\ContentHelperRoute::getArticleRoute($article->slug, $article->catid));
-                }
+                // Использование современного маршрутизатора Joomla 4+
+                $route = Route::_(\Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($article->slug, $article->catid));
                 $link = rtrim(Uri::root(), '/') . '/' . ltrim($route, '/');
                 $image = '';
                 if($this->params->get('content_images', 'fields') == 'fields')
@@ -183,7 +179,7 @@ class PlgContentJllike extends CMSPlugin
                         }
                     }
                 }
-                else if ($context == 'com_content.category' || 'com_content.featured')
+                else if ($context == 'com_content.category' || $context == 'com_content.featured')
                 {
                     if ($autoAdd == 1 || strpos($article->text, '{jllike}') == true)
                     {

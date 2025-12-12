@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="5.1.0" type="plugin" group="adsmanagercontent" method="upgrade">
+<extension version="5.2.0" type="plugin" group="adsmanagercontent" method="upgrade">
 	<name>JL Like for ADSManager</name>
 	<author>JoomLine</author>
-	<creationDate>25.07.2025</creationDate>
+	<creationDate>12.12.2025</creationDate>
 	<copyright>(C) 2012-2025 by Joomline (https://joomline.ru)</copyright>
 	<license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
 	<authorEmail>sale@joomline.ru</authorEmail>
 	<authorUrl>http://joomline.ru</authorUrl>
-	<version>5.1.0</version>
+	<version>5.2.0</version>
 	<url>http://joomline.ru</url>
 	<description>Plugin allow integrate social buttons like into your ADS manager components</description>
 	<minimum-joomla-version>4.0.0</minimum-joomla-version>
