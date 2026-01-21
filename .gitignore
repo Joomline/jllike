@@ -1,1 +1,4 @@
 *.zip
+
+# Claude Code
+.claude/
