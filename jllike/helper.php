@@ -100,6 +100,8 @@ class PlgJLLikeHelper
         $titletl = Text::_('PLG_JLLIKEPRO_TITLE_TL');
         $titlewa = Text::_('PLG_JLLIKEPRO_TITLE_WA');
         $titlevi = Text::_('PLG_JLLIKEPRO_TITLE_VI');
+        $titleth = Text::_('PLG_JLLIKEPRO_TITLE_TH');
+        $titlerd = Text::_('PLG_JLLIKEPRO_TITLE_RD');
         $titleAll = Text::_('PLG_JLLIKEPRO_TITLE_ALL');
 
         $providers = array();
@@ -155,6 +157,14 @@ class PlgJLLikeHelper
             $order = $this->params->get('vi_order', 13);
             $providers[$order] = array('title' => $titlevi, 'class' => 'vi');
         }
+        if ($this->params->get('addth', 1)) {
+            $order = $this->params->get('th_order', 16);
+            $providers[$order] = array('title' => $titleth, 'class' => 'th');
+        }
+        if ($this->params->get('addrd', 1)) {
+            $order = $this->params->get('rd_order', 17);
+            $providers[$order] = array('title' => $titlerd, 'class' => 'rd');
+        }
 
         ksort($providers);
         reset($providers);
@@ -185,11 +195,35 @@ HTML;
 				<div class="likes-block$position_buttons">
 HTML;
 
+        // Collapse buttons logic
+        $collapseButtons = (int) $this->params->get('collapse_buttons', 0);
+        $visibleCount = (int) $this->params->get('visible_buttons_count', 5);
+        $moreButtonText = $this->params->get('more_button_text', '...');
+
+        $providerIndex = 0;
+        $totalProviders = count($providers);
+
         foreach ($providers as $v) {
+            $providerIndex++;
+            $hiddenClass = '';
+
+            if ($collapseButtons && $providerIndex > $visibleCount && $totalProviders > $visibleCount) {
+                $hiddenClass = ' jllike-hidden';
+            }
+
             $scriptPage .= <<<HTML
-					<a title="{$v['title']}" class="like l-{$v['class']}" id="l-{$v['class']}-$id">
+					<a title="{$v['title']}" class="like l-{$v['class']}$hiddenClass" id="l-{$v['class']}-$id">
 					<i class="l-ico"></i>
 					<span class="l-count"></span>
+					</a>
+HTML;
+        }
+
+        // Add "More" button if collapse is enabled and there are hidden buttons
+        if ($collapseButtons && $totalProviders > $visibleCount) {
+            $scriptPage .= <<<HTML
+					<a class="jllike-more-button" id="jllike-more-$id">
+					<span>$moreButtonText</span>
 					</a>
 HTML;
         }

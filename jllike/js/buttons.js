@@ -499,6 +499,56 @@ ViberButton.prototype.getShareLink = function () {
     return 'viber://forward?text=' + encodeURIComponent(this.title + ' ' + this.linkToShare);
 };
 
+// --- Threads Button ---
+function ThreadsButton(config, context, index) {
+    Button.call(this, config, context, index);
+    this.type = 'ThreadsButton';
+}
+ThreadsButton.prototype = Object.create(Button.prototype);
+ThreadsButton.prototype.constructor = ThreadsButton;
+ThreadsButton.prototype.countLikes = function () {
+    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
+        if (this.countElem) this.countElem.remove();
+        return;
+    }
+    var self = this;
+    setTimeout(function () {
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
+        self.setCountValue(count);
+    }, 500);
+};
+ThreadsButton.prototype.getShareLink = function () {
+    return 'https://www.threads.net/intent/post?text=' + encodeURIComponent(this.title + ' ' + this.linkToShare);
+};
+
+// --- Reddit Button ---
+function RedditButton(config, context, index) {
+    Button.call(this, config, context, index);
+    this.type = 'RedditButton';
+}
+RedditButton.prototype = Object.create(Button.prototype);
+RedditButton.prototype.constructor = RedditButton;
+RedditButton.prototype.countLikes = function () {
+    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
+        if (this.countElem) this.countElem.remove();
+        return;
+    }
+    var self = this;
+    setTimeout(function () {
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
+        self.setCountValue(count);
+    }, 500);
+};
+RedditButton.prototype.getShareLink = function () {
+    return 'https://reddit.com/submit?url=' + encodeURIComponent(this.linkToShare) + '&title=' + encodeURIComponent(this.title);
+};
+
 // --- Универсальная инициализация всех кнопок (добавлено для OK.ru) ---
 document.addEventListener('DOMContentLoaded', function () {
     var conf = ButtonConfiguration && ButtonConfiguration.defaults ? ButtonConfiguration.defaults : {};
@@ -515,7 +565,9 @@ document.addEventListener('DOMContentLoaded', function () {
         {selector: '.l-wb', ctor: WeiboButton},
         {selector: '.l-tl', ctor: TelegramButton},
         {selector: '.l-wa', ctor: WhatsappButton},
-        {selector: '.l-vi', ctor: ViberButton}
+        {selector: '.l-vi', ctor: ViberButton},
+        {selector: '.l-th', ctor: ThreadsButton},
+        {selector: '.l-rd', ctor: RedditButton}
     ];
     buttonTypes.forEach(function (type) {
         var btns = document.querySelectorAll(type.selector);
@@ -523,7 +575,31 @@ document.addEventListener('DOMContentLoaded', function () {
             new type.ctor(conf, button, index);
         });
     });
+
+    // Initialize "More" buttons for collapse functionality
+    initMoreButtons();
 });
+
+// --- Collapse Buttons Functionality ---
+function initMoreButtons() {
+    var moreButtons = document.querySelectorAll('.jllike-more-button');
+    moreButtons.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            var container = this.closest('.jllikeproSharesContayner');
+            if (!container) return;
+
+            var hiddenButtons = container.querySelectorAll('.jllike-hidden');
+            hiddenButtons.forEach(function (hidden) {
+                hidden.classList.remove('jllike-hidden');
+                hidden.classList.add('jllike-visible');
+            });
+
+            // Hide the "More" button after revealing all buttons
+            this.style.display = 'none';
+        });
+    });
+}
 
 // --- Twitter Button ---
 function TwitterButton(config, context, index) {

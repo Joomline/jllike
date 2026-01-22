@@ -287,7 +287,45 @@
                         default="15"
                         required="true"
                         filter="integer"
-                />										
+                />
+                <field name="addth"
+                       type="radio"
+                       default="1"
+                       label="PLG_JLLIKEPRO_ENABLE_TH"
+                       description=""
+                       class="btn-group"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="th_order"
+                        type="text"
+                        label="PLG_JLLIKEPRO_ORDER"
+                        description="PLG_JLLIKEPRO_ORDER_DESC"
+                        default="16"
+                        required="true"
+                        filter="integer"
+                />
+                <field name="addrd"
+                       type="radio"
+                       default="1"
+                       label="PLG_JLLIKEPRO_ENABLE_RD"
+                       description=""
+                       class="btn-group"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+                <field
+                        name="rd_order"
+                        type="text"
+                        label="PLG_JLLIKEPRO_ORDER"
+                        description="PLG_JLLIKEPRO_ORDER_DESC"
+                        default="17"
+                        required="true"
+                        filter="integer"
+                />
 				<field name="addall"
                        type="radio"
                        default="1"
@@ -490,6 +528,37 @@
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
                 </field>
+				<field
+                        name="collapse_buttons"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKEPRO_COLLAPSE_BUTTONS"
+                        description="PLG_JLLIKEPRO_COLLAPSE_BUTTONS_DESC"
+                        class="btn-group"
+                        >
+                    <option value="0">PLG_JLLIKEPRO_NO</option>
+                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                </field>
+				<field
+                        name="visible_buttons_count"
+                        type="number"
+                        default="5"
+                        label="PLG_JLLIKEPRO_VISIBLE_BUTTONS_COUNT"
+                        description="PLG_JLLIKEPRO_VISIBLE_BUTTONS_COUNT_DESC"
+                        filter="integer"
+                        min="1"
+                        max="20"
+                        step="1"
+                        showon="collapse_buttons:1"
+                        />
+				<field
+                        name="more_button_text"
+                        type="text"
+                        default="..."
+                        label="PLG_JLLIKEPRO_MORE_BUTTON_TEXT"
+                        description="PLG_JLLIKEPRO_MORE_BUTTON_TEXT_DESC"
+                        showon="collapse_buttons:1"
+                        />
 				<field
                         name="enable_mobile_css"
                         type="radio"
