@@ -123,6 +123,8 @@ Button.prototype = {
         var container = this.context.closest('.jllikeproSharesContayner');
         if (container) {
             updateAllCounter(container);
+            // Обновить ширину кнопки "Ещё" после изменения счетчика
+            updateMoreButtonWidth(container);
         }
     },
     getPopupOptions: function () {
@@ -580,9 +582,41 @@ document.addEventListener('DOMContentLoaded', function () {
     initMoreButtons();
 });
 
+// --- Helper function to update "More" button width ---
+function updateMoreButtonWidth(container) {
+    if (!container) return;
+    var moreButton = container.querySelector('.jllike-more-button');
+    if (!moreButton) return;
+
+    // Найти первую видимую кнопку с классом .like (не скрытую)
+    var firstButton = container.querySelector('.like:not(.jllike-hidden)');
+    if (firstButton) {
+        // Получить общую ширину кнопки (иконка + счетчик + margins/paddings)
+        var buttonWidth = firstButton.offsetWidth;
+        if (buttonWidth > 0) {
+            moreButton.style.width = buttonWidth + 'px';
+            moreButton.style.height = ''; // Сбросить фиксированную высоту
+        }
+    }
+}
+
 // --- Collapse Buttons Functionality ---
 function initMoreButtons() {
     var moreButtons = document.querySelectorAll('.jllike-more-button');
+
+    function adjustMoreButtonWidth() {
+        moreButtons.forEach(function (btn) {
+            var container = btn.closest('.jllikeproSharesContayner');
+            updateMoreButtonWidth(container);
+        });
+    }
+
+    // Установить ширину сразу
+    adjustMoreButtonWidth();
+
+    // Повторно установить ширину после загрузки счетчиков (через 600ms)
+    setTimeout(adjustMoreButtonWidth, 600);
+
     moreButtons.forEach(function (btn) {
         btn.addEventListener('click', function (e) {
             e.preventDefault();

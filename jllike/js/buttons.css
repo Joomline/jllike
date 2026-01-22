@@ -85,13 +85,17 @@ body>p:first-child { display: none }
 
 .jllike-more-button {
 	display: inline-block;
-	padding: 5px 15px;
+	padding: 0;
 	background: rgba(0, 0, 0, 0.1) !important;
 	border-radius: 15px;
 	cursor: pointer;
 	transition: all 0.3s ease;
 	margin-left: 6px;
 	vertical-align: top;
+	min-width: 30px;
+	height: auto;
+	text-align: center;
+	box-sizing: border-box;
 }
 
 .jllike-more-button:hover {
@@ -102,7 +106,11 @@ body>p:first-child { display: none }
 	color: #333;
 	font-size: 0.9rem;
 	line-height: 30px;
-	padding: 0 5px;
+	display: inline-block;
+	width: 100%;
+	height: 30px;
+	padding: 0;
+	box-sizing: border-box;
 }
 .likes-block_left {text-align:left;}
 .likes-block_right {text-align:right;}
