@@ -241,6 +241,14 @@ class JFormFieldPreview extends FormField
             $order = $params->get('vi_order', 13);
             $providers[$order] = array('class' => 'vi', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_VI'));
         }
+        if ($params->get('addth', 1)) {
+            $order = $params->get('th_order', 16);
+            $providers[$order] = array('class' => 'th', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_TH'));
+        }
+        if ($params->get('addrd', 1)) {
+            $order = $params->get('rd_order', 17);
+            $providers[$order] = array('class' => 'rd', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_RD'));
+        }
 
         ksort($providers);
         

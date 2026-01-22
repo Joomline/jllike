@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="5.2.0" type="plugin" group="content" method="upgrade">
+<extension version="5.3.0" type="plugin" group="content" method="upgrade">
     <name>JL Like</name>
     <author>JoomLine</author>
-    <creationDate>12.12.2025</creationDate>
-    <copyright>(C) 2012-2025 by Joomline (https://joomline.ru)</copyright>
+    <creationDate>22.01.2026</creationDate>
+    <copyright>(C) 2012-2026 by Joomline (https://joomline.ru)</copyright>
     <license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
     <authorEmail>sale@joomline.ru</authorEmail>
     <authorUrl>https://joomline.ru</authorUrl>
-    <version>5.2.0</version>
+    <version>5.3.0</version>
     <description>PLG_JLLIKE_DESC_ALL</description>
     <minimum-joomla-version>4.0.0</minimum-joomla-version>
     <files>
@@ -34,307 +34,98 @@
             <fieldset
                     label="PLG_JLLIKEPRO_PROVIDERS"
                     name="providers"
+                    addfieldpath="/plugins/content/jllike/elements/"
                     >
                 <field
-                        name="addfacebook"
-                        type="radio"
-                        default="1"
-                        label="PLG_JLLIKEPRO_ENABLE_FC"
-                        description=""
-                        class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
-                </field>
-                <field
-                        name="facebook_order"
-                        type="text"
-                        label="PLG_JLLIKEPRO_ORDER"
-                        description="PLG_JLLIKEPRO_ORDER_DESC"
-                        default="1"
-                        required="true"
-                        filter="integer"
+                        name="social_networks_order"
+                        type="sortable"
+                        label="PLG_JLLIKEPRO_NETWORKS_ORDER"
+                        description="PLG_JLLIKEPRO_NETWORKS_ORDER_DESC"
                 />
-                <field
-                        name="addvk"
-                        type="radio"
-                        default="1"
-                        label="PLG_JLLIKEPRO_ENABLE_VK"
-                        description=""
-                        class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
+
+                <!-- Скрытые поля для хранения настроек включения/выключения -->
+                <field name="addfacebook" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </field>
-                <field
-                        name="vk_order"
-                        type="text"
-                        label="PLG_JLLIKEPRO_ORDER"
-                        description="PLG_JLLIKEPRO_ORDER_DESC"
-                        default="2"
-                        required="true"
-                        filter="integer"
-                />
-                <field
-                        name="addtw"
-                        type="radio"
-                        default="1"
-                        label="PLG_JLLIKEPRO_ENABLE_TW"
-                        description=""
-                        class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                <field name="addvk" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </field>
-                <field
-                        name="tw_order"
-                        type="text"
-                        label="PLG_JLLIKEPRO_ORDER"
-                        description="PLG_JLLIKEPRO_ORDER_DESC"
-                        default="3"
-                        required="true"
-                        filter="integer"
-                />
-                <field
-                        name="addod"
-                        type="radio"
-                        default="1"
-                        label="PLG_JLLIKEPRO_ENABLE_OD"
-                        description=""
-                        class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                <field name="addtw" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </field>
-                <field
-                        name="od_order"
-                        type="text"
-                        label="PLG_JLLIKEPRO_ORDER"
-                        description="PLG_JLLIKEPRO_ORDER_DESC"
-                        default="4"
-                        required="true"
-                        filter="integer"
-                />
-                <field
-                        name="addmail"
-                        type="radio"
-                        default="1"
-                        label="PLG_JLLIKEPRO_ENABLE_MM"
-                        description=""
-                        class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                <field name="addod" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </field>
-                <field
-                        name="mail_order"
-                        type="text"
-                        label="PLG_JLLIKEPRO_ORDER"
-                        description="PLG_JLLIKEPRO_ORDER_DESC"
-                        default="6"
-                        required="true"
-                        filter="integer"
-                />
-                <field
-                        name="addlin"
-                        type="radio"
-                        default="1"
-                        label="PLG_JLLIKEPRO_ENABLE_LI"
-                        description=""
-                        class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                <field name="addmail" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </field>
-                <field
-                        name="lin_order"
-                        type="text"
-                        label="PLG_JLLIKEPRO_ORDER"
-                        description="PLG_JLLIKEPRO_ORDER_DESC"
-                        default="7"
-                        required="true"
-                        filter="integer"
-                />
-                <field name="addpi"
-                       type="radio"
-                       default="1"
-                       label="PLG_JLLIKEPRO_ENABLE_PI"
-                       description=""
-                       class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                <field name="addlin" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </field>
-                <field
-                        name="pi_order"
-                        type="text"
-                        label="PLG_JLLIKEPRO_ORDER"
-                        description="PLG_JLLIKEPRO_ORDER_DESC"
-                        default="8"
-                        required="true"
-                        filter="integer"
-                />
-                <field name="addlj"
-                       type="radio"
-                       default="1"
-                       label="PLG_JLLIKEPRO_ENABLE_LJ"
-                       description=""
-                       class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                <field name="addpi" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </field>
-                <field
-                        name="lj_order"
-                        type="text"
-                        label="PLG_JLLIKEPRO_ORDER"
-                        description="PLG_JLLIKEPRO_ORDER_DESC"
-                        default="9"
-                        required="true"
-                        filter="integer"
-                />				
-					<field name="addbl"
-                       type="radio"
-                       default="1"
-                       label="PLG_JLLIKEPRO_ENABLE_BL"
-                       description=""
-                       class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                <field name="addlj" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </field>
-                <field
-                        name="bl_order"
-                        type="text"
-                        label="PLG_JLLIKEPRO_ORDER"
-                        description="PLG_JLLIKEPRO_ORDER_DESC"
-                        default="10"
-                        required="true"
-                        filter="integer"
-                />				
-				<field name="addwb"
-                       type="radio"
-                       default="1"
-                       label="PLG_JLLIKEPRO_ENABLE_WB"
-                       description=""
-                       class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                <field name="addbl" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </field>
-                <field
-                        name="wb_order"
-                        type="text"
-                        label="PLG_JLLIKEPRO_ORDER"
-                        description="PLG_JLLIKEPRO_ORDER_DESC"
-                        default="12"
-                        required="true"
-                        filter="integer"
-                />
-                <field name="addtl"
-                       type="radio"
-                       default="1"
-                       label="PLG_JLLIKEPRO_ENABLE_TL"
-                       description=""
-                       class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                <field name="addwb" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </field>
-                <field
-                        name="tl_order"
-                        type="text"
-                        label="PLG_JLLIKEPRO_ORDER"
-                        description="PLG_JLLIKEPRO_ORDER_DESC"
-                        default="13"
-                        required="true"
-                        filter="integer"
-                />
-				<field name="addwa"
-                       type="radio"
-                       default="1"
-                       label="PLG_JLLIKEPRO_ENABLE_WA"
-                       description=""
-                       class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                <field name="addtl" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </field>
-                <field
-                        name="wa_order"
-                        type="text"
-                        label="PLG_JLLIKEPRO_ORDER"
-                        description="PLG_JLLIKEPRO_ORDER_DESC"
-                        default="14"
-                        required="true"
-                        filter="integer"
-                />
-                <field name="addvi"
-                       type="radio"
-                       default="1"
-                       label="PLG_JLLIKEPRO_ENABLE_VI"
-                       description=""
-                       class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                <field name="addwa" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </field>
-                <field
-                        name="vi_order"
-                        type="text"
-                        label="PLG_JLLIKEPRO_ORDER"
-                        description="PLG_JLLIKEPRO_ORDER_DESC"
-                        default="15"
-                        required="true"
-                        filter="integer"
-                />
-                <field name="addth"
-                       type="radio"
-                       default="1"
-                       label="PLG_JLLIKEPRO_ENABLE_TH"
-                       description=""
-                       class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                <field name="addvi" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </field>
-                <field
-                        name="th_order"
-                        type="text"
-                        label="PLG_JLLIKEPRO_ORDER"
-                        description="PLG_JLLIKEPRO_ORDER_DESC"
-                        default="16"
-                        required="true"
-                        filter="integer"
-                />
-                <field name="addrd"
-                       type="radio"
-                       default="1"
-                       label="PLG_JLLIKEPRO_ENABLE_RD"
-                       description=""
-                       class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                <field name="addth" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </field>
-                <field
-                        name="rd_order"
-                        type="text"
-                        label="PLG_JLLIKEPRO_ORDER"
-                        description="PLG_JLLIKEPRO_ORDER_DESC"
-                        default="17"
-                        required="true"
-                        filter="integer"
-                />
-				<field name="addall"
-                       type="radio"
-                       default="1"
-                       label="PLG_JLLIKEPRO_ENABLE_ALL"
-                       description="PLG_JLLIKEPRO_ENABLE_ALL_DESC"
-                       class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
+                <field name="addrd" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                </field>
+
+                <!-- Скрытые поля для хранения порядка -->
+                <field name="facebook_order" type="text" default="1" hiddenLabel="true" class="hidden" />
+                <field name="vk_order" type="text" default="2" hiddenLabel="true" class="hidden" />
+                <field name="tw_order" type="text" default="3" hiddenLabel="true" class="hidden" />
+                <field name="od_order" type="text" default="4" hiddenLabel="true" class="hidden" />
+                <field name="mail_order" type="text" default="6" hiddenLabel="true" class="hidden" />
+                <field name="lin_order" type="text" default="7" hiddenLabel="true" class="hidden" />
+                <field name="pi_order" type="text" default="8" hiddenLabel="true" class="hidden" />
+                <field name="lj_order" type="text" default="9" hiddenLabel="true" class="hidden" />
+                <field name="bl_order" type="text" default="10" hiddenLabel="true" class="hidden" />
+                <field name="wb_order" type="text" default="12" hiddenLabel="true" class="hidden" />
+                <field name="tl_order" type="text" default="13" hiddenLabel="true" class="hidden" />
+                <field name="wa_order" type="text" default="14" hiddenLabel="true" class="hidden" />
+                <field name="vi_order" type="text" default="15" hiddenLabel="true" class="hidden" />
+                <field name="th_order" type="text" default="16" hiddenLabel="true" class="hidden" />
+                <field name="rd_order" type="text" default="17" hiddenLabel="true" class="hidden" />
+
+                <!-- Скрытое поле для общего счетчика (управляется виджетом) -->
+                <field name="addall" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
                 </field>
             </fieldset>
             <fieldset
