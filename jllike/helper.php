@@ -297,7 +297,7 @@ HTML;
 
         if (!$isCategory && $this->params->get('enable_fix_buttons', 1) == 1) {
             $doc->addStyleDeclaration('
-                .jllikeproSharesContayner {position: fixed; left: 0; top: auto;}
+                .jllikeproSharesContayner {position: fixed; left: 0; top: 50%; transform: translateY(-50%);}
                 .jllikeproSharesContayner .event-container>div {display: flex; flex-direction: column;}
             ');
         }
