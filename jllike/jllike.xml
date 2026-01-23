@@ -296,6 +296,19 @@
                     label="PLG_JLLIKEPRO_PREVIEW_WIDGET"
                     description="PLG_JLLIKEPRO_PREVIEW_WIDGET_DESC"
                 />
+				<field
+                        name="button_style"
+                        type="list"
+                        default="default"
+                        label="PLG_JLLIKEPRO_BUTTON_STYLE"
+                        description="PLG_JLLIKEPRO_BUTTON_STYLE_DESC"
+                        >
+                    <option value="default">PLG_JLLIKEPRO_STYLE_DEFAULT</option>
+                    <option value="minimal">PLG_JLLIKEPRO_STYLE_MINIMAL</option>
+                    <option value="gradient">PLG_JLLIKEPRO_STYLE_GRADIENT</option>
+                    <option value="outlined">PLG_JLLIKEPRO_STYLE_OUTLINED</option>
+                    <option value="floating">PLG_JLLIKEPRO_STYLE_FLOATING</option>
+                </field>
 			    <field
                         name="position_content"
                         type="radio"

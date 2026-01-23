@@ -119,3 +119,286 @@ body>p:first-child { display: none }
 .event-container .like .l-count {color: #FFF;}
 .jllikeproSharesContayner a:hover { opacity: 0.85; }
 .jllikeproSharesContayner a {margin-bottom: 6px; text-decoration: none !important;}
+
+/* ============================================
+   НОВЫЕ ВИЗУАЛЬНЫЕ СТИЛИ
+   ============================================ */
+
+/* Стиль 1: Minimal (Минималистичный) */
+.jllikeproSharesContayner.jllike-style-minimal a {
+    background: transparent !important;
+    border: none;
+    padding: 0;
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a .l-ico {
+    filter: brightness(0) saturate(100%);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a.l-fb .l-ico {
+    filter: brightness(0) saturate(100%) invert(29%) sepia(85%) saturate(1245%) hue-rotate(204deg) brightness(91%) contrast(89%);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a.l-vk .l-ico {
+    filter: brightness(0) saturate(100%) invert(46%) sepia(19%) saturate(1381%) hue-rotate(168deg) brightness(93%) contrast(91%);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a.l-tw .l-ico {
+    filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%) contrast(100%);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a.l-ok .l-ico {
+    filter: brightness(0) saturate(100%) invert(58%) sepia(94%) saturate(2799%) hue-rotate(5deg) brightness(101%) contrast(93%);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a.l-ml .l-ico {
+    filter: brightness(0) saturate(100%) invert(37%) sepia(63%) saturate(532%) hue-rotate(169deg) brightness(92%) contrast(89%);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a.l-ln .l-ico {
+    filter: brightness(0) saturate(100%) invert(32%) sepia(91%) saturate(1411%) hue-rotate(169deg) brightness(96%) contrast(101%);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a.l-pinteres .l-ico {
+    filter: brightness(0) saturate(100%) invert(10%) sepia(91%) saturate(7426%) hue-rotate(358deg) brightness(94%) contrast(114%);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a.l-lj .l-ico {
+    filter: brightness(0) saturate(100%) invert(58%) sepia(92%) saturate(5779%) hue-rotate(167deg) brightness(99%) contrast(101%);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a.l-bl .l-ico {
+    filter: brightness(0) saturate(100%) invert(48%) sepia(93%) saturate(2404%) hue-rotate(10deg) brightness(99%) contrast(98%);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a.l-wb .l-ico {
+    filter: brightness(0) saturate(100%) invert(22%) sepia(82%) saturate(2088%) hue-rotate(347deg) brightness(92%) contrast(96%);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a.l-tl .l-ico {
+    filter: brightness(0) saturate(100%) invert(60%) sepia(90%) saturate(2907%) hue-rotate(170deg) brightness(101%) contrast(96%);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a.l-wa .l-ico {
+    filter: brightness(0) saturate(100%) invert(68%) sepia(76%) saturate(1835%) hue-rotate(95deg) brightness(101%) contrast(104%);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a.l-vi .l-ico {
+    filter: brightness(0) saturate(100%) invert(39%) sepia(22%) saturate(1317%) hue-rotate(212deg) brightness(92%) contrast(87%);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a.l-th .l-ico {
+    filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%) contrast(100%);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a.l-rd .l-ico {
+    filter: brightness(0) saturate(100%) invert(35%) sepia(96%) saturate(6932%) hue-rotate(10deg) brightness(104%) contrast(107%);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a:hover .l-ico {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.jllikeproSharesContayner.jllike-style-minimal .event-container .like .l-count {
+    color: #666 !important;
+}
+
+.jllikeproSharesContayner.jllike-style-minimal a:hover .l-count {
+    color: #333 !important;
+}
+
+/* Стиль 2: Gradient (Градиентный) */
+.jllikeproSharesContayner.jllike-style-gradient a.l-fb {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a.l-vk {
+    background: linear-gradient(135deg, #4e7299 0%, #2a5885 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a.l-tw {
+    background: linear-gradient(135deg, #000000 0%, #333333 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a.l-ok {
+    background: linear-gradient(135deg, #f6851f 0%, #d9620a 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a.l-ml {
+    background: linear-gradient(135deg, #356ca4 0%, #2a5683 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a.l-ln {
+    background: linear-gradient(135deg, #0077B5 0%, #005885 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a.l-pinteres {
+    background: linear-gradient(135deg, #E60023 0%, #BD081C 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a.l-lj {
+    background: linear-gradient(135deg, #00B0EA 0%, #0090c8 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a.l-bl {
+    background: linear-gradient(135deg, #f26300 0%, #d45400 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a.l-wb {
+    background: linear-gradient(135deg, #c53220 0%, #a02818 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a.l-tl {
+    background: linear-gradient(135deg, #32afed 0%, #1e96c8 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a.l-wa {
+    background: linear-gradient(135deg, #00e676 0%, #00c853 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a.l-vi {
+    background: linear-gradient(135deg, #665CAC 0%, #4e4689 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a.l-th {
+    background: linear-gradient(135deg, #000000 0%, #333333 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a.l-rd {
+    background: linear-gradient(135deg, #FF4500 0%, #dd3800 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a {
+    position: relative;
+    overflow: hidden;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.2);
+    transition: left 0.3s ease;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a:hover::before {
+    left: 100%;
+}
+
+/* Стиль 3: Outlined (Контурный) */
+.jllikeproSharesContayner.jllike-style-outlined a {
+    background: transparent !important;
+    border: 2px solid currentColor;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-fb {
+    color: #3a5795;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-vk {
+    color: #4e7299;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-tw {
+    color: #000000;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-ok {
+    color: #f6851f;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-ml {
+    color: #356ca4;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-ln {
+    color: #0077B5;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-pinteres {
+    color: #BD081C;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-lj {
+    color: #00B0EA;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-bl {
+    color: #f26300;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-wb {
+    color: #c53220;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-tl {
+    color: #32afed;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-wa {
+    color: #00e676;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-vi {
+    color: #665CAC;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-th {
+    color: #000000;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-rd {
+    color: #FF4500;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a .l-ico {
+    filter: brightness(0) saturate(100%);
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a span {
+    color: currentColor !important;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined .event-container .like .l-count {
+    color: currentColor !important;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a:hover {
+    background: currentColor !important;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a:hover .l-ico {
+    filter: brightness(0) invert(1);
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a:hover span {
+    color: white !important;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined .event-container .like:hover .l-count {
+    color: white !important;
+}
+
+/* Стиль 4: Floating (Парящий) */
+.jllikeproSharesContayner.jllike-style-floating a {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+    transform: translateY(0);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.jllikeproSharesContayner.jllike-style-floating a:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.jllikeproSharesContayner.jllike-style-floating a:active {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.09);
+}
+

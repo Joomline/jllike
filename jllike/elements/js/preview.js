@@ -21,8 +21,9 @@
         
         // Настройки для отслеживания
         watchedFields: {
+            'jform_params_button_style': 'buttonStyle',
             'jform_params_position_content': 'position',
-            'jform_params_btn_border_radius': 'borderRadius', 
+            'jform_params_btn_border_radius': 'borderRadius',
             'jform_params_btn_dimensions': 'dimensions',
             'jform_params_btn_margin': 'margin',
             'jform_params_font_size': 'fontSize',
@@ -177,14 +178,15 @@
         // Основное обновление превью
         updatePreview: function() {
             if (!this.previewSample) return;
-            
+
             this.showUpdating();
-            
+
             var styles = this.collectCurrentStyles();
             this.applyStylesToPreview(styles);
             this.updateButtonText();
             this.updateButtonPositioning();
-            
+            this.updateButtonStyle();
+
             setTimeout(this.hideUpdating.bind(this), 200);
         },
         
@@ -314,6 +316,24 @@
             });
         },
         
+        // Обновление стиля кнопок
+        updateButtonStyle: function() {
+            if (!this.previewSample) return;
+
+            var buttonStyle = this.getFieldValue('jform_params_button_style', 'default');
+
+            // Удаляем все существующие классы стилей
+            var styleClasses = ['jllike-style-minimal', 'jllike-style-gradient', 'jllike-style-outlined', 'jllike-style-floating'];
+            for (var i = 0; i < styleClasses.length; i++) {
+                this.previewSample.classList.remove(styleClasses[i]);
+            }
+
+            // Добавляем новый класс стиля, если не default
+            if (buttonStyle !== 'default') {
+                this.previewSample.classList.add('jllike-style-' + buttonStyle);
+            }
+        },
+
         // Получение значения поля формы
         getFieldValue: function(fieldId, defaultValue) {
             var field = document.getElementById(fieldId);

@@ -139,6 +139,12 @@ class JFormFieldPreview extends FormField
 
     private function getPreviewHTML()
     {
+        // Получаем стиль кнопок
+        $plugin = PluginHelper::getPlugin('content', 'jllike');
+        $params = new Registry($plugin->params);
+        $buttonStyle = $params->get('button_style', 'default');
+        $styleClass = $buttonStyle !== 'default' ? ' jllike-style-' . $buttonStyle : '';
+
         $html = '
         <div class="preview-widget-container" id="jllike-preview-widget">
             <div class="preview-header">
@@ -150,9 +156,9 @@ class JFormFieldPreview extends FormField
                     </button>
                 </div>
             </div>
-            
+
             <div class="preview-content" id="preview-content">
-                <div class="jllikeproSharesContayner preview-sample" id="preview-sample">
+                <div class="jllikeproSharesContayner preview-sample' . $styleClass . '" id="preview-sample">
                     <input type="hidden" class="link-to-share" value="https://example.com"/>
                     <input type="hidden" class="share-title" value="' . Text::_('PLG_JLLIKEPRO_PREVIEW_SAMPLE_TITLE') . '"/>
                     <input type="hidden" class="share-image" value=""/>

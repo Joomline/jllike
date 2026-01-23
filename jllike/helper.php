@@ -169,9 +169,13 @@ class PlgJLLikeHelper
         ksort($providers);
         reset($providers);
 
+        // Получаем стиль кнопок
+        $buttonStyle = $this->params->get('button_style', 'default');
+        $styleClass = $buttonStyle !== 'default' ? ' jllike-style-' . $buttonStyle : '';
+
         $scriptPage = '';
         $scriptPage .= <<<HTML
-				<div class="jllikeproSharesContayner jllikepro_{$id}">
+				<div class="jllikeproSharesContayner jllikepro_{$id}{$styleClass}">
 				<input type="hidden" class="link-to-share" id="link-to-share-$id" value="$link"/>
 				<input type="hidden" class="share-title" id="share-title-$id" value="$title"/>
 				<input type="hidden" class="share-image" id="share-image-$id" value="$image"/>
