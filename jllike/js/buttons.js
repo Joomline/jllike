@@ -9,20 +9,6 @@ var jllikeproShareUrls = {
     vkontakte: {}
 };
 
-function getParam(key) {
-    if (key) {
-        var pairs = top.location.search.replace(/^\?/, '').split('&');
-        for (var i in pairs) {
-            var current = pairs[i];
-            var match = current.match(/([^=]*)=(\w*)/);
-            if (match && match[1] === key) {
-                return decodeURIComponent(match[2]);
-            }
-        }
-    }
-    return false;
-}
-
 var ButtonConfiguration = function (params) {
     if (params) {
         // Глубокое копирование объекта
@@ -137,12 +123,18 @@ Button.prototype = {
         this.context.classList.add('like-not-empty');
         if (counter) counter.textContent = count + 1;
     },
+    isAlreadyLiked: function () {
+        var parent = this.context.closest('.jllikeproSharesContayner');
+        return !!(window.jllickeproSettings && jllickeproSettings.disableMoreLikes &&
+            parent && parent.querySelector('.disable_more_likes'));
+    },
     disableMoreLikes: function () {
         if (window.jllickeproSettings && jllickeproSettings.disableMoreLikes) {
             var parent = this.context.closest('.jllikeproSharesContayner');
-            var id = parent ? (parent.querySelector('.share-id') || {}).value : '';
+            if (!parent || parent.querySelector('.disable_more_likes')) return;
+            var id = (parent.querySelector('.share-id') || {}).value || '';
             var date = new Date(new Date().getTime() + 60 * 60 * 24 * 30 * 1000);
-            document.cookie = 'jllikepro_article_' + id + '=1; path=/; expires=' + date.toUTCString();
+            document.cookie = 'jllikepro_article_' + encodeURIComponent(id) + '=1; path=/; expires=' + date.toUTCString() + '; SameSite=Lax';
             var div = document.createElement('div');
             div.className = 'disable_more_likes';
             parent.prepend(div);
@@ -152,8 +144,17 @@ Button.prototype = {
         e.preventDefault();
         var shareUri = this.getShareLink();
         var windowOptions = this.getPopupOptions();
-        var newWindow = window.open(shareUri, '', windowOptions);
-        this.plusOne();
+        var newWindow = window.open('', '_blank', windowOptions);
+        if (newWindow) {
+            // Окно соцсети не должно иметь доступа к странице сайта (reverse tabnabbing)
+            newWindow.opener = null;
+            newWindow.location.href = shareUri;
+        }
+        // При включённой опции «запретить повторные лайки» счётчик растёт только один раз
+        if (!this.isAlreadyLiked()) {
+            this.plusOne();
+            updateAllCounter(this.context.closest('.jllikeproSharesContayner') || document);
+        }
         this.disableMoreLikes();
         if (window.focus && newWindow) {
             newWindow.focus();
@@ -162,7 +163,13 @@ Button.prototype = {
     collectShareInfo: function () {
         var parent = this.context;
         var parentContayner = (window.jllickeproSettings && jllickeproSettings.parentContayner) || '.jllikeproSharesContayner';
-        var parentElem = parent.closest(parentContayner) || parent.closest('.jllikeproSharesContayner');
+        var parentElem = null;
+        try {
+            parentElem = parent.closest(parentContayner);
+        } catch (err) {
+            // Некорректный селектор в настройках плагина не должен ломать кнопки
+        }
+        parentElem = parentElem || parent.closest('.jllikeproSharesContayner');
         var href = parentElem ? (parentElem.querySelector('input.link-to-share') || {}).value : '';
         var title = parentElem ? (parentElem.querySelector('input.share-title') || {}).value : '';
         var image = parentElem ? (parentElem.querySelector('input.share-image') || {}).value : '';
@@ -225,15 +232,6 @@ VkontakteButton.prototype.getShareLink = function () {
     return 'https://vk.com/share.php?url=' + encodeURIComponent(this.linkToShare) + '&title=' + encodeURIComponent(this.title) + '&description=' + encodeURIComponent(this.summary) + (this.images[0] ? '&image=' + encodeURIComponent(this.images[0]) : '');
 };
 
-// --- Инициализация всех VK-кнопок ---
-document.addEventListener('DOMContentLoaded', function () {
-    var vkButtons = document.querySelectorAll('.l-vk');
-    vkButtons.forEach(function (button, index) {
-        var conf = ButtonConfiguration.defaults;
-        new VkontakteButton(conf, button, index);
-    });
-});
-
 // --- Facebook Button (Vanilla JS) ---
 function FacebookButton(config, context, index) {
     Button.call(this, config, context, index);
@@ -259,15 +257,6 @@ FacebookButton.prototype.countLikes = function () {
 FacebookButton.prototype.getShareLink = function () {
     return 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(this.linkToShare) + '&t=' + encodeURIComponent(this.title);
 };
-
-// --- Инициализация всех Facebook-кнопок ---
-document.addEventListener('DOMContentLoaded', function () {
-    var fbButtons = document.querySelectorAll('.l-fb');
-    fbButtons.forEach(function (button, index) {
-        var conf = ButtonConfiguration.defaults;
-        new FacebookButton(conf, button, index);
-    });
-});
 
 // --- Odnoklassniki Button ---
 function OdnoklassnikiButton(config, context, index) {
@@ -371,7 +360,7 @@ LivejournalButton.prototype.countLikes = function () {
     }, 500);
 };
 LivejournalButton.prototype.getShareLink = function () {
-    return 'http://livejournal.com/update.bml?subject=' + encodeURIComponent(this.title) +
+    return 'https://www.livejournal.com/update.bml?subject=' + encodeURIComponent(this.title) +
         '&event=' + encodeURIComponent('<a href="' + this.linkToShare + '">' + this.title + '</a> ' + this.summary);
 };
 
@@ -423,7 +412,7 @@ WeiboButton.prototype.countLikes = function () {
     }, 500);
 };
 WeiboButton.prototype.getShareLink = function () {
-    return 'http://service.weibo.com/share/share.php?url=' + encodeURIComponent(this.linkToShare) + '&title=' + encodeURIComponent(this.title);
+    return 'https://service.weibo.com/share/share.php?url=' + encodeURIComponent(this.linkToShare) + '&title=' + encodeURIComponent(this.title);
 };
 
 // --- Telegram Button ---
@@ -551,8 +540,8 @@ RedditButton.prototype.getShareLink = function () {
     return 'https://reddit.com/submit?url=' + encodeURIComponent(this.linkToShare) + '&title=' + encodeURIComponent(this.title);
 };
 
-// --- Универсальная инициализация всех кнопок (добавлено для OK.ru) ---
-document.addEventListener('DOMContentLoaded', function () {
+// --- Универсальная инициализация всех кнопок ---
+function jllikeInitButtons() {
     var conf = ButtonConfiguration && ButtonConfiguration.defaults ? ButtonConfiguration.defaults : {};
     var buttonTypes = [
         {selector: '.l-vk', ctor: VkontakteButton},
@@ -574,13 +563,17 @@ document.addEventListener('DOMContentLoaded', function () {
     buttonTypes.forEach(function (type) {
         var btns = document.querySelectorAll(type.selector);
         btns.forEach(function (button, index) {
+            // Защита от повторной инициализации (скрипт может попасть на страницу дважды)
+            if (button.getAttribute('data-jllike-init')) return;
+            button.setAttribute('data-jllike-init', '1');
             new type.ctor(conf, button, index);
         });
     });
 
     // Initialize "More" buttons for collapse functionality
     initMoreButtons();
-});
+}
+
 
 // --- Helper function to update "More" button width ---
 function updateMoreButtonWidth(container) {
@@ -688,4 +681,11 @@ MailButton.prototype.getShareLink = function () {
         '&description=' + encodeURIComponent(this.summary);
 };
 
-// --- Остальные типы кнопок (Facebook, Twitter и т.д.) будут реализованы аналогично ---
+// Запуск строго в конце файла: все прототипы кнопок к этому моменту уже определены.
+// Скрипт может быть подключён после DOMContentLoaded (оптимизаторы JS шаблонов, async/defer),
+// тогда событие уже не наступит и кнопки остались бы неактивными
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', jllikeInitButtons);
+} else {
+    jllikeInitButtons();
+}

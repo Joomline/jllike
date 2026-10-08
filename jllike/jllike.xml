@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="5.3.0" type="plugin" group="content" method="upgrade">
+<extension version="5.3.1" type="plugin" group="content" method="upgrade">
     <name>JL Like</name>
     <author>JoomLine</author>
     <creationDate>22.01.2026</creationDate>
@@ -7,8 +7,9 @@
     <license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
     <authorEmail>sale@joomline.ru</authorEmail>
     <authorUrl>https://joomline.ru</authorUrl>
-    <version>5.3.0</version>
+    <version>5.3.1</version>
     <description>PLG_JLLIKE_DESC_ALL</description>
+    <scriptfile>script.php</scriptfile>
     <minimum-joomla-version>4.0.0</minimum-joomla-version>
     <files>
         <folder>js</folder>
@@ -16,6 +17,7 @@
         <folder>elements</folder>
         <filename plugin="jllike">jllike.php</filename>
         <filename>helper.php</filename>
+        <filename>script.php</filename>
         <filename>joomla.asset.json</filename>
     </files>
     <media folder="media/jllikezooel" destination="zoo/elements/jllikezooel">

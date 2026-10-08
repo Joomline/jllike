@@ -15,7 +15,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\Plugin\Content\Jllike\Helper\PlgJLLikeHelper;
 
@@ -35,16 +34,18 @@ class PlgContentJllike extends CMSPlugin
     public function onAfterRender()
     {
         $app = Factory::getApplication();
+        if (!$app->isClient('site') || $app->getDocument()->getType() !== 'html')
+        {
+            return;
+        }
         $buffer = $app->getBody();
         if($buffer !== null)
         {
-            $image = $app->getUserState('jllike.image', '');
+            $image = \PlgJLLikeHelper::$shareImage;
             if(!empty($image))
             {
-                $app->setUserState('jllike.image', '');
-                $html = "  <link rel=\"image_src\" href=\"". $image ."\" />\n</head>";
-                $count = 1;
-                $buffer = str_ireplace('</head>', $html, $buffer, $count);
+                $html = '  <link rel="image_src" href="' . htmlspecialchars($image, ENT_QUOTES, 'UTF-8') . '" />' . "\n</head>";
+                $buffer = preg_replace('#</head>#i', addcslashes($html, '\\$'), $buffer, 1);
             }
             $buffer = str_ireplace('<meta name="og:', '<meta property="og:', $buffer);
             $app->setBody($buffer);
@@ -96,7 +97,7 @@ class PlgContentJllike extends CMSPlugin
         if($this->params->get('punycode_convert',0))
         {
             $file = JPATH_ROOT.'/libraries/idna_convert/idna_convert.class.php';
-            if(!File::exists($file))
+            if(!is_file($file))
             {
                 return Text::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
             }
@@ -130,8 +131,13 @@ class PlgContentJllike extends CMSPlugin
                     return true;
                 }
                 // Использование современного маршрутизатора Joomla 4+
-                $route = Route::_(\Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($article->slug, $article->catid));
-                $link = rtrim(Uri::root(), '/') . '/' . ltrim($route, '/');
+                // Абсолютный URL без &amp;: корректно и для сайта в подпапке
+                $link = Route::_(
+                    \Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language ?? 0),
+                    false,
+                    Route::TLS_IGNORE,
+                    true
+                );
                 $image = '';
                 if($this->params->get('content_images', 'fields') == 'fields')
                 {
@@ -145,10 +151,6 @@ class PlgContentJllike extends CMSPlugin
                         else if(!empty($images->image_fulltext))
                         {
                             $image = $images->image_fulltext;
-                        }
-                        if(!empty($image))
-                        {
-                            $image = Uri::root().$image;
                         }
                     }
                 }
@@ -164,7 +166,7 @@ class PlgContentJllike extends CMSPlugin
                     $view = $input->get('view');
                     if ($view == 'article')
                     {
-                        if ($autoAdd == 1 || strpos($article->text, '{jllike}') == true)
+                        if ($autoAdd == 1 || strpos($article->text, '{jllike}') !== false)
                         {
                             $helper->loadScriptAndStyle(0);
                             switch($sharePos)
@@ -181,7 +183,7 @@ class PlgContentJllike extends CMSPlugin
                 }
                 else if ($context == 'com_content.category' || $context == 'com_content.featured')
                 {
-                    if ($autoAdd == 1 || strpos($article->text, '{jllike}') == true)
+                    if ($autoAdd == 1 || strpos($article->text, '{jllike}') !== false)
                     {
                         $helper->loadScriptAndStyle(1);
                         $article->text = str_replace("{jllike}", "", $article->text) . $shares;
@@ -223,7 +225,7 @@ class PlgContentJllike extends CMSPlugin
                     {
                         return true;
                     }
-                    if ($autoAdd == 1 || strpos($article->text, '{jllike}') == true)
+                    if ($autoAdd == 1 || strpos($article->text, '{jllike}') !== false)
                     {
                         $helper->loadScriptAndStyle(0);
                         $uri = str_ireplace(Uri::root(), '', Uri::current());

@@ -77,9 +77,10 @@ function initSortable() {
             var network = item.dataset.network;
             var isEnabled = item.classList.contains('enabled');
 
-            // Ищем кнопку в preview
+            // Ищем кнопку в preview; выключенные оставляем скрытыми, чтобы их можно было включить снова
             var button = previewButtons.querySelector('.l-' + network);
-            if (button && isEnabled) {
+            if (button) {
+                button.style.display = isEnabled ? '' : 'none';
                 fragment.appendChild(button);
             }
         });
@@ -277,8 +278,8 @@ function initTouchSupport(sortableList) {
         touchItem = null;
         touchClone = null;
 
-        // Обновляем порядок
-        var items = sortableList.querySelectorAll('.jllike-sortable-item');
+        // Обновляем порядок (кнопка "Все" не участвует в сортировке)
+        var items = sortableList.querySelectorAll('.jllike-sortable-item:not(.jllike-all-counter)');
         items.forEach(function(item, index) {
             var orderSpan = item.querySelector('.network-order');
             if (orderSpan) {

@@ -52,8 +52,8 @@ class ElementJlLikeZooEl extends Element implements iSubmittable {
         }
 
         $ssl = (Factory::getConfig()->get('force_ssl') == 2) ? 1 : -1;
-        $item_route = Route::_($this->app->route->item($this->_item, false), true, $ssl);
-        Factory::getLanguage()->load('plg_content_jllike'. JPATH_ROOT.'/plugins/content/jllike');
+        $item_route = Route::_($this->app->route->item($this->_item, false), false, $ssl);
+        Factory::getLanguage()->load('plg_content_jllike', JPATH_ROOT . '/plugins/content/jllike');
         $plugin = PluginHelper::getPlugin('content', 'jllike');
         $plgParams = new JRegistry($plugin->params);
 

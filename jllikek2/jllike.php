@@ -14,18 +14,15 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
-use Joomla\String\StringHelper;
-use Joomla\CMS\Loader\ClassLoader;
 
-/**
- * Example K2 Plugin to render YouTube URLs entered in backend K2 forms to video players in the frontend.
- */
-
-// Load the K2 Plugin API
-ClassLoader::register('K2Plugin', JPATH_ADMINISTRATOR . '/components/com_k2/lib/k2plugin.php');
+// Load the K2 Plugin API (класса Joomla\CMS\Loader\ClassLoader в Joomla 4-6 нет — был фатал)
+if (!is_file(JPATH_ADMINISTRATOR . '/components/com_k2/lib/k2plugin.php'))
+{
+    return;
+}
+\JLoader::register('K2Plugin', JPATH_ADMINISTRATOR . '/components/com_k2/lib/k2plugin.php');
 
 class PlgK2Jllike extends \K2Plugin
 {
@@ -128,22 +125,13 @@ class PlgK2Jllike extends \K2Plugin
         include_once JPATH_ROOT.'/plugins/content/jllike/helper.php';
         $helper = PlgJLLikeHelper::getInstance($this->params, 'k2', 'jllike');
 
-        $url = $this->getUrl();
         $isCategory = ($input->getString('view', '') == 'itemlist') ? true : false;
-        $route = $this->getRoute($article);
-        $link = rtrim(Uri::root(), '/') . '/' . ltrim($route, '/');
+        $link = $this->getRoute($article);
 
         if($this->params->get('k2_images', 'fields') == 'fields' && !empty($article->imageLarge))
         {
+            // Абсолютный URL формирует PlgJLLikeHelper::ShowIN
             $image = trim($article->imageLarge);
-            if(!empty($image))
-            {
-                if(StringHelper::strpos($image, '/') === 0)
-                {
-                    $image = StringHelper::substr($image, 1);
-                }
-                $image = Uri::root().$image;
-            }
         }
         else
         {
@@ -166,47 +154,22 @@ class PlgK2Jllike extends \K2Plugin
         }
     }
 
-    private function getUrl()
+    /**
+     * Абсолютная ссылка на материал K2 (метод вызывался, но не был объявлен)
+     */
+    private function getRoute($article)
     {
-        $baseUri = $this->getBaseUri();
-        $url = $baseUri->toString();
-        if($this->params->get('punycode_convert',0))
+        if (!class_exists('K2HelperRoute'))
         {
-            $file = JPATH_ROOT.'/libraries/idna_convert/idna_convert.class.php';
-            if(!File::exists($file))
-            {
-                return Text::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
-            }
-
-            include_once $file;
-
-            if($url)
-            {
-                if (class_exists('idna_convert'))
-                {
-                    $idn = new idna_convert;
-                    $url = $idn->encode($url);
-                }
-            }
-            $baseUri->setHost(parse_url($url, PHP_URL_HOST));
+            require_once JPATH_SITE . '/components/com_k2/helpers/route.php';
         }
-        return $baseUri->toString();
-    }
 
-    private function getBaseUri()
-    {
-        $uri = new Uri(Uri::root());
-        $uri->setScheme((Factory::getConfig()->get('force_ssl') == 2) ? 'https' : 'http');
-        $host = $uri->getHost();
-        $pathbase = $this->params->get('pathbase', '');
-        if ($pathbase && strpos($host, 'www.') === false && $pathbase === 'www.') {
-            $host = 'www.' . $host;
-        } elseif ($pathbase === '' && strpos($host, 'www.') === 0) {
-            $host = substr($host, 4);
-        }
-        $uri->setHost($host);
-        $uri->setPath('');
-        $uri->setQuery([]);
-        return $uri;
+        $catAlias = isset($article->category->alias) ? $article->category->alias : '';
+        $route = \K2HelperRoute::getItemRoute(
+            $article->id . ':' . urlencode($article->alias),
+            $article->catid . ':' . urlencode($catAlias)
+        );
+
+        return Route::_($route, false, Route::TLS_IGNORE, true);
     }
 }

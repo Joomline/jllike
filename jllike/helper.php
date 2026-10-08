@@ -12,7 +12,6 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Factory;
@@ -25,6 +24,12 @@ class PlgJLLikeHelper
     protected $params = null;
 
     protected static $instance = null;
+
+    /**
+     * Изображение для <link rel="image_src">, выводится в onAfterRender текущего запроса
+     * @var string
+     */
+    public static $shareImage = '';
 
     /**
      * Пример вывода лайков в любом месте макетов, шаблонов и т.п.
@@ -59,6 +64,7 @@ class PlgJLLikeHelper
      */
     function ShowIn($id, $link = '', $title = '', $image = '', $desc = '', $enable_opengraph = 1)
     {
+        // Нужен onAfterRender контент-плагина (og: -> property, image_src) и на страницах K2, Zoo, JShopping
         PluginHelper::importPlugin('content', 'jllike');
 
         $position_content = $this->params->get('position_content', 0);
@@ -76,8 +82,8 @@ class PlgJLLikeHelper
 
         if (empty($image)) {
             $image = trim($this->params->get('default_image', ''));
-            $image = !empty($image) ? Uri::root() . $image : '';
         }
+        $image = self::absoluteImageUrl($image);
 
         $desc = $this->cleanText($desc);
         $desc = $this->limittext($desc, 200);
@@ -86,7 +92,15 @@ class PlgJLLikeHelper
         if ($enable_opengraph) {
             $this->addOpenGraphTags($title, $desc, $image, $link);
         }
-        
+
+        // Все значения выводятся в HTML-атрибуты, поэтому экранируем их здесь, а не раньше:
+        // мета-теги Joomla экранирует сама, и двойное экранирование портило og:title
+        $id = htmlspecialchars((string) $id, ENT_QUOTES, 'UTF-8');
+        $link = htmlspecialchars((string) $link, ENT_QUOTES, 'UTF-8');
+        $image = htmlspecialchars($image, ENT_QUOTES, 'UTF-8');
+        $title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
+        $desc = htmlspecialchars($desc, ENT_QUOTES, 'UTF-8');
+
         $titlefc = Text::_('PLG_JLLIKEPRO_TITLE_FC');
         $titlevk = Text::_('PLG_JLLIKEPRO_TITLE_VK');
         $titletw = Text::_('PLG_JLLIKEPRO_TITLE_TW');
@@ -107,67 +121,69 @@ class PlgJLLikeHelper
         $providers = array();
         if ($this->params->get('addfacebook', 1)) {
             $order = $this->params->get('facebook_order', 1);
-            $providers[$order] = array('title' => $titlefc, 'class' => 'fb');
+            $providers[] = array('order' => (int) $order, 'title' => $titlefc, 'class' => 'fb');
         }
         if ($this->params->get('addvk', 1)) {
             $order = $this->params->get('vk_order', 2);
-            $providers[$order] = array('title' => $titlevk, 'class' => 'vk');
+            $providers[] = array('order' => (int) $order, 'title' => $titlevk, 'class' => 'vk');
         }
         if ($this->params->get('addtw', 1)) {
             $order = $this->params->get('tw_order', 3);
-            $providers[$order] = array('title' => $titletw, 'class' => 'tw');
+            $providers[] = array('order' => (int) $order, 'title' => $titletw, 'class' => 'tw');
         }
         if ($this->params->get('addod', 1)) {
             $order = $this->params->get('od_order', 4);
-            $providers[$order] = array('title' => $titleod, 'class' => 'ok');
+            $providers[] = array('order' => (int) $order, 'title' => $titleod, 'class' => 'ok');
         }
         if ($this->params->get('addmail', 1)) {
             $order = $this->params->get('mail_order', 5);
-            $providers[$order] = array('title' => $titlemm, 'class' => 'ml');
+            $providers[] = array('order' => (int) $order, 'title' => $titlemm, 'class' => 'ml');
         }
         if ($this->params->get('addlin', 1)) {
             $order = $this->params->get('lin_order', 6);
-            $providers[$order] = array('title' => $titleli, 'class' => 'ln');
+            $providers[] = array('order' => (int) $order, 'title' => $titleli, 'class' => 'ln');
         }
         if ($this->params->get('addpi', 1)) {
             $order = $this->params->get('pi_order', 7);
-            $providers[$order] = array('title' => $titlepi, 'class' => 'pinteres');
+            $providers[] = array('order' => (int) $order, 'title' => $titlepi, 'class' => 'pinteres');
         }
         if ($this->params->get('addlj', 1)) {
             $order = $this->params->get('lj_order', 8);
-            $providers[$order] = array('title' => $titlelj, 'class' => 'lj');
+            $providers[] = array('order' => (int) $order, 'title' => $titlelj, 'class' => 'lj');
         }
         if ($this->params->get('addbl', 1)) {
             $order = $this->params->get('bl_order', 9);
-            $providers[$order] = array('title' => $titlebl, 'class' => 'bl');
+            $providers[] = array('order' => (int) $order, 'title' => $titlebl, 'class' => 'bl');
         }
         if ($this->params->get('addwb', 1)) {
             $order = $this->params->get('wb_order', 10);
-            $providers[$order] = array('title' => $titlewb, 'class' => 'wb');
+            $providers[] = array('order' => (int) $order, 'title' => $titlewb, 'class' => 'wb');
         }
         if ($this->params->get('addtl', 1)) {
             $order = $this->params->get('tl_order', 11);
-            $providers[$order] = array('title' => $titletl, 'class' => 'tl');
+            $providers[] = array('order' => (int) $order, 'title' => $titletl, 'class' => 'tl');
         }
         if ($this->params->get('addwa', 1)) {
             $order = $this->params->get('wa_order', 12);
-            $providers[$order] = array('title' => $titlewa, 'class' => 'wa');
+            $providers[] = array('order' => (int) $order, 'title' => $titlewa, 'class' => 'wa');
         }
         if ($this->params->get('addvi', 1)) {
             $order = $this->params->get('vi_order', 13);
-            $providers[$order] = array('title' => $titlevi, 'class' => 'vi');
+            $providers[] = array('order' => (int) $order, 'title' => $titlevi, 'class' => 'vi');
         }
         if ($this->params->get('addth', 1)) {
             $order = $this->params->get('th_order', 16);
-            $providers[$order] = array('title' => $titleth, 'class' => 'th');
+            $providers[] = array('order' => (int) $order, 'title' => $titleth, 'class' => 'th');
         }
         if ($this->params->get('addrd', 1)) {
             $order = $this->params->get('rd_order', 17);
-            $providers[$order] = array('title' => $titlerd, 'class' => 'rd');
+            $providers[] = array('order' => (int) $order, 'title' => $titlerd, 'class' => 'rd');
         }
 
-        ksort($providers);
-        reset($providers);
+        // Сортировка без потери кнопок с одинаковым порядковым номером
+        usort($providers, function ($a, $b) {
+            return $a['order'] <=> $b['order'];
+        });
 
         // Получаем стиль кнопок
         $buttonStyle = $this->params->get('button_style', 'default');
@@ -202,7 +218,7 @@ HTML;
         // Collapse buttons logic
         $collapseButtons = (int) $this->params->get('collapse_buttons', 0);
         $visibleCount = (int) $this->params->get('visible_buttons_count', 5);
-        $moreButtonText = $this->params->get('more_button_text', '...');
+        $moreButtonText = htmlspecialchars($this->params->get('more_button_text', '...'), ENT_QUOTES, 'UTF-8');
 
         $providerIndex = 0;
         $totalProviders = count($providers);
@@ -271,20 +287,23 @@ HTML;
 
         $enableCounters = (int) $this->params->get('enableCounters', 1);
 
-        $script = '
-            window.jllickeproSettings = window.jllickeproSettings || {};
-            jllickeproSettings.url = "' . $url . '";
-            jllickeproSettings.typeGet = "' . $this->params->get('typesget', 0) . '";
-            jllickeproSettings.enableCounters = ' . ($enableCounters ? 'true' : 'false') . ';
-            jllickeproSettings.disableMoreLikes = ' . $this->params->get('disable_more_likes', 0) . ';
-            jllickeproSettings.isCategory = ' . $isCategory . ';
-            jllickeproSettings.buttonsContayner = "' . $this->params->get('buttons_contayner', '') . '";
-            jllickeproSettings.parentContayner = "' . $this->params->get('parent_contayner', 'div.jllikeproSharesContayner') . '";
-        ';
+        // json_encode гарантирует корректный JS даже при кавычках в селекторах из настроек
+        $settings = [
+            'url' => $url,
+            'typeGet' => (string) $this->params->get('typesget', 0),
+            'enableCounters' => (bool) $enableCounters,
+            'random_likes' => (bool) $this->params->get('random_likes', 1),
+            'disableMoreLikes' => (int) $this->params->get('disable_more_likes', 0),
+            'isCategory' => $isCategory,
+            'buttonsContayner' => (string) $this->params->get('buttons_contayner', ''),
+            'parentContayner' => (string) $this->params->get('parent_contayner', 'div.jllikeproSharesContayner'),
+        ];
+        $doc->addScriptDeclaration(
+            'window.jllickeproSettings = Object.assign(window.jllickeproSettings || {}, '
+            . json_encode($settings, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)
+            . ');'
+        );
 
-        $doc->addScriptDeclaration($script);
-
-        
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         $wa->registerAndUseScript('plg_jllike.buttons.script', 'plugins/content/jllike/js/buttons.js', [], ['defer' => true]);
         $wa->registerAndUseStyle('plg_jllike.buttons', 'plugins/content/jllike/js/buttons.css');
@@ -299,9 +318,9 @@ HTML;
             .jllikeproSharesContayner span {height: ' . $btn_dimensions . 'px;line-height: ' . $btn_dimensions . 'px;font-size: ' . $font_size . 'rem;}
         ');
 
-        if (!$isCategory && $this->params->get('enable_fix_buttons', 1) == 1) {
+        if (!$isCategory && $this->params->get('enable_fix_buttons', 0) == 1) {
             $doc->addStyleDeclaration('
-                .jllikeproSharesContayner {position: fixed; left: 0; top: 50%; transform: translateY(-50%);}
+                .jllikeproSharesContayner {position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 1000; max-height: 100vh; overflow-y: auto;}
                 .jllikeproSharesContayner .event-container>div {display: flex; flex-direction: column;}
             ');
         }
@@ -310,6 +329,8 @@ HTML;
             $doc->addStyleDeclaration('
             @media screen and (max-width:800px) {
                 .jllikeproSharesContayner {position: fixed;right: 0;bottom: 0; z-index: 999999; background-color: #fff!important;width: 100%;}
+                /* сброс правил «фиксированных кнопок слева», иначе панель растягивается на полэкрана */
+                .jllikeproSharesContayner {top: auto; left: 0; transform: none; max-height: none; overflow: visible;}
                 .jllikeproSharesContayner .event-container > div {border-radius: 0; padding: 0; display: block;}
                 .like .l-count {display:none}
                 .jllikeproSharesContayner a {border-radius: 0!important;margin: 0!important;}
@@ -323,15 +344,6 @@ HTML;
             }
             ');
         }
-
-        // Передаем настройки в JS
-        $params = [
-            'enableCounters' => (bool)$this->params->get('enableCounters', 1),
-            'random_likes' => (bool)$this->params->get('random_likes', 1),
-            // ... возможно, другие параметры ...
-        ];
-        $js = 'window.jllickeproSettings = Object.assign(window.jllickeproSettings || {}, ' . json_encode($params) . ');';
-        Factory::getApplication()->getDocument()->addScriptDeclaration($js);
     }
 
     function getShareText($metadesc, $introtext, $text)
@@ -396,19 +408,17 @@ HTML;
     private function cleanText($text)
     {
         $clear_plugin_tags = $this->params->get('clear_plugin_tags', 1);
-        $text = strip_tags($text);
-        $text = preg_replace('/&nbsp;/', ' ', $text);
-        $text = str_replace("\n", ' ', $text);
+        $text = strip_tags((string) $text);
+        // Возвращаем обычный текст: экранирование делается в момент вывода
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $text = str_replace(["\xC2\xA0", "\r", "\n"], ' ', $text);
 
         if ($clear_plugin_tags) {
-            $text = preg_replace('/\[.+?\]/', '', $text);
-            $text = preg_replace('/{.+?}/', '', $text);
+            $text = preg_replace('/\[.+?\]/u', '', $text);
+            $text = preg_replace('/{.+?}/u', '', $text);
         }
 
-        $text = htmlspecialchars($text, ENT_QUOTES);
-        $text = preg_replace('/&amp;amp;/', '&amp;', $text);
-
-        return $text;
+        return trim($text);
     }
 
     private static function getPluginParams($folder = 'content', $name = 'jllike')
@@ -439,23 +449,56 @@ HTML;
             $image = $images[2];
         }
 
-        if (!empty($image)) {
-            if (!preg_match("#^http|^https|^ftp#i", $image)) {
-                if (!File::exists(JPATH_SITE . '/' . $image)) {
-                    $image = '';
-                }
+        if (!empty($image) && !preg_match('#^(https?:)?//#i', $image)) {
+            $path = HTMLHelper::cleanImageURL(html_entity_decode($image, ENT_QUOTES, 'UTF-8'))->url;
+            $path = rawurldecode(parse_url($path, PHP_URL_PATH) ?? '');
 
-                if (strpos($image, '/') === 0) {
-                    $image = substr($image, 1);
-                }
-
-                $image = Uri::root() . $image;
+            // Путь от корня домена переводим в путь от корня сайта (если сайт в подпапке)
+            $base = Uri::root(true);
+            if ($base !== '' && strpos($path, $base . '/') === 0) {
+                $path = substr($path, strlen($base));
             }
-        } else {
-            $image = '';
+
+            // Раньше при отсутствии файла возвращался адрес главной страницы сайта
+            if (!is_file(JPATH_SITE . '/' . ltrim($path, '/'))) {
+                return '';
+            }
         }
 
-        return $image;
+        return self::absoluteImageUrl($image);
+    }
+
+    /**
+     * Приводит путь к изображению к абсолютному URL и убирает служебный хвост
+     * #joomlaImage://..., который Joomla 4+ добавляет к значениям медиаполей
+     *
+     * @param string $image
+     * @return string
+     */
+    public static function absoluteImageUrl($image)
+    {
+        $image = trim(html_entity_decode((string) $image, ENT_QUOTES, 'UTF-8'));
+
+        if ($image === '') {
+            return '';
+        }
+
+        $image = HTMLHelper::cleanImageURL($image)->url;
+
+        if (strpos($image, '//') === 0) {
+            return Uri::getInstance()->getScheme() . ':' . $image;
+        }
+
+        if (preg_match('#^https?://#i', $image)) {
+            return $image;
+        }
+
+        // Путь от корня домена (/images/..., /media/k2/...) — сайт может лежать в подпапке
+        if (strpos($image, '/') === 0) {
+            return Uri::getInstance()->toString(['scheme', 'host', 'port']) . $image;
+        }
+
+        return Uri::root() . $image;
     }
 
     private function limittext($wordtext, $maxchar)
@@ -476,7 +519,7 @@ HTML;
             $text .= ' ' . $word;
         }
 
-        return $text;
+        return ltrim($text);
     }
 
     private function addOpenGraphTags($title = '', $text = '', $image = '', $url = '')
@@ -487,7 +530,7 @@ HTML;
 
         if ($image) {
             $doc->setMetaData('og:image', $image);
-            Factory::getApplication()->setUserState('jllike.image', $image);
+            self::$shareImage = $image;
             // Twitter large card
             $doc->setMetaData('twitter:card', 'summary_large_image');
             $doc->setMetaData('twitter:image', $image);

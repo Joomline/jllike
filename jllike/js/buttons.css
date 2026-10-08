@@ -210,6 +210,13 @@ body>p:first-child { display: none }
     color: #333 !important;
 }
 
+/* Логотип LiveJournal цветной и залит кругом: фильтр brightness(0) превращал его в сплошное пятно.
+   Для стилей Minimal и Outlined используем только силуэт карандаша */
+.jllikeproSharesContayner.jllike-style-minimal a.l-lj .l-ico,
+.jllikeproSharesContayner.jllike-style-outlined a.l-lj .l-ico {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='%23FFFFFF' transform='translate(2.7 2.7)'%3E%3Cpath d='M14.437,21.696c1.4-3.251,3.999-5.861,7.238-7.281h0.002L10.316,3.071L10.311,3.07c-3.242,1.42-5.839,4.029-7.239,7.282L14.437,21.696z'/%3E%3Cpath d='M22.489,18.29c-1.882,0.824-3.39,2.343-4.205,4.229l5.306,1.097L22.489,18.29z'/%3E%3Cpath d='M22.489,18.292c-0.427-2.037-0.812-3.876-0.812-3.876l-0.004,0.001c-3.238,1.42-5.836,4.029-7.237,7.28l3.848,0.822C19.101,20.639,20.612,19.114,22.489,18.292'/%3E%3C/g%3E%3C/svg%3E");
+}
+
 /* Стиль 2: Gradient (Градиентный) */
 .jllikeproSharesContayner.jllike-style-gradient a.l-fb {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
