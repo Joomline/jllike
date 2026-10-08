@@ -24,6 +24,11 @@ class PlgAdsmanagercontentJlLikeAds extends CMSPlugin
 {
     public function ADSonContentAfterDisplay($content)
     {
+        // Без включённого контент-плагина JL Like (там настройки) ничего не выводим: иначе PHP-предупреждения
+        if (!PluginHelper::isEnabled('content', 'jllike'))
+        {
+            return '';
+        }
         Factory::getLanguage()->load('plg_content_jllike');
         $plugin = PluginHelper::getPlugin('content', 'jllike');
         $plgParams = new Registry;

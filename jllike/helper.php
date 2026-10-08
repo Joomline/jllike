@@ -574,9 +574,14 @@ HTML;
         $res = $db->loadResult();
 
         if ($res) {
-            $baseUri = $this->getBaseUri();
-            $baseUri->setPath(ltrim($res, '/'));
-            $image = $baseUri->toString();
+            // file_url может быть и внешним адресом (CDN) — тогда его нельзя склеивать с доменом сайта
+            if (preg_match('#^(https?:)?//#i', $res)) {
+                $image = self::absoluteImageUrl($res);
+            } else {
+                $baseUri = $this->getBaseUri();
+                $baseUri->setPath(ltrim($res, '/'));
+                $image = $baseUri->toString();
+            }
         }
         return $image;
     }

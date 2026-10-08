@@ -127,7 +127,8 @@ Button.prototype = {
             if (!parent || parent.querySelector('.disable_more_likes')) return;
             var id = (parent.querySelector('.share-id') || {}).value || '';
             var date = new Date(new Date().getTime() + 60 * 60 * 24 * 30 * 1000);
-            document.cookie = 'jllikepro_article_' + encodeURIComponent(id) + '=1; path=/; expires=' + date.toUTCString() + '; SameSite=Lax';
+            document.cookie = 'jllikepro_article_' + encodeURIComponent(id) + '=1; path=/; expires=' + date.toUTCString() + '; SameSite=Lax' +
+                (window.location.protocol === 'https:' ? '; Secure' : '');
             var div = document.createElement('div');
             div.className = 'disable_more_likes';
             parent.prepend(div);

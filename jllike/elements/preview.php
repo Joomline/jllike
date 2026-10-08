@@ -59,8 +59,7 @@ class JFormFieldPreview extends FormField
     private function applyFrontendStyles()
     {
         // Получаем настройки плагина
-        $plugin = PluginHelper::getPlugin('content', 'jllike');
-        $params = new Registry($plugin->params);
+        $params = $this->getPluginParams();
         
         $doc = Factory::getDocument();
         
@@ -140,8 +139,7 @@ class JFormFieldPreview extends FormField
     private function getPreviewHTML()
     {
         // Получаем стиль кнопок
-        $plugin = PluginHelper::getPlugin('content', 'jllike');
-        $params = new Registry($plugin->params);
+        $params = $this->getPluginParams();
         $buttonStyle = $params->get('button_style', 'default');
         $styleClass = $buttonStyle !== 'default' ? ' jllike-style-' . $buttonStyle : '';
 
@@ -189,8 +187,7 @@ class JFormFieldPreview extends FormField
     private function generateSampleButtons()
     {
         // Получаем настройки плагина для определения активных кнопок
-        $plugin = PluginHelper::getPlugin('content', 'jllike');
-        $params = new Registry($plugin->params);
+        $params = $this->getPluginParams();
         
         // Выводим все сети, выключенные скрываем: иначе после повторного включения
         // в настройках кнопка не появлялась в превью до сохранения
@@ -248,4 +245,14 @@ class JFormFieldPreview extends FormField
 
         return $buttonsHtml;
     }
-} 
+
+    /**
+     * Параметры плагина из редактируемой формы. PluginHelper::getPlugin() для выключенного
+     * плагина возвращает пустой массив: были PHP-предупреждения (с путём к файлу) и показывались
+     * значения по умолчанию вместо сохранённых
+     */
+    protected function getPluginParams()
+    {
+        return new Registry($this->form ? $this->form->getValue('params') : null);
+    }
+}

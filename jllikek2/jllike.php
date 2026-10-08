@@ -84,6 +84,11 @@ class PlgK2Jllike extends \K2Plugin
 
     private function enableShow()
 	{
+		// Без включённого контент-плагина JL Like (там настройки) ничего не выводим: иначе PHP-предупреждения
+		if (!PluginHelper::isEnabled('content', 'jllike'))
+		{
+			return false;
+		}
 		$app = Factory::getApplication();
 		$input = $app->input;
         $view = $input->getString('view','');

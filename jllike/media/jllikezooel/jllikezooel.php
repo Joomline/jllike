@@ -46,7 +46,7 @@ class ElementJlLikeZooEl extends Element implements iSubmittable {
 
 	public function render($params = array())
     {
-		if (!$this->get('value', $this->config->get('default', 1)))
+		if (!$this->get('value', $this->config->get('default', 1)) || !PluginHelper::isEnabled('content', 'jllike'))
         {
             return '';
         }

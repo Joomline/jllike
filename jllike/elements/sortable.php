@@ -58,8 +58,7 @@ class JFormFieldSortable extends FormField
         );
 
         // Получаем текущие настройки плагина
-        $plugin = PluginHelper::getPlugin('content', 'jllike');
-        $params = new Registry($plugin->params);
+        $params = $this->getPluginParams();
 
         // Собираем сети с их текущими порядками и статусами
         $networks = $this->getNetworksWithOrder($params);
@@ -112,8 +111,7 @@ class JFormFieldSortable extends FormField
     protected function renderSortableList($networks)
     {
         // Получаем текущее значение addall (показывать общий счетчик)
-        $plugin = PluginHelper::getPlugin('content', 'jllike');
-        $params = new Registry($plugin->params);
+        $params = $this->getPluginParams();
         $addallEnabled = (int) $params->get('addall', 1);
         $addallChecked = $addallEnabled ? 'checked' : '';
         $addallClass = $addallEnabled ? 'enabled' : 'disabled';
@@ -193,5 +191,15 @@ class JFormFieldSortable extends FormField
         </div>';
 
         return $html;
+    }
+
+    /**
+     * Параметры плагина из редактируемой формы. PluginHelper::getPlugin() для выключенного
+     * плагина возвращает пустой массив: были PHP-предупреждения (с путём к файлу) и показывались
+     * значения по умолчанию вместо сохранённых
+     */
+    protected function getPluginParams()
+    {
+        return new Registry($this->form ? $this->form->getValue('params') : null);
     }
 }
