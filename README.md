@@ -16,7 +16,7 @@ JL Like — это набор плагинов для вывода соврем�
 - JoomShopping
 - ADSmanager
 
-Плагин поддерживает популярные соцсети: Facebook, ВКонтакте, X (Twitter), OK.ru, Мой Мир, LinkedIn, Pinterest, LiveJournal, Blogger, Weibo, Viber, WhatsApp, Telegram, Threads, Reddit и др.
+Плагин поддерживает популярные соцсети: Facebook, ВКонтакте, X (Twitter), OK.ru, Мой Мир, LinkedIn, Pinterest, LiveJournal, Blogger, Weibo, Viber, WhatsApp, Telegram, MAX, Threads, Reddit и др.
 
 ---
 
@@ -48,6 +48,9 @@ JL Like — это набор плагинов для вывода соврем�
 ## Обновления и миграция
 
 ### Версия 5.3.1 (08.10.2026)
+
+**Новые возможности:**
+- ✨ Кнопка «Поделиться в MAX» (официальная ссылка `https://max.ru/:share?text=…`), поддержка во всех стилях кнопок и в настройках порядка
 
 **Исправления:**
 - 🐞 Ошибка `jQuery is not defined` (Astroid, Cassiopeia и другие шаблоны без jQuery): при обновлении на сайте оставался старый `js/buttons.min.js` на jQuery, и Joomla подключала его вместо нового `buttons.js`. Теперь устаревшие файлы удаляются при установке

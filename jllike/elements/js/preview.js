@@ -114,7 +114,7 @@
             var providers = [
                 'addfacebook', 'addvk', 'addtw', 'addod', 'addmail', 
                 'addlin', 'addpi', 'addlj', 'addbl', 'addwb', 
-                'addtl', 'addwa', 'addvi', 'addth', 'addrd', 'addall'
+                'addtl', 'addwa', 'addvi', 'addth', 'addrd', 'addmx', 'addall'
             ];
             
             var self = this;
@@ -304,6 +304,7 @@
                 {name: 'addvi', selector: '.l-vi'},
                 {name: 'addth', selector: '.l-th'},
                 {name: 'addrd', selector: '.l-rd'},
+                {name: 'addmx', selector: '.l-mx'},
                 {name: 'addall', selector: '.l-all'}
             ];
             

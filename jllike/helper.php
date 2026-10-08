@@ -116,6 +116,7 @@ class PlgJLLikeHelper
         $titlevi = Text::_('PLG_JLLIKEPRO_TITLE_VI');
         $titleth = Text::_('PLG_JLLIKEPRO_TITLE_TH');
         $titlerd = Text::_('PLG_JLLIKEPRO_TITLE_RD');
+        $titlemx = Text::_('PLG_JLLIKEPRO_TITLE_MX');
         $titleAll = Text::_('PLG_JLLIKEPRO_TITLE_ALL');
 
         $providers = array();
@@ -178,6 +179,10 @@ class PlgJLLikeHelper
         if ($this->params->get('addrd', 1)) {
             $order = $this->params->get('rd_order', 17);
             $providers[] = array('order' => (int) $order, 'title' => $titlerd, 'class' => 'rd');
+        }
+        if ($this->params->get('addmx', 1)) {
+            $order = $this->params->get('mx_order', 18);
+            $providers[] = array('order' => (int) $order, 'title' => $titlemx, 'class' => 'mx');
         }
 
         // Сортировка без потери кнопок с одинаковым порядковым номером

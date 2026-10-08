@@ -64,6 +64,10 @@ background-repeat: no-repeat;}
 background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath fill='%23fff' d='m154.04,60.36c2.22,9.41,10.67,16.42,20.76,16.42,11.78,0,21.33-9.55,21.33-21.33s-9.55-21.33-21.33-21.33c-10.3,0-18.89,7.3-20.89,17.01-17.25,1.85-30.72,16.48-30.72,34.21,0,.04,0,.07,0,.11-18.76.79-35.89,6.13-49.49,14.56-5.05-3.91-11.39-6.24-18.27-6.24-16.51,0-29.89,13.38-29.89,29.89,0,11.98,7.04,22.3,17.21,27.07.99,34.7,38.8,62.61,85.31,62.61s84.37-27.94,85.31-62.67c10.09-4.8,17.07-15.09,17.07-27,0-16.51-13.38-29.89-29.89-29.89-6.85,0-13.16,2.31-18.2,6.19-13.72-8.49-31.04-13.83-49.99-14.54,0-.03,0-.05,0-.08,0-12.7,9.44-23.24,21.68-24.97Zm-81.54,82.27c.5-10.84,7.7-19.16,16.07-19.16s14.77,8.79,14.27,19.63c-.5,10.84-6.75,14.78-15.13,14.78s-15.71-4.41-15.21-15.25Zm95.06-19.16c8.38,0,15.58,8.32,16.07,19.16.5,10.84-6.84,15.25-15.21,15.25s-14.63-3.93-15.13-14.78c-.5-10.84,5.89-19.63,14.27-19.63Zm-9.96,44.24c1.57.16,2.57,1.79,1.96,3.25-5.15,12.31-17.31,20.96-31.5,20.96s-26.34-8.65-31.5-20.96c-.61-1.46.39-3.09,1.96-3.25,9.2-.93,19.15-1.44,29.54-1.44s20.33.51,29.54,1.44Z'/%3E%3C/svg%3E");
 background-repeat: no-repeat;}
 .jllikeproSharesContayner a.l-rd { background-color: #FF4500!important;}
+.jllikeproSharesContayner a.l-mx .l-ico {
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-15 -15 130 130'%3E%3Cpath fill='%23fff' fill-rule='evenodd' d='M50.7571 0.261719C78.2929 0.261719 99.8857 22.5974 99.8857 50.1474C99.8857 77.6974 77.6071 99.4903 51.0214 99.4903C41.5857 99.4903 37.0143 98.1617 29.65 92.9474C29.1429 92.5903 28.45 92.6831 28.0214 93.1403C22.3571 99.1831 7.85 103.426 7.18571 95.176C7.18571 80.7903 0 71.4474 0 49.876C0 21.5546 23.2214 0.261719 50.7571 0.261719ZM51.5286 24.8117C38.4643 24.126 28.2643 33.1974 26.0143 47.3831C24.15 59.1332 27.45 73.4546 30.2786 74.176C31.4786 74.4832 34.3571 72.276 36.4571 70.2974C36.85 69.926 37.45 69.8617 37.9071 70.1474C41.1786 72.1474 44.8786 73.6474 48.9571 73.8617C62.3714 74.5617 74.2571 64.0617 74.9643 50.6474C75.6643 37.2331 64.9429 25.5046 51.5286 24.8046V24.8117Z'/%3E%3C/svg%3E");
+background-repeat: no-repeat;}
+.jllikeproSharesContayner a.l-mx { background-color: #3C22FE!important;}
 
 .jllikeproSharesContayner
 i {vertical-align: top;float: none;display: inline-block;width: 30px;height: 30px;background-image: none;-webkit-border-radius: 50%;-webkit-background-clip: padding-box;-moz-border-radius: 50%;-moz-background-clip: padding;border-radius: 50%;background-clip: padding-box;position: static;}
@@ -197,6 +201,12 @@ body>p:first-child { display: none }
     filter: brightness(0) saturate(100%) invert(35%) sepia(96%) saturate(6932%) hue-rotate(10deg) brightness(104%) contrast(107%);
 }
 
+/* MAX: фирменный градиент вместо фильтра, им не передать переход цвета */
+.jllikeproSharesContayner.jllike-style-minimal a.l-mx .l-ico {
+    filter: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-15 -15 130 130'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%2300EAFF'/%3E%3Cstop offset='.5' stop-color='%233C22FE'/%3E%3Cstop offset='1' stop-color='%238419FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url%28%23g%29' fill-rule='evenodd' d='M50.7571 0.261719C78.2929 0.261719 99.8857 22.5974 99.8857 50.1474C99.8857 77.6974 77.6071 99.4903 51.0214 99.4903C41.5857 99.4903 37.0143 98.1617 29.65 92.9474C29.1429 92.5903 28.45 92.6831 28.0214 93.1403C22.3571 99.1831 7.85 103.426 7.18571 95.176C7.18571 80.7903 0 71.4474 0 49.876C0 21.5546 23.2214 0.261719 50.7571 0.261719ZM51.5286 24.8117C38.4643 24.126 28.2643 33.1974 26.0143 47.3831C24.15 59.1332 27.45 73.4546 30.2786 74.176C31.4786 74.4832 34.3571 72.276 36.4571 70.2974C36.85 69.926 37.45 69.8617 37.9071 70.1474C41.1786 72.1474 44.8786 73.6474 48.9571 73.8617C62.3714 74.5617 74.2571 64.0617 74.9643 50.6474C75.6643 37.2331 64.9429 25.5046 51.5286 24.8046V24.8117Z'/%3E%3C/svg%3E");
+}
+
 .jllikeproSharesContayner.jllike-style-minimal a:hover .l-ico {
     opacity: 1;
     transform: scale(1.1);
@@ -276,6 +286,10 @@ body>p:first-child { display: none }
 
 .jllikeproSharesContayner.jllike-style-gradient a.l-rd {
     background: linear-gradient(135deg, #FF4500 0%, #dd3800 100%) !important;
+}
+
+.jllikeproSharesContayner.jllike-style-gradient a.l-mx {
+    background: linear-gradient(135deg, #00EAFF 0%, #3C22FE 50%, #8419FF 100%) !important;
 }
 
 .jllikeproSharesContayner.jllike-style-gradient a {
@@ -362,6 +376,10 @@ body>p:first-child { display: none }
 
 .jllikeproSharesContayner.jllike-style-outlined a.l-rd {
     color: #FF4500;
+}
+
+.jllikeproSharesContayner.jllike-style-outlined a.l-mx {
+    color: #3C22FE;
 }
 
 .jllikeproSharesContayner.jllike-style-outlined a .l-ico {

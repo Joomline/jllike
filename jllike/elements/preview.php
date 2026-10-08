@@ -210,6 +210,7 @@ class JFormFieldPreview extends FormField
             ['addvi', 'vi_order', 13, 'vi', 'PLG_JLLIKEPRO_TITLE_VI'],
             ['addth', 'th_order', 16, 'th', 'PLG_JLLIKEPRO_TITLE_TH'],
             ['addrd', 'rd_order', 17, 'rd', 'PLG_JLLIKEPRO_TITLE_RD'],
+            ['addmx', 'mx_order', 18, 'mx', 'PLG_JLLIKEPRO_TITLE_MX'],
         ];
 
         $providers = array();

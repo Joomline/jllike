@@ -32,6 +32,7 @@ ButtonConfiguration.defaults = {
         TelegramButton: '.l-tl',
         WhatsappButton: '.l-wa',
         ViberButton: '.l-vi',
+        MaxButton: '.l-mx',
         count: '.l-count',
         ico: '.l-ico',
         shareTitle: 'h2',
@@ -540,6 +541,33 @@ RedditButton.prototype.getShareLink = function () {
     return 'https://reddit.com/submit?url=' + encodeURIComponent(this.linkToShare) + '&title=' + encodeURIComponent(this.title);
 };
 
+// --- MAX Button ---
+// Официальный диплинк https://max.ru/:share?text=... (dev.max.ru/help/deeplinks):
+// параметр только один — text, поэтому ссылку передаём внутри текста
+function MaxButton(config, context, index) {
+    Button.call(this, config, context, index);
+    this.type = 'MaxButton';
+}
+MaxButton.prototype = Object.create(Button.prototype);
+MaxButton.prototype.constructor = MaxButton;
+MaxButton.prototype.countLikes = function () {
+    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
+        if (this.countElem) this.countElem.remove();
+        return;
+    }
+    var self = this;
+    setTimeout(function () {
+        var count = 0;
+        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+            count = Math.floor(Math.random() * 100);
+        }
+        self.setCountValue(count);
+    }, 500);
+};
+MaxButton.prototype.getShareLink = function () {
+    return 'https://max.ru/:share?text=' + encodeURIComponent(this.title + ' ' + this.linkToShare);
+};
+
 // --- Универсальная инициализация всех кнопок ---
 function jllikeInitButtons() {
     var conf = ButtonConfiguration && ButtonConfiguration.defaults ? ButtonConfiguration.defaults : {};
@@ -558,7 +586,8 @@ function jllikeInitButtons() {
         {selector: '.l-wa', ctor: WhatsappButton},
         {selector: '.l-vi', ctor: ViberButton},
         {selector: '.l-th', ctor: ThreadsButton},
-        {selector: '.l-rd', ctor: RedditButton}
+        {selector: '.l-rd', ctor: RedditButton},
+        {selector: '.l-mx', ctor: MaxButton}
     ];
     buttonTypes.forEach(function (type) {
         var btns = document.querySelectorAll(type.selector);

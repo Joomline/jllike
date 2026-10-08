@@ -106,6 +106,10 @@
                     <option value="0">0</option>
                     <option value="1">1</option>
                 </field>
+                <field name="addmx" type="radio" default="1" hiddenLabel="true" class="hidden">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                </field>
 
                 <!-- Скрытые поля для хранения порядка -->
                 <field name="facebook_order" type="text" default="1" hiddenLabel="true" class="hidden" />
@@ -123,6 +127,7 @@
                 <field name="vi_order" type="text" default="15" hiddenLabel="true" class="hidden" />
                 <field name="th_order" type="text" default="16" hiddenLabel="true" class="hidden" />
                 <field name="rd_order" type="text" default="17" hiddenLabel="true" class="hidden" />
+                <field name="mx_order" type="text" default="18" hiddenLabel="true" class="hidden" />
 
                 <!-- Скрытое поле для общего счетчика (управляется виджетом) -->
                 <field name="addall" type="radio" default="1" hiddenLabel="true" class="hidden">

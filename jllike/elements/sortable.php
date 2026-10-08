@@ -39,6 +39,7 @@ class JFormFieldSortable extends FormField
         'vi' => ['param' => 'addvi', 'order_param' => 'vi_order', 'default_order' => 13, 'label' => 'PLG_JLLIKEPRO_TITLE_VI', 'color' => '#665CAC'],
         'th' => ['param' => 'addth', 'order_param' => 'th_order', 'default_order' => 16, 'label' => 'PLG_JLLIKEPRO_TITLE_TH', 'color' => '#000000'],
         'rd' => ['param' => 'addrd', 'order_param' => 'rd_order', 'default_order' => 17, 'label' => 'PLG_JLLIKEPRO_TITLE_RD', 'color' => '#FF4500'],
+        'mx' => ['param' => 'addmx', 'order_param' => 'mx_order', 'default_order' => 18, 'label' => 'PLG_JLLIKEPRO_TITLE_MX', 'color' => '#3C22FE'],
     ];
 
     protected function getInput()
