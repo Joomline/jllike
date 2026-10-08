@@ -52,6 +52,14 @@ JL Like — это набор плагинов для вывода соврем�
 **Новые возможности:**
 - ✨ Кнопка «Поделиться в MAX» (официальная ссылка `https://max.ru/:share?text=…`), поддержка во всех стилях кнопок и в настройках порядка
 
+**Обновлены ссылки «Поделиться»:**
+- ⚡ X: `x.com/intent/tweet` вместо `twitter.com` (без лишнего редиректа)
+- ⚡ LinkedIn: `sharing/share-offsite` вместо устаревшего `shareArticle`
+- ⚡ Threads: домен `threads.com` вместо `threads.net`
+- ⚡ Одноклассники: передаются заголовок и картинка (`title`, `imageUrl` по документации apiok.ru)
+- ⚡ Reddit: `www.reddit.com`; Facebook: убран игнорируемый параметр `t`
+- ♻️ buttons.js: 16 одинаковых копий логики счётчика заменены одной, удалены неиспользуемые переменные
+
 **Исправления:**
 - 🐞 Ошибка `jQuery is not defined` (Astroid, Cassiopeia и другие шаблоны без jQuery): при обновлении на сайте оставался старый `js/buttons.min.js` на jQuery, и Joomla подключала его вместо нового `buttons.js`. Теперь устаревшие файлы удаляются при установке
 - 🐞 Joomla 6: фатальная ошибка `Class "Joomla\CMS\Filesystem\File" not found` при выборе картинки из текста, в K2, Zoo и при punycode

@@ -1,14 +1,6 @@
 // JL Like Social Buttons - Vanilla JS version
 // Полный отказ от jQuery
 
-var socialButtonCountObjects = {};
-var jllikeproShareUrls = {
-    mail: {},
-    pinteres: {},
-    linkedin: {},
-    vkontakte: {}
-};
-
 var ButtonConfiguration = function (params) {
     if (params) {
         // Глубокое копирование объекта
@@ -202,8 +194,22 @@ Button.prototype = {
             this.images[0] = image;
         }
     },
-    // Заглушки для наследников
-    countLikes: function () {},
+    // Общая для всех кнопок логика счётчика. Публичных API счётчиков у соцсетей больше нет,
+    // поэтому при включённой опции random_likes показывается случайное число
+    countLikes: function () {
+        if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
+            if (this.countElem) this.countElem.remove();
+            return;
+        }
+        var self = this;
+        setTimeout(function () {
+            var count = 0;
+            if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
+                count = Math.floor(Math.random() * 100);
+            }
+            self.setCountValue(count);
+        }, 500);
+    },
     getShareLink: function () { return '#'; }
 };
 
@@ -211,24 +217,9 @@ Button.prototype = {
 function VkontakteButton(config, context, index) {
     Button.call(this, config, context, index);
     this.type = 'VkontakteButton';
-    this.countServiceUrl = 'https://vk.com/share.php?act=count&index=';
 }
 VkontakteButton.prototype = Object.create(Button.prototype);
 VkontakteButton.prototype.constructor = VkontakteButton;
-VkontakteButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 VkontakteButton.prototype.getShareLink = function () {
     return 'https://vk.com/share.php?url=' + encodeURIComponent(this.linkToShare) + '&title=' + encodeURIComponent(this.title) + '&description=' + encodeURIComponent(this.summary) + (this.images[0] ? '&image=' + encodeURIComponent(this.images[0]) : '');
 };
@@ -237,26 +228,11 @@ VkontakteButton.prototype.getShareLink = function () {
 function FacebookButton(config, context, index) {
     Button.call(this, config, context, index);
     this.type = 'FacebookButton';
-    this.countServiceUrl = 'https://graph.facebook.com/?id=';
 }
 FacebookButton.prototype = Object.create(Button.prototype);
 FacebookButton.prototype.constructor = FacebookButton;
-FacebookButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 FacebookButton.prototype.getShareLink = function () {
-    return 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(this.linkToShare) + '&t=' + encodeURIComponent(this.title);
+    return 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(this.linkToShare);
 };
 
 // --- Odnoklassniki Button ---
@@ -266,22 +242,11 @@ function OdnoklassnikiButton(config, context, index) {
 }
 OdnoklassnikiButton.prototype = Object.create(Button.prototype);
 OdnoklassnikiButton.prototype.constructor = OdnoklassnikiButton;
-OdnoklassnikiButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 OdnoklassnikiButton.prototype.getShareLink = function () {
-    return 'https://connect.ok.ru/offer?url=' + encodeURIComponent(this.linkToShare) + '&description=' + encodeURIComponent(this.summary);
+    // Параметры по документации apiok.ru/ext/like: url, title, imageUrl
+    return 'https://connect.ok.ru/offer?url=' + encodeURIComponent(this.linkToShare) +
+        '&title=' + encodeURIComponent(this.title) +
+        (this.images[0] ? '&imageUrl=' + encodeURIComponent(this.images[0]) : '');
 };
 
 // --- LinkedIn Button ---
@@ -291,24 +256,9 @@ function LinkedInButton(config, context, index) {
 }
 LinkedInButton.prototype = Object.create(Button.prototype);
 LinkedInButton.prototype.constructor = LinkedInButton;
-LinkedInButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 LinkedInButton.prototype.getShareLink = function () {
-    return 'https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(this.linkToShare) +
-        '&title=' + encodeURIComponent(this.title) +
-        '&summary=' + encodeURIComponent(this.summary);
+    // shareArticle устарел; share-offsite принимает только url, заголовок и картинку LinkedIn берёт из og:-тегов
+    return 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(this.linkToShare);
 };
 
 // --- Pinterest Button ---
@@ -318,20 +268,6 @@ function PinterestButton(config, context, index) {
 }
 PinterestButton.prototype = Object.create(Button.prototype);
 PinterestButton.prototype.constructor = PinterestButton;
-PinterestButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 PinterestButton.prototype.getShareLink = function () {
     var media = (this.images[0] != undefined) ? this.images[0] : '';
     return 'https://www.pinterest.com/pin/create/button/?url=' + encodeURIComponent(this.linkToShare) +
@@ -346,20 +282,6 @@ function LivejournalButton(config, context, index) {
 }
 LivejournalButton.prototype = Object.create(Button.prototype);
 LivejournalButton.prototype.constructor = LivejournalButton;
-LivejournalButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 LivejournalButton.prototype.getShareLink = function () {
     return 'https://www.livejournal.com/update.bml?subject=' + encodeURIComponent(this.title) +
         '&event=' + encodeURIComponent('<a href="' + this.linkToShare + '">' + this.title + '</a> ' + this.summary);
@@ -372,20 +294,6 @@ function BloggerButton(config, context, index) {
 }
 BloggerButton.prototype = Object.create(Button.prototype);
 BloggerButton.prototype.constructor = BloggerButton;
-BloggerButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 BloggerButton.prototype.getShareLink = function () {
     return 'https://www.blogger.com/blog-this.g?u=' + encodeURIComponent(this.linkToShare) +
         '&n=' + encodeURIComponent(this.title);
@@ -398,20 +306,6 @@ function WeiboButton(config, context, index) {
 }
 WeiboButton.prototype = Object.create(Button.prototype);
 WeiboButton.prototype.constructor = WeiboButton;
-WeiboButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 WeiboButton.prototype.getShareLink = function () {
     return 'https://service.weibo.com/share/share.php?url=' + encodeURIComponent(this.linkToShare) + '&title=' + encodeURIComponent(this.title);
 };
@@ -423,20 +317,6 @@ function TelegramButton(config, context, index) {
 }
 TelegramButton.prototype = Object.create(Button.prototype);
 TelegramButton.prototype.constructor = TelegramButton;
-TelegramButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 TelegramButton.prototype.getShareLink = function () {
     return 'https://t.me/share/url?url=' + encodeURIComponent(this.linkToShare) + '&text=' + encodeURIComponent(this.title);
 };
@@ -448,20 +328,6 @@ function WhatsappButton(config, context, index) {
 }
 WhatsappButton.prototype = Object.create(Button.prototype);
 WhatsappButton.prototype.constructor = WhatsappButton;
-WhatsappButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 WhatsappButton.prototype.getShareLink = function () {
     return 'https://wa.me/?text=' + encodeURIComponent(this.title + ' ' + this.linkToShare);
 };
@@ -473,20 +339,6 @@ function ViberButton(config, context, index) {
 }
 ViberButton.prototype = Object.create(Button.prototype);
 ViberButton.prototype.constructor = ViberButton;
-ViberButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 ViberButton.prototype.getShareLink = function () {
     return 'viber://forward?text=' + encodeURIComponent(this.title + ' ' + this.linkToShare);
 };
@@ -498,22 +350,8 @@ function ThreadsButton(config, context, index) {
 }
 ThreadsButton.prototype = Object.create(Button.prototype);
 ThreadsButton.prototype.constructor = ThreadsButton;
-ThreadsButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 ThreadsButton.prototype.getShareLink = function () {
-    return 'https://www.threads.net/intent/post?text=' + encodeURIComponent(this.title + ' ' + this.linkToShare);
+    return 'https://www.threads.com/intent/post?text=' + encodeURIComponent(this.title + ' ' + this.linkToShare);
 };
 
 // --- Reddit Button ---
@@ -523,22 +361,8 @@ function RedditButton(config, context, index) {
 }
 RedditButton.prototype = Object.create(Button.prototype);
 RedditButton.prototype.constructor = RedditButton;
-RedditButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 RedditButton.prototype.getShareLink = function () {
-    return 'https://reddit.com/submit?url=' + encodeURIComponent(this.linkToShare) + '&title=' + encodeURIComponent(this.title);
+    return 'https://www.reddit.com/submit?url=' + encodeURIComponent(this.linkToShare) + '&title=' + encodeURIComponent(this.title);
 };
 
 // --- MAX Button ---
@@ -550,20 +374,6 @@ function MaxButton(config, context, index) {
 }
 MaxButton.prototype = Object.create(Button.prototype);
 MaxButton.prototype.constructor = MaxButton;
-MaxButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 MaxButton.prototype.getShareLink = function () {
     return 'https://max.ru/:share?text=' + encodeURIComponent(this.title + ' ' + this.linkToShare);
 };
@@ -664,22 +474,8 @@ function TwitterButton(config, context, index) {
 }
 TwitterButton.prototype = Object.create(Button.prototype);
 TwitterButton.prototype.constructor = TwitterButton;
-TwitterButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 TwitterButton.prototype.getShareLink = function () {
-    return 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(this.linkToShare) + '&text=' + encodeURIComponent(this.title);
+    return 'https://x.com/intent/tweet?url=' + encodeURIComponent(this.linkToShare) + '&text=' + encodeURIComponent(this.title);
 };
 
 // --- Mail Button ---
@@ -689,20 +485,6 @@ function MailButton(config, context, index) {
 }
 MailButton.prototype = Object.create(Button.prototype);
 MailButton.prototype.constructor = MailButton;
-MailButton.prototype.countLikes = function () {
-    if (window.jllickeproSettings && jllickeproSettings.enableCounters === false) {
-        if (this.countElem) this.countElem.remove();
-        return;
-    }
-    var self = this;
-    setTimeout(function () {
-        var count = 0;
-        if (!window.jllickeproSettings || window.jllickeproSettings.random_likes !== false) {
-            count = Math.floor(Math.random() * 100);
-        }
-        self.setCountValue(count);
-    }, 500);
-};
 MailButton.prototype.getShareLink = function () {
     return 'https://connect.mail.ru/share?url=' + encodeURIComponent(this.linkToShare) +
         '&image_url=' + encodeURIComponent(this.images[0] || '') +
