@@ -59,8 +59,7 @@ class JFormFieldPreview extends FormField
     private function applyFrontendStyles()
     {
         // Получаем настройки плагина
-        $plugin = PluginHelper::getPlugin('content', 'jllike');
-        $params = new Registry($plugin->params);
+        $params = $this->getPluginParams();
         
         $doc = Factory::getDocument();
         
@@ -140,8 +139,7 @@ class JFormFieldPreview extends FormField
     private function getPreviewHTML()
     {
         // Получаем стиль кнопок
-        $plugin = PluginHelper::getPlugin('content', 'jllike');
-        $params = new Registry($plugin->params);
+        $params = $this->getPluginParams();
         $buttonStyle = $params->get('button_style', 'default');
         $styleClass = $buttonStyle !== 'default' ? ' jllike-style-' . $buttonStyle : '';
 
@@ -189,79 +187,48 @@ class JFormFieldPreview extends FormField
     private function generateSampleButtons()
     {
         // Получаем настройки плагина для определения активных кнопок
-        $plugin = PluginHelper::getPlugin('content', 'jllike');
-        $params = new Registry($plugin->params);
+        $params = $this->getPluginParams();
         
+        // Выводим все сети, выключенные скрываем: иначе после повторного включения
+        // в настройках кнопка не появлялась в превью до сохранения
+        $networks = [
+            ['addfacebook', 'facebook_order', 1, 'fb', 'PLG_JLLIKEPRO_TITLE_FC'],
+            ['addvk', 'vk_order', 2, 'vk', 'PLG_JLLIKEPRO_TITLE_VK'],
+            ['addtw', 'tw_order', 3, 'tw', 'PLG_JLLIKEPRO_TITLE_TW'],
+            ['addod', 'od_order', 4, 'ok', 'PLG_JLLIKEPRO_TITLE_OD'],
+            ['addmail', 'mail_order', 5, 'ml', 'PLG_JLLIKEPRO_TITLE_MM'],
+            ['addlin', 'lin_order', 6, 'ln', 'PLG_JLLIKEPRO_TITLE_LI'],
+            ['addpi', 'pi_order', 7, 'pinteres', 'PLG_JLLIKEPRO_TITLE_PI'],
+            ['addlj', 'lj_order', 8, 'lj', 'PLG_JLLIKEPRO_TITLE_LJ'],
+            ['addbl', 'bl_order', 9, 'bl', 'PLG_JLLIKEPRO_TITLE_BL'],
+            ['addwb', 'wb_order', 10, 'wb', 'PLG_JLLIKEPRO_TITLE_WB'],
+            ['addtl', 'tl_order', 11, 'tl', 'PLG_JLLIKEPRO_TITLE_TL'],
+            ['addwa', 'wa_order', 12, 'wa', 'PLG_JLLIKEPRO_TITLE_WA'],
+            ['addvi', 'vi_order', 13, 'vi', 'PLG_JLLIKEPRO_TITLE_VI'],
+            ['addth', 'th_order', 16, 'th', 'PLG_JLLIKEPRO_TITLE_TH'],
+            ['addrd', 'rd_order', 17, 'rd', 'PLG_JLLIKEPRO_TITLE_RD'],
+            ['addmx', 'mx_order', 18, 'mx', 'PLG_JLLIKEPRO_TITLE_MX'],
+        ];
+
         $providers = array();
-        
-        // Собираем включенные провайдеры с их порядком
-        if ($params->get('addfacebook', 1)) {
-            $order = $params->get('facebook_order', 1);
-            $providers[$order] = array('class' => 'fb', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_FC'));
-        }
-        if ($params->get('addvk', 1)) {
-            $order = $params->get('vk_order', 2);
-            $providers[$order] = array('class' => 'vk', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_VK'));
-        }
-        if ($params->get('addtw', 1)) {
-            $order = $params->get('tw_order', 3);
-            $providers[$order] = array('class' => 'tw', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_TW'));
-        }
-        if ($params->get('addod', 1)) {
-            $order = $params->get('od_order', 4);
-            $providers[$order] = array('class' => 'ok', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_OD'));
-        }
-        if ($params->get('addmail', 1)) {
-            $order = $params->get('mail_order', 5);
-            $providers[$order] = array('class' => 'ml', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_MM'));
-        }
-        if ($params->get('addlin', 1)) {
-            $order = $params->get('lin_order', 6);
-            $providers[$order] = array('class' => 'ln', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_LI'));
-        }
-        if ($params->get('addpi', 1)) {
-            $order = $params->get('pi_order', 7);
-            $providers[$order] = array('class' => 'pinteres', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_PI'));
-        }
-        if ($params->get('addlj', 1)) {
-            $order = $params->get('lj_order', 8);
-            $providers[$order] = array('class' => 'lj', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_LJ'));
-        }
-        if ($params->get('addbl', 1)) {
-            $order = $params->get('bl_order', 9);
-            $providers[$order] = array('class' => 'bl', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_BL'));
-        }
-        if ($params->get('addwb', 1)) {
-            $order = $params->get('wb_order', 10);
-            $providers[$order] = array('class' => 'wb', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_WB'));
-        }
-        if ($params->get('addtl', 1)) {
-            $order = $params->get('tl_order', 11);
-            $providers[$order] = array('class' => 'tl', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_TL'));
-        }
-        if ($params->get('addwa', 1)) {
-            $order = $params->get('wa_order', 12);
-            $providers[$order] = array('class' => 'wa', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_WA'));
-        }
-        if ($params->get('addvi', 1)) {
-            $order = $params->get('vi_order', 13);
-            $providers[$order] = array('class' => 'vi', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_VI'));
-        }
-        if ($params->get('addth', 1)) {
-            $order = $params->get('th_order', 16);
-            $providers[$order] = array('class' => 'th', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_TH'));
-        }
-        if ($params->get('addrd', 1)) {
-            $order = $params->get('rd_order', 17);
-            $providers[$order] = array('class' => 'rd', 'title' => Text::_('PLG_JLLIKEPRO_TITLE_RD'));
+        foreach ($networks as [$enableParam, $orderParam, $defaultOrder, $class, $title]) {
+            $providers[] = array(
+                'order' => (int) $params->get($orderParam, $defaultOrder),
+                'class' => $class,
+                'title' => Text::_($title),
+                'enabled' => (bool) $params->get($enableParam, 1),
+            );
         }
 
-        ksort($providers);
-        
+        // Сортировка без потери кнопок с одинаковым порядковым номером
+        usort($providers, function ($a, $b) {
+            return $a['order'] <=> $b['order'];
+        });
+
         $buttonsHtml = '';
         foreach ($providers as $provider) {
             $buttonsHtml .= '
-                <a title="' . $provider['title'] . '" class="like like-not-empty l-' . $provider['class'] . '" id="l-' . $provider['class'] . '-preview">
+                <a title="' . $provider['title'] . '" class="like like-not-empty l-' . $provider['class'] . '" id="l-' . $provider['class'] . '-preview"' . ($provider['enabled'] ? '' : ' style="display: none"') . '>
                     <i class="l-ico"></i>
                     <span class="l-count">42</span>
                 </a>';
@@ -278,4 +245,14 @@ class JFormFieldPreview extends FormField
 
         return $buttonsHtml;
     }
-} 
+
+    /**
+     * Параметры плагина из редактируемой формы. PluginHelper::getPlugin() для выключенного
+     * плагина возвращает пустой массив: были PHP-предупреждения (с путём к файлу) и показывались
+     * значения по умолчанию вместо сохранённых
+     */
+    protected function getPluginParams()
+    {
+        return new Registry($this->form ? $this->form->getValue('params') : null);
+    }
+}

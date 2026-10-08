@@ -15,7 +15,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
 
@@ -43,6 +42,10 @@ class PlgJshoppingproductsJlLikeJShop extends CMSPlugin
 
     public function onBeforeDisplayProductView(&$content)
     {
+        // Без включённого контент-плагина JL Like (там настройки) ничего не выводим: иначе PHP-предупреждения
+        if (!PluginHelper::isEnabled('content', 'jllike')) {
+            return '';
+        }
         Factory::getLanguage()->load('plg_content_jllike');
         $plugin = PluginHelper::getPlugin('content', 'jllike');
         $plgParams = new Registry;
@@ -66,7 +69,7 @@ class PlgJshoppingproductsJlLikeJShop extends CMSPlugin
         $url = $baseUri->toString();
         if ($plgParams->get('punycode_convert', 0)) {
             $file = JPATH_ROOT . '/libraries/idna_convert/idna_convert.class.php';
-            if (!File::exists($file)) {
+            if (!is_file($file)) {
                 return Text::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
             }
 

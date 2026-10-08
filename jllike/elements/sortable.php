@@ -39,6 +39,7 @@ class JFormFieldSortable extends FormField
         'vi' => ['param' => 'addvi', 'order_param' => 'vi_order', 'default_order' => 13, 'label' => 'PLG_JLLIKEPRO_TITLE_VI', 'color' => '#665CAC'],
         'th' => ['param' => 'addth', 'order_param' => 'th_order', 'default_order' => 16, 'label' => 'PLG_JLLIKEPRO_TITLE_TH', 'color' => '#000000'],
         'rd' => ['param' => 'addrd', 'order_param' => 'rd_order', 'default_order' => 17, 'label' => 'PLG_JLLIKEPRO_TITLE_RD', 'color' => '#FF4500'],
+        'mx' => ['param' => 'addmx', 'order_param' => 'mx_order', 'default_order' => 18, 'label' => 'PLG_JLLIKEPRO_TITLE_MX', 'color' => '#3C22FE'],
     ];
 
     protected function getInput()
@@ -57,8 +58,7 @@ class JFormFieldSortable extends FormField
         );
 
         // Получаем текущие настройки плагина
-        $plugin = PluginHelper::getPlugin('content', 'jllike');
-        $params = new Registry($plugin->params);
+        $params = $this->getPluginParams();
 
         // Собираем сети с их текущими порядками и статусами
         $networks = $this->getNetworksWithOrder($params);
@@ -111,8 +111,7 @@ class JFormFieldSortable extends FormField
     protected function renderSortableList($networks)
     {
         // Получаем текущее значение addall (показывать общий счетчик)
-        $plugin = PluginHelper::getPlugin('content', 'jllike');
-        $params = new Registry($plugin->params);
+        $params = $this->getPluginParams();
         $addallEnabled = (int) $params->get('addall', 1);
         $addallChecked = $addallEnabled ? 'checked' : '';
         $addallClass = $addallEnabled ? 'enabled' : 'disabled';
@@ -192,5 +191,15 @@ class JFormFieldSortable extends FormField
         </div>';
 
         return $html;
+    }
+
+    /**
+     * Параметры плагина из редактируемой формы. PluginHelper::getPlugin() для выключенного
+     * плагина возвращает пустой массив: были PHP-предупреждения (с путём к файлу) и показывались
+     * значения по умолчанию вместо сохранённых
+     */
+    protected function getPluginParams()
+    {
+        return new Registry($this->form ? $this->form->getValue('params') : null);
     }
 }
