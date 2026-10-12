@@ -3,9 +3,9 @@
 /**
  * jllike
  *
- * @version 5.2.0
+ * @version 5.3.1
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2012-2025 by Joomline (https://joomline.ru)
+ * @copyright (C) 2012-2026 by Joomline (https://joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 
@@ -24,12 +24,6 @@ class PlgJLLikeHelper
     protected $params = null;
 
     protected static $instance = null;
-
-    /**
-     * Изображение для <link rel="image_src">, выводится в onAfterRender текущего запроса
-     * @var string
-     */
-    public static $shareImage = '';
 
     /**
      * Пример вывода лайков в любом месте макетов, шаблонов и т.п.
@@ -64,9 +58,6 @@ class PlgJLLikeHelper
      */
     function ShowIn($id, $link = '', $title = '', $image = '', $desc = '', $enable_opengraph = 1)
     {
-        // Нужен onAfterRender контент-плагина (og: -> property, image_src) и на страницах K2, Zoo, JShopping
-        PluginHelper::importPlugin('content', 'jllike');
-
         $position_content = $this->params->get('position_content', 0);
         $enableCounters = (int) $this->params->get('enableCounters', 1);
 
@@ -204,10 +195,6 @@ class PlgJLLikeHelper
 				<input type="hidden" class="share-id" value="{$id}"/>
 HTML;
 
-        if ($this->params->get('disable_more_likes', 0) && Factory::getApplication()->input->cookie->get('jllikepro_article_' . $id)) {
-            $scriptPage .= '<div class="disable_more_likes"></div>';
-        }
-
         $buttonText = trim($this->params->get('button_text', ''));
 
         if (!empty($buttonText)) {
@@ -295,12 +282,10 @@ HTML;
         // json_encode гарантирует корректный JS даже при кавычках в селекторах из настроек
         $settings = [
             'url' => $url,
-            'typeGet' => (string) $this->params->get('typesget', 0),
             'enableCounters' => (bool) $enableCounters,
             'random_likes' => (bool) $this->params->get('random_likes', 1),
             'disableMoreLikes' => (int) $this->params->get('disable_more_likes', 0),
             'isCategory' => $isCategory,
-            'buttonsContayner' => (string) $this->params->get('buttons_contayner', ''),
             'parentContayner' => (string) $this->params->get('parent_contayner', 'div.jllikeproSharesContayner'),
         ];
         $doc->addScriptDeclaration(
@@ -531,11 +516,10 @@ HTML;
     {
         $doc = Factory::getDocument();
 
-        $doc->setMetaData('og:type', 'article');
+        $doc->setMetaData('og:type', 'article', 'property');
 
         if ($image) {
-            $doc->setMetaData('og:image', $image);
-            self::$shareImage = $image;
+            $doc->setMetaData('og:image', $image, 'property');
             // Twitter large card
             $doc->setMetaData('twitter:card', 'summary_large_image');
             $doc->setMetaData('twitter:image', $image);
@@ -545,16 +529,16 @@ HTML;
         }
 
         if ($title) {
-            $doc->setMetaData('og:title', $title);
+            $doc->setMetaData('og:title', $title, 'property');
             $doc->setMetaData('twitter:title', $title);
         }
         if ($text) {
             $desc = preg_replace('/\s+/u', ' ', $text);
-            $doc->setMetaData('og:description', $desc);
+            $doc->setMetaData('og:description', $desc, 'property');
             $doc->setMetaData('twitter:description', $desc);
         }
         if ($url) {
-            $doc->setMetaData('og:url', $url);
+            $doc->setMetaData('og:url', $url, 'property');
         }
     }
 

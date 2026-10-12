@@ -2,9 +2,9 @@
 /**
  * jllike
  *
- * @version 5.2.0
+ * @version 5.3.1
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2012-2025 by Joomline (https://joomline.ru)
+ * @copyright (C) 2012-2026 by Joomline (https://joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 
@@ -14,43 +14,15 @@ use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Application\CMSApplication;
-use Joomla\Plugin\Content\Jllike\Helper\PlgJLLikeHelper;
 
 require_once JPATH_ROOT . '/plugins/content/jllike/helper.php';
 
 class PlgContentJllike extends CMSPlugin
 {
-    private $protokol;
-
-    public function __construct(&$subject, $config)
-    {
-        parent::__construct($subject, $config);
-        $this->loadLanguage();
-        $this->protokol = (Factory::getConfig()->get('force_ssl') == 2) ? 'https://' : 'http://';
-    }
-
-    public function onAfterRender()
-    {
-        $app = Factory::getApplication();
-        if (!$app->isClient('site') || $app->getDocument()->getType() !== 'html')
-        {
-            return;
-        }
-        $buffer = $app->getBody();
-        if($buffer !== null)
-        {
-            $image = \PlgJLLikeHelper::$shareImage;
-            if(!empty($image))
-            {
-                $html = '  <link rel="image_src" href="' . htmlspecialchars($image, ENT_QUOTES, 'UTF-8') . '" />' . "\n</head>";
-                $buffer = preg_replace('#</head>#i', addcslashes($html, '\\$'), $buffer, 1);
-            }
-            $buffer = str_ireplace('<meta name="og:', '<meta property="og:', $buffer);
-            $app->setBody($buffer);
-        }
-    }
+    /**
+     * Языковой файл загружает сам CMSPlugin, собственный конструктор в стиле Joomla 3 не нужен
+     */
+    protected $autoloadLanguage = true;
 
     public function onContentPrepare($context, &$article, &$params, $page = 0)
     {
@@ -93,25 +65,6 @@ class PlgContentJllike extends CMSPlugin
         }
         $print = (int) $input->get('print', 0);
         $baseUri = $this->getBaseUri();
-        $url = $baseUri->toString();
-        if($this->params->get('punycode_convert',0))
-        {
-            $file = JPATH_ROOT.'/libraries/idna_convert/idna_convert.class.php';
-            if(!is_file($file))
-            {
-                return Text::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
-            }
-            include_once $file;
-            if($url)
-            {
-                if (class_exists('idna_convert'))
-                {
-                    $idn = new \idna_convert;
-                    $url = $idn->encode($url);
-                }
-            }
-            $baseUri->setHost(parse_url($url, PHP_URL_HOST));
-        }
         switch ($option) {
             case 'com_content':
                 if(empty($article->id))

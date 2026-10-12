@@ -2,9 +2,9 @@
 /**
  * jllike
  *
- * @version 5.1.0
+ * @version 5.3.1
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2012-2025 by Joomline (https://joomline.ru)
+ * @copyright (C) 2012-2026 by Joomline (https://joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  **/
 
@@ -14,7 +14,6 @@ use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
 
@@ -22,24 +21,6 @@ require_once JPATH_ROOT . '/plugins/content/jllike/helper.php';
 
 class PlgJshoppingproductsJlLikeJShop extends CMSPlugin
 {
-    // Новый приватный метод для получения базового Uri
-    private function getBaseUri($plgParams)
-    {
-        $uri = new Uri(Uri::root());
-        $uri->setScheme((Factory::getConfig()->get('force_ssl') == 2) ? 'https' : 'http');
-        $host = $uri->getHost();
-        $pathbase = $plgParams->get('pathbase', '');
-        if ($pathbase && strpos($host, 'www.') === false && $pathbase === 'www.') {
-            $host = 'www.' . $host;
-        } elseif ($pathbase === '' && strpos($host, 'www.') === 0) {
-            $host = substr($host, 4);
-        }
-        $uri->setHost($host);
-        $uri->setPath('');
-        $uri->setQuery([]);
-        return $uri;
-    }
-
     public function onBeforeDisplayProductView(&$content)
     {
         // Без включённого контент-плагина JL Like (там настройки) ничего не выводим: иначе PHP-предупреждения
@@ -64,26 +45,6 @@ class PlgJshoppingproductsJlLikeJShop extends CMSPlugin
         }
         $helper = PlgJLLikeHelper::getInstance($plgParams);
         $helper->loadScriptAndStyle(0);
-        // Новый способ формирования базового URL
-        $baseUri = $this->getBaseUri($plgParams);
-        $url = $baseUri->toString();
-        if ($plgParams->get('punycode_convert', 0)) {
-            $file = JPATH_ROOT . '/libraries/idna_convert/idna_convert.class.php';
-            if (!is_file($file)) {
-                return Text::_('PLG_JLLIKEPRO_PUNYCODDE_CONVERTOR_NOT_INSTALLED');
-            }
-
-            include_once $file;
-
-            if ($url) {
-                if (class_exists('idna_convert')) {
-                    $idn = new idna_convert;
-                    $url = $idn->encode($url);
-                }
-            }
-            // После конвертации обновляем host в Uri
-            $baseUri->setHost(parse_url($url, PHP_URL_HOST));
-        }
         $uri = str_ireplace(Uri::root(), '', Uri::current());
         $route = $uri;
         $link = rtrim(Uri::root(), '/') . '/' . ltrim($route, '/');

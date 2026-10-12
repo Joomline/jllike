@@ -1,9 +1,9 @@
 /**
  * JL Like Sortable - Drag and Drop functionality for social networks order
  *
- * @version 5.3.0
+ * @version 5.3.1
  * @author JoomLine (https://joomline.ru)
- * @copyright (C) 2012-2025 by Joomline
+ * @copyright (C) 2012-2026 by Joomline
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -318,10 +318,16 @@ function initToggleListeners() {
                 item.classList.add('disabled');
             }
 
-            // Находим и обновляем соответствующее radio поле в форме Joomla
-            var enabledField = document.querySelector('input[name="jform[params][' + param + ']"][value="' + (isEnabled ? '1' : '0') + '"]');
+            // Обновляем скрытое поле формы (в старых версиях манифеста это была пара radio)
+            var value = isEnabled ? '1' : '0';
+            var enabledField = document.querySelector('input[name="jform[params][' + param + ']"][type="radio"][value="' + value + '"]') ||
+                document.querySelector('input[name="jform[params][' + param + ']"]');
             if (enabledField) {
-                enabledField.checked = true;
+                if (enabledField.type === 'radio') {
+                    enabledField.checked = true;
+                } else {
+                    enabledField.value = value;
+                }
                 enabledField.dispatchEvent(new Event('change', { bubbles: true }));
             }
 
