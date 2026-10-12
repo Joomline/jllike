@@ -2,9 +2,9 @@
 /**
  * Sortable field for JL Like social buttons order
  *
- * @version 5.3.0
+ * @version 5.3.1
  * @author Vadim Kunicin (vadim@joomline.ru), Arkadiy (a.sedelnikov@gmail.com)
- * @copyright (C) 2012-2025 by Joomline (https://joomline.ru)
+ * @copyright (C) 2012-2026 by Joomline (https://joomline.ru)
  * @license GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
  */
 

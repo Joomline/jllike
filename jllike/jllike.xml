@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="5.3.1" type="plugin" group="content" method="upgrade">
+<extension type="plugin" group="content" method="upgrade">
     <name>JL Like</name>
     <author>JoomLine</author>
     <creationDate>22.01.2026</creationDate>
@@ -10,7 +10,6 @@
     <version>5.3.1</version>
     <description>PLG_JLLIKE_DESC_ALL</description>
     <scriptfile>script.php</scriptfile>
-    <minimum-joomla-version>4.0.0</minimum-joomla-version>
     <files>
         <folder>js</folder>
         <folder>language</folder>
@@ -46,94 +45,43 @@
                 />
 
                 <!-- Скрытые поля для хранения настроек включения/выключения -->
-                <field name="addfacebook" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
-                <field name="addvk" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
-                <field name="addtw" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
-                <field name="addod" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
-                <field name="addmail" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
-                <field name="addlin" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
-                <field name="addpi" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
-                <field name="addlj" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
-                <field name="addbl" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
-                <field name="addwb" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
-                <field name="addtl" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
-                <field name="addwa" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
-                <field name="addvi" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
-                <field name="addth" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
-                <field name="addrd" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
-                <field name="addmx" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
+                <field name="addfacebook" type="hidden" default="1" filter="integer" />
+                <field name="addvk" type="hidden" default="1" filter="integer" />
+                <field name="addtw" type="hidden" default="1" filter="integer" />
+                <field name="addod" type="hidden" default="1" filter="integer" />
+                <field name="addmail" type="hidden" default="1" filter="integer" />
+                <field name="addlin" type="hidden" default="1" filter="integer" />
+                <field name="addpi" type="hidden" default="1" filter="integer" />
+                <field name="addlj" type="hidden" default="1" filter="integer" />
+                <field name="addbl" type="hidden" default="1" filter="integer" />
+                <field name="addwb" type="hidden" default="1" filter="integer" />
+                <field name="addtl" type="hidden" default="1" filter="integer" />
+                <field name="addwa" type="hidden" default="1" filter="integer" />
+                <field name="addvi" type="hidden" default="1" filter="integer" />
+                <field name="addth" type="hidden" default="1" filter="integer" />
+                <field name="addrd" type="hidden" default="1" filter="integer" />
+                <field name="addmx" type="hidden" default="1" filter="integer" />
 
                 <!-- Скрытые поля для хранения порядка -->
-                <field name="facebook_order" type="text" default="1" hiddenLabel="true" class="hidden" />
-                <field name="vk_order" type="text" default="2" hiddenLabel="true" class="hidden" />
-                <field name="tw_order" type="text" default="3" hiddenLabel="true" class="hidden" />
-                <field name="od_order" type="text" default="4" hiddenLabel="true" class="hidden" />
-                <field name="mail_order" type="text" default="6" hiddenLabel="true" class="hidden" />
-                <field name="lin_order" type="text" default="7" hiddenLabel="true" class="hidden" />
-                <field name="pi_order" type="text" default="8" hiddenLabel="true" class="hidden" />
-                <field name="lj_order" type="text" default="9" hiddenLabel="true" class="hidden" />
-                <field name="bl_order" type="text" default="10" hiddenLabel="true" class="hidden" />
-                <field name="wb_order" type="text" default="12" hiddenLabel="true" class="hidden" />
-                <field name="tl_order" type="text" default="13" hiddenLabel="true" class="hidden" />
-                <field name="wa_order" type="text" default="14" hiddenLabel="true" class="hidden" />
-                <field name="vi_order" type="text" default="15" hiddenLabel="true" class="hidden" />
-                <field name="th_order" type="text" default="16" hiddenLabel="true" class="hidden" />
-                <field name="rd_order" type="text" default="17" hiddenLabel="true" class="hidden" />
-                <field name="mx_order" type="text" default="18" hiddenLabel="true" class="hidden" />
+                <field name="facebook_order" type="hidden" default="1" filter="integer" />
+                <field name="vk_order" type="hidden" default="2" filter="integer" />
+                <field name="tw_order" type="hidden" default="3" filter="integer" />
+                <field name="od_order" type="hidden" default="4" filter="integer" />
+                <field name="mail_order" type="hidden" default="6" filter="integer" />
+                <field name="lin_order" type="hidden" default="7" filter="integer" />
+                <field name="pi_order" type="hidden" default="8" filter="integer" />
+                <field name="lj_order" type="hidden" default="9" filter="integer" />
+                <field name="bl_order" type="hidden" default="10" filter="integer" />
+                <field name="wb_order" type="hidden" default="12" filter="integer" />
+                <field name="tl_order" type="hidden" default="13" filter="integer" />
+                <field name="wa_order" type="hidden" default="14" filter="integer" />
+                <field name="vi_order" type="hidden" default="15" filter="integer" />
+                <field name="th_order" type="hidden" default="16" filter="integer" />
+                <field name="rd_order" type="hidden" default="17" filter="integer" />
+                <field name="mx_order" type="hidden" default="18" filter="integer" />
 
                 <!-- Скрытое поле для общего счетчика (управляется виджетом) -->
-                <field name="addall" type="radio" default="1" hiddenLabel="true" class="hidden">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                </field>
+                <field name="addall" type="hidden" default="1" filter="integer" />
             </fieldset>
             <fieldset
                     name="basic"
@@ -143,7 +91,7 @@
                         type="radio" default="1"
                         label="PLG_JLLIKEPRO_AUTOADD_LABEL"
                         description="PLG_JLLIKEPRO_AUTOADD_DESC"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -153,7 +101,7 @@
                         type="radio" default="1"
                         label="LG_JLLIKEPRO_ENABLECOUNTERS"
                         description="LG_JLLIKEPRO_ENABLECOUNTERS_DESC"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -163,7 +111,7 @@
                         type="radio" default="1"
                         label="PLG_JLLIKEPRO_RANDOM_LIKES"
                         description="PLG_JLLIKEPRO_RANDOM_LIKES_DESC"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -208,7 +156,7 @@
                         default="1"
                         label="PLG_JLLIKEPRO_CLEAR_PLUGIN_TAGS"
                         description="PLG_JLLIKEPRO_CLEAR_PLUGIN_TAGS_DESC"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                 >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -227,22 +175,12 @@
                         default="1"
                         label="PLG_JLLIKEPRO_ENABLE_OPENGRAPH"
                         description="PLG_JLLIKEPRO_ENABLE_OPENGRAPH_DESC"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
                 </field>
 
-                <field
-                        name="typesget"
-                        type="list"
-                        default="0"
-                        label="PLG_JLLIKEPRO_TYPESGET_LABEL"
-                        description="PLG_JLLIKEPRO_TYPESGET_DESC"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_FILEGET</option>
-                    <option value="1">PLG_JLLIKEPRO_CURL</option>
-                </field>
                 <field
                         name="pathbase"
                         type="list"
@@ -254,13 +192,6 @@
                     <option value="www.">PLG_JLLIKEPRO__WITH_WWW</option>
                 </field>
                 <field
-                        name="buttons_contayner"
-                        type="text"
-                        default=""
-                        label="PLG_JLLIKEPRO_METKAVM_LABEL"
-                        description="PLG_JLLIKEPRO_METKAVM_DESC"
-                        />
-                <field
                         name="parent_contayner"
                         type="text"
                         default="div.jllikeproSharesContayner"
@@ -268,26 +199,15 @@
                         description="PLG_JLLIKEPRO_PARENT_CONTAYNER_DESC"
                         />
                 <field
-                        name="punycode_convert"
-                        type="radio"
-                        default="0"
-                        label="PLG_JLLIKEPRO_PUNYCODDE_CONVERT"
-                        description="PLG_JLLIKEPRO_PUNYCODDE_CONVERT_DESC"
-                        class="btn-group"
-                        >
-                    <option value="0">PLG_JLLIKEPRO_NO</option>
-                    <option value="1">PLG_JLLIKEPRO_YES</option>
-                </field>
-                <field
                         name="disable_more_likes"
                         type="radio"
                         default="0"
                         label="PLG_JLLIKEPRO_DISABLE_MORE_LIKES"
                         description="PLG_JLLIKEPRO_DISABLE_MORE_LIKES_DESC"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
-                    <option value="1">JYES</option>
                     <option value="0">JNO</option>
+                    <option value="1">JYES</option>
                 </field>			
             </fieldset>
 
@@ -334,7 +254,7 @@
                         default="0"
                         label="PLG_JLLIKEPRO_ENABLE_FIX_BUTTONS"
                         description="PLG_JLLIKEPRO_ENABLE_FIX_BUTTONS_DESC"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -345,7 +265,7 @@
                         default="0"
                         label="PLG_JLLIKEPRO_COLLAPSE_BUTTONS"
                         description="PLG_JLLIKEPRO_COLLAPSE_BUTTONS_DESC"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -376,7 +296,7 @@
                         default="1"
                         label="PLG_JLLIKEPRO_ENABLE_MOBILE_CSS"
                         description="PLG_JLLIKEPRO_ENABLE_MOBILE_CSS_DESC"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -440,7 +360,7 @@
                         default="0"
                         label="PLG_JLLIKEPRO_ALLOW_IN_CAT"
                         description="PLG_JLLIKEPRO_ALLOW_IN_CAT_DESC"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -534,10 +454,10 @@
                         default="0"
                         label="PLG_JLLIKEPRO_ADD_OPENGRAPH"
                         description="PLG_JLLIKEPRO_ADD_OPENGRAPH_DESC"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
-                    <option value="1">JYES</option>
                     <option value="0">JNO</option>
+                    <option value="1">JYES</option>
                 </field>
                 <field
                         name="desc_source_k2"
@@ -559,7 +479,7 @@
                         type="radio"
                         default="0"
                         label="PLG_JLLIKEPRO_SHOW_LABEL"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
 					<option value="1">PLG_JLLIKEPRO_YES</option>
@@ -570,7 +490,7 @@
                         default="0"
                         label="PLG_JLLIKEPRO_AUTOADD_LABEL"
                         description="PLG_JLLIKEPRO_AUTOADD_DESC_VIRTUEMART"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -585,7 +505,7 @@
                         type="radio"
                         default="0"
                         label="PLG_JLLIKEPRO_SHOW_LABEL"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
 					<option value="1">PLG_JLLIKEPRO_YES</option>
@@ -600,7 +520,7 @@
                         type="radio"
                         default="0"
                         label="PLG_JLLIKEPRO_SHOW_LABEL"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
 					<option value="1">PLG_JLLIKEPRO_YES</option>
@@ -626,7 +546,7 @@
                         type="radio"
                         default="0"
                         label="PLG_JLLIKEPRO_SHOW_LABEL"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
                     <option value="0">PLG_JLLIKEPRO_NO</option>
                     <option value="1">PLG_JLLIKEPRO_YES</option>
@@ -647,10 +567,10 @@
                         default="0"
                         label="PLG_JLLIKEPRO_ADD_OPENGRAPH"
                         description="PLG_JLLIKEPRO_ADD_OPENGRAPH_DESC"
-                        class="btn-group"
+                        layout="joomla.form.field.radio.switcher"
                         >
-                    <option value="1">JYES</option>
                     <option value="0">JNO</option>
+                    <option value="1">JYES</option>
                 </field>
             </fieldset>
 

@@ -380,7 +380,25 @@ MaxButton.prototype.getShareLink = function () {
 };
 
 // --- Универсальная инициализация всех кнопок ---
+// Отметка «уже лайкнули» восстанавливается по cookie в браузере, а не в PHP:
+// иначе при включённом кэше страниц Joomla она попадала в кэш и показывалась всем
+function jllikeRestoreLikedState() {
+    if (!window.jllickeproSettings || !jllickeproSettings.disableMoreLikes) return;
+    document.querySelectorAll('.jllikeproSharesContayner').forEach(function (container) {
+        var idInput = container.querySelector('.share-id');
+        if (!idInput || container.querySelector('.disable_more_likes')) return;
+        var name = 'jllikepro_article_' + encodeURIComponent(idInput.value) + '=';
+        var liked = document.cookie.split('; ').some(function (c) { return c.indexOf(name) === 0; });
+        if (liked) {
+            var div = document.createElement('div');
+            div.className = 'disable_more_likes';
+            container.prepend(div);
+        }
+    });
+}
+
 function jllikeInitButtons() {
+    jllikeRestoreLikedState();
     var conf = ButtonConfiguration && ButtonConfiguration.defaults ? ButtonConfiguration.defaults : {};
     var buttonTypes = [
         {selector: '.l-vk', ctor: VkontakteButton},
